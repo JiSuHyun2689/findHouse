@@ -9,7 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "house")
 public class HouseImage{
 
     @Id
@@ -18,7 +18,7 @@ public class HouseImage{
 
     private String imageName, path, uuid;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_num")
     private House house;
 

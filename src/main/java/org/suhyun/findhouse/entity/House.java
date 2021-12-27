@@ -56,7 +56,14 @@ public class House extends BaseEntity{
         this.loan = loan;
     }
 
-    /*
+
     @OneToOne(mappedBy = "house")
-    private Option option;*/
+    private Option option;
+
+    @OneToOne(mappedBy = "house")
+    private Price price;
+
+    @OneToOne(mappedBy = "house")
+    private Structure structure;
+
 }

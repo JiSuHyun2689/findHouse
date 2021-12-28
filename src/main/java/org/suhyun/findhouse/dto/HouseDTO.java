@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,11 +20,11 @@ public class HouseDTO {
 
     private String id;
 
-    private String status, address, content;
+    private String title, status, address, content, contractType, buildingType;
 
     private double area;
 
-    private int contractType, buildingType, minTerm, theFloor, wholeFloor, brokerage, view;
+    private int minTerm, theFloor, wholeFloor, brokerage, view;
 
     private LocalDate moveInDate, completionDate;
 
@@ -31,5 +33,8 @@ public class HouseDTO {
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+
+    @Builder.Default
+    private List<HouseImageDTO>imageDTOList = new ArrayList<>();
 
 }

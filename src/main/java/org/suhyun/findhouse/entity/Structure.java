@@ -22,14 +22,14 @@ public class Structure {
     @Column(nullable = false)
     private int room, toilet, livingRoom, veranda;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house_num")
-    private House house;
-
     public void chageStructures(int room , int toilet, int livingRoom, int veranda){
         this.room = room;
         this.toilet = toilet;
         this.livingRoom = livingRoom;
         this.veranda = veranda;
     }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_num")
+    private House house;
 }

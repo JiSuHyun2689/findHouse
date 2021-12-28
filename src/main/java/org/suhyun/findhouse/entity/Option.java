@@ -16,10 +16,6 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long option_num;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house_num")
-    private House house;
-
     private boolean tv, airConditioner, refrigerator, washer, dryer, induction, gasStove, sink, desk, bookshelf, bed, closet, dishwasher, shoeRack;
 
     public void changeOptions(boolean tv, boolean airConditioner, boolean refrigerator, boolean washer, boolean dryer, boolean induction, boolean gasStove,
@@ -39,4 +35,8 @@ public class Option {
         this.dishwasher = dishwasher;
         this.shoeRack = shoeRack;
     }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_num")
+    private House house;
 }

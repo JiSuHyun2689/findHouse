@@ -3,11 +3,14 @@ package org.suhyun.findhouse.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.suhyun.findhouse.entity.*;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,15 +35,17 @@ public class HouseRepositoryTests {
     @Autowired
     private StructureRepository structureRepository;
 
+    @Autowired CostRepository costRepository;
+
 
     @Test
     public void houseInsertTest(){
 
         LocalDate date = LocalDate.of(2021, 12, 31);
 
-        IntStream.rangeClosed(1, 10).forEach(i ->{
+        IntStream.rangeClosed(1, 100).forEach(i ->{
 
-            House house = House.builder().completionDate(date).address("서울 ... " + i ).buildingType(1).contractType(2).content("content..." + i).id("user" + i).moveInDate(date).area(21).brokerage(20).minTerm(3)
+            House house = House.builder().completionDate(date).title("사회 초년생이 살기 너무 좋은 집").address("서울 ... " + i ).buildingType("오피스텔").contractType("월세").content("content..." + i).id("user" + i).moveInDate(date).area(21).brokerage(20).minTerm(3)
                     .loan(false).parking(true).pet(true).elevator(true).theFloor(3).wholeFloor(10).status("거래가능").build();
 
             houseRepository.save(house);
@@ -57,6 +62,10 @@ public class HouseRepositoryTests {
             Structure structure = Structure.builder().room(1).toilet(1).house(house).build();
 
             structureRepository.save(structure);
+
+            Cost cost = Cost.builder().totalCost(100000).electricity(true).gas(false).internet(true).tv(true).parking(false).water(true).etc(true).content("cost Content!!!").house(house).build();
+
+            costRepository.save(cost);
 
             int random = (int)(Math.random() * 5) + 1;
 
@@ -85,7 +94,7 @@ public class HouseRepositoryTests {
     @Test
     public void houseGetTest(){
 
-        Optional<House> result = houseRepository.findById(39L);
+        Optional<House> result = houseRepository.findById(200L);
 
         House house = result.get();
 
@@ -97,9 +106,11 @@ public class HouseRepositoryTests {
     @Commit
     public void houseDeleteTest(){
 
-        Long houseNum = 40L;
+        Long houseNum = 60L;
         House house = House.builder().houseNum(houseNum).build();
         System.out.println(house);
+
+        costRepository.deletebyHouse(house);
 
         structureRepository.deletebyHouse(house);
 
@@ -112,4 +123,6 @@ public class HouseRepositoryTests {
         houseRepository.deleteById(houseNum);
 
     }
+
+
 }

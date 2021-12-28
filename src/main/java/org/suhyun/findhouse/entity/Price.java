@@ -20,13 +20,13 @@ public class Price {
     @ColumnDefault("0")
     private int price, deposit, monthly;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house_num")
-    private House house;
-
     public void changePrices(int price, int deposit, int monthly){
         this.price = price;
         this.deposit = deposit;
         this.monthly = monthly;
     }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_num")
+    private House house;
 }

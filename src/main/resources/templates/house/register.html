@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <div id="main-content">
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>House Register</h3>
+                            <p>매물을 등록하시고 고객들과 소통하세요!
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a th:href="@{/house/list}">List</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Layout Vertical Navbar
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Example Content</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <form class="form form-vertical">
+                                <div class="form-body">
+                                    <div class="row">
+
+                                        <div class="col-10">
+                                            <div class="form-group">
+                                                <label>Title</label>
+                                                <input type="text" class="form-control" name="title" placeholder="Title">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Title</label>
+                                                <input type="text" class="form-control" name="title" placeholder="Title">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-10">
+                                            <div class="form-group">
+                                                <label>Address</label><small class="text-muted"> <code class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히 표시되지 않습니다!</i></small>
+                                                <input type="text" class="form-control" name="address" placeholder="Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Area</label>
+                                                <input type="number" class="form-control" name="area" placeholder="면적 (㎡)">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>유형</label>
+                                                <select class="form-select" name="contractType">
+                                                    <option>전세</option>
+                                                    <option>월세</option>
+                                                    <option>선세</option>
+                                                    <option>매매</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>건물유형</label>
+                                                <select class="form-select" name="builidingType">
+                                                    <option>원룸</option>
+                                                    <option>투룸</option>
+                                                    <option>빌라</option>
+                                                    <option>오피스텔</option>
+                                                    <option>아파트</option>
+                                                    <option>단독주택</option>
+                                                    <option>기타</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>중개수수료</label>
+                                                <input type="number" class="form-control" name="brokerage" placeholder="(만원)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>최소 계약기간</label>
+                                                <input type="number" class="form-control" name="minTerm" placeholder="(개월)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>해당 층 수</label>
+                                                <input type="number" class="form-control" name="theFloor" placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>전체 층 수</label>
+                                                <input type="number" class="form-control" name="wholeFloor" placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>입주 가능 날짜</label>
+                                                <input type="number" class="form-control" class="datePicker" name="moveInDate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>준공 날짜</label>
+                                                <input type="number" class="form-control" name="completionDate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>방 개수</label>
+                                                <input type="number" class="form-control" name="room">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>거실 개수</label>
+                                                <input type="number" class="form-control" name="livingRoom">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>화장실 개수</label>
+                                                <input type="number" class="form-control" name="toilet">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>베란다 개수</label>
+                                                <input type="number" class="form-control" name="veranda">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="elevator">
+                                                    <label class="form-check-label">엘레베이터</label>
+                                                </div>
+                                            </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="pet">
+                                                    <label class="form-check-label">애완동물</label>
+                                                </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="parking">
+                                                    <label class="form-check-label">주차</label>
+                                                </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow"  name="loan">
+                                                    <label class="form-check-label">대출</label>
+                                                </div>
+                                                </div>
+                                            </li>
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </th:block>
+</th:block>

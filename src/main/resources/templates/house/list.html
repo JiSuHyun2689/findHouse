@@ -13,15 +13,6 @@
               <p>본인이 원하는 매물을 <code class="highlighter-rouge">필터</code>를 이용하여 쉽게 찾아보세요.
               </p>
             </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-              <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">List</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Layout Vertical Navbar
-                  </li>
-                </ol>
-              </nav>
-            </div>
           </div>
         </div>
         <section class="section">
@@ -47,7 +38,7 @@
                   <tbody>
                   <tr th:each="dto : ${result.dtoList}">
                     <td>[[${dto.houseNum}]]</td>
-                    <td>[[${dto.title}]]</td>
+                    <td><a th:href="@{/house/read?(houseNum= ${dto.houseNum})}"> [[${dto.title}]]</a></td>
                     <td>[[${dto.id}]]</td>
                     <td>[[${dto.contractType}]]</td>
                     <td>[[${dto.area}]]㎡</td>
@@ -56,6 +47,7 @@
                   </tr>
                   </tbody>
                 </table>
+
                 <a th:href="@{/house/register}" class="btn btn-primary rounded-pill btn-sm" style="float: right; margin-top: 0.5em; margin-right: 0.5em">Register</a>
 
                 <nav aria-label="Page navigation example" style="margin-top: 2em">

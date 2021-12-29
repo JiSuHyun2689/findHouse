@@ -12,6 +12,7 @@ import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.repository.HouseRepository;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -44,6 +45,39 @@ public class HouseServiceImpl implements HouseService {
         Function<House, HouseDTO> fn = (entity -> entityToDto(entity));
 
         return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public HouseDTO read(Long houseNum) {
+
+        Optional<House> result = houseRepository.findById(houseNum);
+
+        return result.isPresent() ? entityToDto(result.get()) : null;
+    }
+
+    @Override
+    public void modify(HouseDTO dto) {
+
+        Optional<House> result = houseRepository.findById(dto.getHouseNum());
+
+        if(result.isPresent()){
+
+            House entity = result.get();
+
+            entity.changeStatus(dto.getStatus());
+            entity.changeTitle(dto.getTitle());
+            entity.changeContent(dto.getContent());
+            entity.changeInfo(dto.getAddress(), dto.getContractType(), dto.getMinTerm(), dto.getBrokerage(), dto.getMoveInDate(), dto.isLoan());
+
+            houseRepository.save(entity);
+        }
+    }
+
+    @Override
+    public void remove(Long houseNum) {
+
+        houseRepository.deleteById(houseNum);
+
     }
 
 

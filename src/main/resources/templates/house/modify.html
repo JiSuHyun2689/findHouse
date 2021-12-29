@@ -15,13 +15,16 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>House Register</h3>
-                            <p>매물을 등록하세요.</p>
+                            <h3>House Modify</h3>
+                            <p>매물을 수정하세요.</p>
                         </div>
                     </div>
                 </div>
                 <section class="section">
                     <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Example Content</h4>
+                        </div>
                         <div class="card-body">
 
                             <form class="form form-vertical" method="post" action="/house/register" id="inputForm">
@@ -30,26 +33,35 @@
 
                                         <!-- 수정 필요 -->
                                         <input type="hidden" name="id" value="user200">
-                                        <input type="hidden" name="status" value="거래가능">
 
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Title</label>
-                                                <input type="text" class="form-control" name="title" placeholder="Title" value="test">
+                                                <input type="text" class="form-control" name="title" placeholder="Title" th:value="${dto.title}">
                                             </div>
                                         </div>
 
-                                        <div class="col-10">
+                                        <div class="col-8">
                                             <div class="form-group">
                                                 <label>Address</label><small class="text-muted"> <code class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히 표시되지 않습니다!</i></small>
-                                                <input type="text" class="form-control" name="address" placeholder="Address" value="test">
+                                                <input type="text" class="form-control" name="address" th:value="${dto.address}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <select class="form-select" name="status">
+                                                    <option value="거래가능">거래가능</option>
+                                                    <option value="거래불가">거래불가</option>
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>면적(㎡)</label>
-                                                <input type="text" class="form-control" name="area" placeholder="면적 (㎡)" value="12.9">
+                                                <input type="text" class="form-control" name="area" th:value="${dto.area}">
                                             </div>
                                         </div>
 
@@ -58,10 +70,10 @@
                                             <div class="form-group">
                                                 <label>유형</label>
                                                 <select class="form-select" name="contractType">
-                                                    <option value="전세">전세</option>
-                                                    <option value="월세">월세</option>
-                                                    <option value="선세">선세</option>
-                                                    <option value="매매">매매</option>
+                                                    <option value="전세" th:selected="${dto.contractType} == '전세'">전세</option>
+                                                    <option value="월세" th:selected="${dto.contractType} == '월세'">월세</option>
+                                                    <option value="선세" th:selected="${dto.contractType} == '선세'">선세</option>
+                                                    <option value="매매" th:selected="${dto.contractType} == '매매'">매매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -70,49 +82,49 @@
                                             <div class="form-group">
                                                 <label>건물유형</label>
                                                 <select class="form-select" name="buildingType">
-                                                    <option value="원룸">원룸</option>
-                                                    <option value="투룸">투룸</option>
-                                                    <option value="빌라">빌라</option>
-                                                    <option value="오피스텔">오피스텔</option>
-                                                    <option value="아파트">아파트</option>
-                                                    <option value="단독주택">단독주택</option>
-                                                    <option value="기타">기타</option>
+                                                    <option value="원룸" th:selected="${dto.buildingType} == '원룸'">원룸</option>
+                                                    <option value="투룸" th:selected="${dto.buildingType} == '투룸'">투룸</option>
+                                                    <option value="빌라" th:selected="${dto.buildingType} == '빌라'">빌라</option>
+                                                    <option value="오피스텔" th:selected="${dto.buildingType} == '오피스텔'">오피스텔</option>
+                                                    <option value="아파트" th:selected="${dto.buildingType} == '아파트'">아파트</option>
+                                                    <option value="단독주택" th:selected="${dto.buildingType} == '단독주택'">단독주택</option>
+                                                    <option value="기타" th:selected="${dto.buildingType} == '기타'">기타</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>중개수수료</label>
-                                                <input type="number" class="form-control" name="brokerage" placeholder="(만원)" value="15">
+                                                <label>중개수수료 (만원)</label>
+                                                <input type="number" class="form-control" name="brokerage" th:value="${dto.brokerage}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>최소 계약기간</label>
-                                                <input type="number" class="form-control" name="minTerm" placeholder="(개월)" value="6">
+                                                <label>최소 계약기간 (개월)</label>
+                                                <input type="number" class="form-control" name="minTerm" th:value="${dto.minTerm}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>해당 층 수</label>
-                                                <input type="number" class="form-control" name="theFloor" placeholder="" value="2">
+                                                <input type="number" class="form-control" name="theFloor" th:value="${dto.theFloor}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>전체 층 수</label>
-                                                <input type="number" class="form-control" name="wholeFloor" placeholder="" value="10">
+                                                <input type="number" class="form-control" name="wholeFloor" th:value="${dto.wholeFloor}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>입주 가능 날짜</label>
-                                                <input type="datetime-local" id="moveInDate" class="form-control"  name="moveInDate" >
+                                                <input type="datetime-local" id="moveInDate" class="form-control"  name="moveInDate">
                                             </div>
                                         </div>
 
@@ -153,38 +165,38 @@
 
                                         <div class="col-12">
                                             <li class="d-inline-block me-2 mb-1">
-                                            <div class="form-check">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="elevator">
-                                                    <label class="form-check-label">엘레베이터</label>
-                                                </div>
-                                            </div>
-                                            </li>
-
-                                            <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="pet">
-                                                    <label class="form-check-label">애완동물</label>
-                                                </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="elevator" th:checked="${dto.elevator}">
+                                                        <label class="form-check-label">엘레베이터</label>
+                                                    </div>
                                                 </div>
                                             </li>
 
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="parking">
-                                                    <label class="form-check-label">주차</label>
-                                                </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="pet" th:checked="${dto.pet}">
+                                                        <label class="form-check-label">애완동물</label>
+                                                    </div>
                                                 </div>
                                             </li>
 
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow"  name="loan">
-                                                    <label class="form-check-label">대출</label>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="parking" th:checked="${dto.parking}">
+                                                        <label class="form-check-label">주차</label>
+                                                    </div>
                                                 </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"  name="loan" th:checked="${dto.loan}">
+                                                        <label class="form-check-label">대출</label>
+                                                    </div>
                                                 </div>
                                             </li>
                                         </div>
@@ -193,40 +205,45 @@
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" name="content" placeholder="매물에 대한 설명을 써주세요."  style="margin-top: 1em; margin-bottom: 1em; height: 77px;"></textarea>
+                                            <textarea class="form-control" name="content" style="margin-top: 1em; margin-bottom: 1em; height: 77px;">[[${dto.content}]]</textarea>
                                             <label>Comments</label>
                                         </div>
                                     </div>
+
 
 
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                         <button type="submit" class="btn btn-primary me-1 mb-1 submitBtn">Submit</button>
                                     </div>
-
                                 </div>
-                            </div>
-                            </form>
                         </div>
+                        </form>
                     </div>
-                </section>
+            </div>
+            </section>
         </div>
         </div>
+
     </th:block>
 </th:block>
 <script>
 
     $(document).ready(function (){
-        $('#moveInDate, #completionDate').datetimepicker({
-            language : 'ko',
-            pickTime : false,
-            defalutDate : new Date(),
-            format: 'yyyy/MM/dd\'T\'HH:mm:ss',
-            autoclose: true
-        });
+       // var moveInDate = $('#moveInDate').datepicker().data('datepicker');
+      //  var comletionDate = $('#comletionDate').datepicker().data('datepicker');
+      //  moveInDate.selectDate(new Date());
+        //comletionDate.selectDate(new Date());
+        console.log([[${dto.moveInDate}]]);
+        console.log(new Date([[${dto.moveInDate}]]).toISOString().substring(0, 10));
+
+        var moveInDate = $('#moveInDate');
+        moveInDate.value = new Date([[${dto.moveInDate}]]);
+        document.getElementById('moveInDate').value = new Date().toISOString().substring(0, 10);;
     });
 
-    console.log("test");
+
+
 
     var form = $('#inputForm');
 

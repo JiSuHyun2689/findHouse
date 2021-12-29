@@ -11,6 +11,12 @@ public interface HouseService {
 
     public PageResultDTO<HouseDTO, House> getList(PageRequestDTO requestDTO);
 
+    HouseDTO read(Long houseNum);
+
+    void modify(HouseDTO dto);
+
+    void remove(Long houseNum);
+
     default House dtoToEntity(HouseDTO dto){
         House entity = House.builder().houseNum(dto.getHouseNum()).address(dto.getAddress()).area(dto.getArea()).brokerage(dto.getBrokerage())
                 .buildingType(dto.getBuildingType()).contractType(dto.getContractType()).completionDate(dto.getCompletionDate())

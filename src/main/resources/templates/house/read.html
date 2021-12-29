@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <div id="main-content">
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>House Read Page</h3>
+                        </div>
+                    </div>
+                </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"></h4>
+                        </div>
+                        <div class="card-body">
+
+                            <form class="form form-vertical" method="post" action="/house/register" id="inputForm">
+                                <div class="form-body">
+                                    <div class="row">
+
+                                        <input type="hidden" name="houseNum" th:value="${dto.houseNum}">
+                                        <input type="hidden" name="page" th:value="${requestDTO.page}">
+                                        <div class="col-9">
+                                            <div class="form-group">
+                                                <label>Title</label>
+                                                <input type="text" class="form-control" name="title" th:value="${dto.title}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>ID</label>
+                                                <input type="text" class="form-control" name="id" th:value="${dto.id}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label>View</label>
+                                                <input type="text" class="form-control" name="view" th:value="${dto.view}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input type="text" class="form-control" name="address" th:value="${dto.address}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <input type="text" class="form-control" name="status" th:value="${dto.status}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Area</label>
+                                                <input type="text" class="form-control" name="area" th:value="${dto.area}" readonly>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>유형</label>
+                                                <input class="form-control" name="contractType" th:value="${dto.contractType}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>건물유형</label>
+                                                <input class="form-control" name="contractType" th:value="${dto.buildingType}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>중개수수료 (만원)</label>
+                                                <input type="number" class="form-control" name="brokerage" th:value="${dto.brokerage}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>최소 계약기간 (개월)</label>
+                                                <input type="number" class="form-control" name="minTerm" th:value="${dto.minTerm}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>해당 층 수</label>
+                                                <input type="number" class="form-control" name="theFloor" th:value="${dto.theFloor}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>전체 층 수</label>
+                                                <input type="number" class="form-control" name="wholeFloor" th:value="${dto.wholeFloor}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>입주 가능 날짜</label>
+                                                <input type="text" id="moveInDate" class="form-control"  name="moveInDate" th:value="${dto.moveInDate}" readonly>
+                                            </div>
+                                        </div>
+
+                                       <div class="col-2">
+                                            <div class="form-group">
+                                                <label>준공 날짜</label>
+                                                <input type="text" id="completionDate" class="form-control"  name="completionDate" th:value="${dto.completionDate}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>방 개수</label>
+                                                <input type="number" class="form-control" name="room"  readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>거실 개수</label>
+                                                <input type="number" class="form-control" name="livingRoom"   readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>화장실 개수</label>
+                                                <input type="number" class="form-control" name="toilet"   readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>베란다 개수</label>
+                                                <input type="number" class="form-control" name="veranda"   readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"   name="elevator" th:checked="${dto.elevator}" disabled>
+                                                        <label class="form-check-label">엘레베이터</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="pet" th:checked="${dto.pet}" disabled>
+                                                        <label class="form-check-label">애완동물</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" th:value="${dto.parking}" name="parking" th:checked="${dto.parking}" disabled>
+                                                        <label class="form-check-label">주차</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" th:value="${dto.loan}" name="loan" th:checked="${dto.loan}" disabled>
+                                                        <label class="form-check-label">대출</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" name="content"  style="margin-top: 1em; margin-bottom: 1em; height: 77px;" readonly>[[${dto.content}]]</textarea>
+                                            <label>Comments</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill" id="removeBtn" th:href="@{/house/remove?(houseNum=${dto.houseNum})}">Remove</button>
+                                        <button type="button" class="btn btn-warning me-1 mb-1 rounded-pill" id="modifyBtn" th:href="@{/house/modify?(houseNum=${dto.houseNum})}">Modify</button>
+                                        <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill" id="listBtn" th:href="@{/house/list}">List</button>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+            </div>
+            </section>
+        </div>
+        </div>
+
+    </th:block>
+</th:block>
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function (){
+        $('#moveInDate').datetimepicker({
+            language : 'ko',
+            pickTime : false,
+            defalutDate : [[${dto.moveInDate}]],
+            format: 'yyyy/MM/dd\'T\'HH:mm:ss',
+            autoclose: true
+        });
+    });
+
+
+
+    var form = $(".form");
+
+    console.log(form);
+
+    $("#removeBtn").click(function (){
+        form.attr("action", "/house/remove").attr("method", "post");
+        form.submit();
+    });
+
+    $("#modifyBtn").click(function (){
+        form.attr("action", "/house/modify").attr("method", "get");
+        console.log(form);
+        form.submit();
+    });
+
+    $("#listBtn").click(function (){
+        form.attr("action", "/house/list").attr("method", "get");
+        form.submit();
+    });
+
+</script>

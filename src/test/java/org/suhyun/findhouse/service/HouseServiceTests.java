@@ -9,6 +9,7 @@ import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.House;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SpringBootTest
 public class HouseServiceTests {
@@ -20,7 +21,7 @@ public class HouseServiceTests {
     @Test
     public void testRegister(){
 
-        LocalDate date = LocalDate.of(2021, 12, 31);
+        LocalDate date = LocalDate.of(2021,12,31);
 
         HouseDTO houseDTO = HouseDTO.builder().completionDate(date).title("사회 초년생이 살기 너무 좋은 집").address("서울 ... ").buildingType("오피스텔").contractType("월세").content("content...").id("user").moveInDate(date).area(21).brokerage(20).minTerm(3)
                 .loan(false).parking(true).pet(true).elevator(true).theFloor(3).wholeFloor(10).status("거래가능").build();

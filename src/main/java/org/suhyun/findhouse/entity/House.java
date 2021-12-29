@@ -3,9 +3,11 @@ package org.suhyun.findhouse.entity;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -22,8 +24,10 @@ public class House extends BaseEntity{
     @Column(nullable = false)
     private String id;
 
+    private String status;
+
     @Column(nullable = false)
-    private String title, status, address, content, contractType, buildingType;
+    private String title, address, content, contractType, buildingType;
 
     @Column(nullable = false)
     private double area;
@@ -34,6 +38,7 @@ public class House extends BaseEntity{
     @ColumnDefault("0")
     private int view;
 
+    @Column(nullable = false)
     private LocalDate moveInDate, completionDate;
 
     @Column(nullable = false)

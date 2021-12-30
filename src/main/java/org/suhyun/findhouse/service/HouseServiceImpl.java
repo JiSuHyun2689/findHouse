@@ -25,7 +25,7 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public Long register(HouseDTO dto) {
 
-        log.info("DTO--------------------------");
+        log.info("House DTO--------------------------");
         log.info(dto);
 
         House entity = dtoToEntity(dto);

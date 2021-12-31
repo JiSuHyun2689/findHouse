@@ -16,11 +16,9 @@ import javax.persistence.OneToOne;
 @Builder
 public class OptionDTO {
 
-    private Long option_num;
+    private Long optionNum;
 
     private boolean tv, airConditioner, refrigerator, washer, dryer, induction, gasStove, sink, desk, bookshelf, bed, closet, dishwasher, shoeRack;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house_num")
-    private House house;
+    private Long houseNum;
 }

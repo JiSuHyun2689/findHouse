@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CostDTO {
 
-    private Long cost_num;
+    private Long costNum;
 
     private int totalCost;
 
     private boolean electricity, gas, water, tv, internet, parking, etc;
 
     private String content;
+
+    private Long houseNum;
 }

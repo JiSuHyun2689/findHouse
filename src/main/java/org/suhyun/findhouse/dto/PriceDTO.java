@@ -12,7 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Builder
 public class PriceDTO {
 
-    private Long price_num;
+    private Long priceNum;
 
     private int price, deposit, monthly;
 

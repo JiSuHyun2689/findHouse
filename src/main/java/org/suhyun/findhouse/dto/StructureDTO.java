@@ -14,7 +14,9 @@ import javax.persistence.Column;
 @Builder
 public class StructureDTO {
 
-    private Long structure_num;
+    private Long structureNum;
 
     private int room, toilet, livingRoom, veranda;
+
+    private Long houseNum;
 }

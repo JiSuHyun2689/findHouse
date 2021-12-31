@@ -27,12 +27,13 @@
                   <thead class="thead-dark">
                   <tr>
                     <th>No</th>
-                    <th>TITLE</th>
-                    <th>ID</th>
-                    <th>TYPE</th>
-                    <th>AREA</th>
-                    <th>REGDATE</th>
-                    <th>VIEW</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>유형</th>
+                    <th>건물유형</th>
+                    <th>면적</th>
+                    <th>작성일</th>
+                    <th>조회</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -41,6 +42,7 @@
                     <td><a th:href="@{/house/read?(houseNum= ${dto.houseNum})}"> [[${dto.title}]]</a></td>
                     <td>[[${dto.id}]]</td>
                     <td>[[${dto.contractType}]]</td>
+                    <td>[[${dto.buildingType}]]</td>
                     <td>[[${dto.area}]]㎡</td>
                     <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
                     <td>[[${dto.view}]]</td>
@@ -48,7 +50,10 @@
                   </tbody>
                 </table>
 
-                <a th:href="@{/house/register}" class="btn btn-primary rounded-pill btn-sm" style="float: right; margin-top: 0.5em; margin-right: 0.5em">Register</a>
+
+                <div class="col-12 d-flex justify-content-end">
+                  <a th:href="@{/house/register}"><button type="button" class="btn btn-primary me-1 mb-1 rounded-pill" style="margin-top: 0.5em">Register</button></a>
+                </div>
 
                 <nav aria-label="Page navigation example" style="margin-top: 2em">
                   <ul class="pagination pagination-primary justify-content-center">

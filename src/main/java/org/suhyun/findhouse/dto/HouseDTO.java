@@ -27,7 +27,7 @@ public class HouseDTO {
 
     private int minTerm, theFloor, wholeFloor, brokerage, view;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate moveInDate, completionDate;
 
     private boolean pet, elevator, parking, loan;

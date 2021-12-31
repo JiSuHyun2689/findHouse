@@ -34,22 +34,22 @@
 
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label>Title</label>
-                                                <input type="text" class="form-control" name="title" placeholder="Title" value="test">
+                                                <label>제목</label>
+                                                <input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요." value="test">
                                             </div>
                                         </div>
 
                                         <div class="col-10">
                                             <div class="form-group">
-                                                <label>Address</label><small class="text-muted"> <code class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히 표시되지 않습니다!</i></small>
-                                                <input type="text" class="form-control" name="address" placeholder="Address" value="test">
+                                                <label>주소</label><small class="text-muted"> <code class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히 표시되지 않습니다!</i></small>
+                                                <input type="text" class="form-control" name="address" placeholder="주소를 입력해주세요." value="test">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>면적(㎡)</label>
-                                                <input type="text" class="form-control" name="area" placeholder="면적 (㎡)" value="12.9">
+                                                <input type="text" class="form-control" name="area" placeholder="면적(㎡)" value="12.9">
                                             </div>
                                         </div>
 
@@ -83,14 +83,14 @@
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>중개수수료</label>
+                                                <label>중개수수료 (만원)</label>
                                                 <input type="number" class="form-control" name="brokerage" placeholder="(만원)" value="15">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>최소 계약기간</label>
+                                                <label>최소 계약기간 (개월)</label>
                                                 <input type="number" class="form-control" name="minTerm" placeholder="(개월)" value="6">
                                             </div>
                                         </div>
@@ -112,14 +112,14 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>입주 가능 날짜</label>
-                                                <input type="datetime-local" id="moveInDate" class="form-control"  name="moveInDate" >
+                                                <input type="date" id="moveInDate" class="form-control"  name="moveInDate" >
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>준공 날짜</label>
-                                                <input type="datetime-local" id="completionDate" class="form-control"  name="completionDate">
+                                                <input type="date" id="completionDate" class="form-control"  name="completionDate">
                                             </div>
                                         </div>
 
@@ -151,6 +151,9 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12">
+                                            <label style="font-weight: bold">가능 여부</label>
+                                        </div>
                                         <div class="col-12">
                                             <li class="d-inline-block me-2 mb-1">
                                             <div class="form-check">
@@ -190,6 +193,140 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12">
+                                        <label style="font-weight: bold">옵션</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="tv">
+                                                    <label class="form-check-label">TV</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="airConditioner">
+                                                    <label class="form-check-label">에어컨</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="refrigerator">
+                                                    <label class="form-check-label">냉장고</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="washer">
+                                                    <label class="form-check-label">냉장고</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="dryer">
+                                                    <label class="form-check-label">건조기</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="induction">
+                                                    <label class="form-check-label">인덕션</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gasStove">
+                                                    <label class="form-check-label">가스레인지</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="sink">
+                                                    <label class="form-check-label">싱크대</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="desk">
+                                                    <label class="form-check-label">책상</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="bookshelf">
+                                                    <label class="form-check-label">책장</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="bed">
+                                                    <label class="form-check-label">침대</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="closet">
+                                                    <label class="form-check-label">옷장</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="dishwasher">
+                                                    <label class="form-check-label">식기세척기</label>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-inline-block me-2 mb-1">
+                                            <div class="form-check">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="shoeRack">
+                                                    <label class="form-check-label">신발장</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+
+
+
+
 
                                     <div class="col-12">
                                         <div class="form-floating">
@@ -199,9 +336,14 @@
                                     </div>
 
 
+
+
+
+
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                                        <button type="submit" class="btn btn-primary me-1 mb-1 submitBtn">Submit</button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1 rounded-pill">Reset</button>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1 submitBtn rounded-pill">Submit</button>
+                                        <a th:href="@{/house/list}"><button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill">List</button></a>
                                     </div>
 
                                 </div>

@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhyun.findhouse.dto.HouseDTO;
+import org.suhyun.findhouse.dto.OptionDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
+import org.suhyun.findhouse.entity.Option;
 import org.suhyun.findhouse.service.HouseService;
+import org.suhyun.findhouse.service.OptionService;
 
 @Controller
 @Log4j2
@@ -22,6 +25,7 @@ import org.suhyun.findhouse.service.HouseService;
 public class HouseController {
 
     private final HouseService houseService;
+    private final OptionService optionService;
 
     @GetMapping("/")
     public String index(){
@@ -45,11 +49,15 @@ public class HouseController {
 
 
     @PostMapping("/register")
-    public String registerPost(HouseDTO dto, RedirectAttributes redirectAttributes){
+    public String registerPost(HouseDTO dto, OptionDTO optionDto, RedirectAttributes redirectAttributes){
 
         log.info("house register post ...........................");
 
         Long houseNum = houseService.register(dto);
+
+        optionDto.setHouseNum(houseNum);
+
+        optionService.register(optionDto);
 
         redirectAttributes.addFlashAttribute("msg", houseNum);
 
@@ -64,7 +72,11 @@ public class HouseController {
 
         HouseDTO dto = houseService.read(houseNum);
 
+        OptionDTO optionDto = optionService.read(houseNum);
+
         model.addAttribute("dto", dto);
+
+        model.addAttribute("optionDto", optionDto);
     }
 
 
@@ -72,6 +84,8 @@ public class HouseController {
     public String remove(Long houseNum, RedirectAttributes redirectAttributes){
 
         log.info("house remove "+ houseNum + " ...........................");
+
+        optionService.remove(houseNum);
 
         houseService.remove(houseNum);
 
@@ -82,9 +96,11 @@ public class HouseController {
 
 
     @PostMapping("/modify")
-    public String modify(HouseDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+    public String modify(HouseDTO dto, OptionDTO optionDTO ,@ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
 
         log.info("house modify post "+ dto.getHouseNum() + " ...........................");
+
+        optionService.modify(optionDTO);
 
         houseService.modify(dto);
 

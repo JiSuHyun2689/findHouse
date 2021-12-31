@@ -130,7 +130,7 @@ public class HouseRepositoryTests {
 
         priceRepository.deletebyHouse(house);
 
-        optionRepository.deletebyHouse(house);
+        optionRepository.deleteByHouse(houseNum);
 
         houseImageRepository.deletebyHouse(house);
 

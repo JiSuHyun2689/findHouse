@@ -6,11 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.OptionDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
-import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.Option;
 import org.suhyun.findhouse.repository.OptionRepository;
 
@@ -51,24 +49,25 @@ public class OptionServiceImpl implements OptionService{
     }
 
     @Override
-    public OptionDTO read(Long optionNum) {
+    public OptionDTO read(Long houseNum) {
 
-        Optional<Option> result = optionRepository.findById(optionNum);
+        Optional<Option> result = optionRepository.findByHouse(houseNum);
 
         return result.isPresent() ? entityToDto(result.get()) : null;
+
     }
 
     @Override
     public void modify(OptionDTO dto) {
 
-        Optional<Option> result = optionRepository.findById(dto.getOption_num());
+        Optional<Option> result = optionRepository.findByHouse(dto.getHouseNum());
 
         if(result.isPresent()){
 
             Option entity = result.get();
 
-            entity.changeOptions(entity.isTv(), entity.isAirConditioner(), entity.isRefrigerator(), entity.isWasher(), entity.isDryer()
-            ,entity.isInduction(), entity.isGasStove(), entity.isSink(), entity.isDesk(), entity.isBookshelf(), entity.isBed(), entity.isCloset(), entity.isDishwasher(), entity.isShoeRack());
+            entity.changeOptions(dto.isTv(), dto.isAirConditioner(), dto.isRefrigerator(), dto.isWasher(), dto.isDryer()
+            ,dto.isInduction(), dto.isGasStove(), dto.isSink(), dto.isDesk(), dto.isBookshelf(), dto.isBed(), dto.isCloset(), dto.isDishwasher(), dto.isShoeRack());
 
             optionRepository.save(entity);
         }
@@ -76,9 +75,9 @@ public class OptionServiceImpl implements OptionService{
     }
 
     @Override
-    public void remove(Long optionNum) {
+    public void remove(Long houseNum) {
 
-        optionRepository.deleteById(optionNum);
+        optionRepository.deleteByHouse(houseNum);
 
     }
 }

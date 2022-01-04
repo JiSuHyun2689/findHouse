@@ -15,7 +15,7 @@ public class Price {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long price_num;
+    private Long priceNum;
 
     @ColumnDefault("0")
     private int price, deposit, monthly;

@@ -3,16 +3,11 @@ package org.suhyun.findhouse.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.suhyun.findhouse.entity.*;
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -124,11 +119,11 @@ public class HouseRepositoryTests {
         House house = House.builder().houseNum(houseNum).build();
         System.out.println(house);
 
-        costRepository.deletebyHouse(house);
+        costRepository.deleteByHouse(houseNum);
 
-        structureRepository.deletebyHouse(house);
+        structureRepository.deleteByHouse(houseNum);
 
-        priceRepository.deletebyHouse(house);
+        priceRepository.deleteByHouse(houseNum);
 
         optionRepository.deleteByHouse(houseNum);
 

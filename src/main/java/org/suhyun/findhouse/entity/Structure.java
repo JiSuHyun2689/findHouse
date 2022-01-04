@@ -16,7 +16,7 @@ public class Structure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long structure_num;
+    private Long structureNum;
 
     @ColumnDefault("0")
     @Column(nullable = false)

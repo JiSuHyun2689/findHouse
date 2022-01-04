@@ -64,6 +64,8 @@
                                         </div>
 
 
+
+
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>유형</label>
@@ -119,6 +121,10 @@
                                             </div>
                                         </div>
 
+
+
+
+
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>입주 가능 날짜</label>
@@ -136,35 +142,150 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>방 개수</label>
-                                                <input type="number" class="form-control" name="room" value="1">
+                                                <input type="number" class="form-control" name="room" th:value="${structureDto.room}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>거실 개수</label>
-                                                <input type="number" class="form-control" name="livingRoom" value="1">
+                                                <input type="number" class="form-control" name="livingRoom" th:value="${structureDto.livingRoom}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>화장실 개수</label>
-                                                <input type="number" class="form-control" name="toilet" value="1">
+                                                <input type="number" class="form-control" name="toilet" th:value="${structureDto.toilet}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>베란다 개수</label>
-                                                <input type="number" class="form-control" name="veranda" value="1">
+                                                <input type="number" class="form-control" name="veranda" th:value="${structureDto.veranda}">
                                             </div>
                                         </div>
+
+
+
+
+
+
+
+                                        <div class="col-2 price">
+                                            <div class="form-group">
+                                                <label>가격 (만원)</label>
+                                                <input type="number" class="form-control price" name="price" th:value="${priceDto.price}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-2 deposit" style="display:none">
+                                            <div class="form-group">
+                                                <label>보증금 (만원)</label>
+                                                <input type="number" class="form-control deposit" name="deposit" th:value="${priceDto.deposit}" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2 monthly" style="display:none">
+                                            <div class="form-group">
+                                                <label>월세 (만원)</label>
+                                                <input type="number" class="form-control monthly" name="monthly" th:value="${priceDto.monthly}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 (만원)</label>
+                                                <input type="number" class="form-control" name="totalCost" th:value="${costDto.totalCost}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 기타 항목</label>
+                                                <input type="text" class="form-control" name="costContent" th:value="${costDto.costContent}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <label style="font-weight: bold">관리비 포함 항목</label>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="electricity" th:checked="${costDto.electricity}">
+                                                        <label class="form-check-label">전기세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gas" th:checked="${costDto.gas}">
+                                                        <label class="form-check-label">가스비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="water" th:checked="${costDto.water}">
+                                                        <label class="form-check-label">수도세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costTv" th:checked="${costDto.costTv}">
+                                                        <label class="form-check-label">TV</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="internet" th:checked="${costDto.internet}">
+                                                        <label class="form-check-label">인터넷</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costParking" th:checked="${costDto.costParking}">
+                                                        <label class="form-check-label">주차비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="etc" th:checked="${costDto.etc}">
+                                                        <label class="form-check-label">기타</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+
+
+
+
 
                                         <div class="col-12">
                                             <label style="font-weight: bold">가능 여부</label>
                                         </div>
-
 
                                         <div class="col-12">
                                             <li class="d-inline-block me-2 mb-1">
@@ -203,6 +324,12 @@
                                                 </div>
                                             </li>
                                         </div>
+
+
+
+
+
+
 
                                         <div class="col-12">
                                             <label style="font-weight: bold">옵션</label>
@@ -334,10 +461,9 @@
                                                 </div>
                                             </li>
                                         </div>
-
-
-
                                     </div>
+
+
 
 
                                     <div class="col-12">
@@ -370,17 +496,19 @@
 
 <script>
 
-     var form = $('#inputForm');
+    $(document).ready(function () {
+        var form = $('#inputForm');
 
-    $('.submitBtn').click(function (){
+        $('.submitBtn').click(function () {
 
-        var moveInDate = $('#moveInDate').val();
-        var comletionDate = $('#comletionDate').val();
+            var moveInDate = $('#moveInDate').val();
+            var comletionDate = $('#comletionDate').val();
 
-        form.append(moveInDate);
-        form.append(comletionDate);
+            form.append(moveInDate);
+            form.append(comletionDate);
 
-        form.submit();
+            form.submit();
+        });
     });
 
 </script>

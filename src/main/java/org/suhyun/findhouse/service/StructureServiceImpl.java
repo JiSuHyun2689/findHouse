@@ -1,5 +1,6 @@
 package org.suhyun.findhouse.service;
 
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -9,72 +10,74 @@ import org.springframework.stereotype.Service;
 import org.suhyun.findhouse.dto.OptionDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
+import org.suhyun.findhouse.dto.StructureDTO;
 import org.suhyun.findhouse.entity.Option;
-import org.suhyun.findhouse.repository.OptionRepository;
+import org.suhyun.findhouse.entity.Structure;
+import org.suhyun.findhouse.repository.StructureRepository;
 
 import java.util.Optional;
 import java.util.function.Function;
 
-
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class OptionServiceImpl implements OptionService{
+public class StructureServiceImpl implements StructureService{
 
-    private final OptionRepository repository;
+    private final StructureRepository repository;
 
 
     @Override
-    public Long register(OptionDTO dto) {
+    public Long register(StructureDTO dto) {
 
-        log.info("Option DTO register------------------------------------------------------------");
+        log.info("Structure DTO register------------------------------------------------------------");
         log.info(dto);
 
-        Option entity = dtoToEntity(dto);
+        Structure entity = dtoToEntity(dto);
         log.info(entity);
 
         repository.save(entity);
-        return entity.getOptionNum();
+        return entity.getStructureNum();
     }
 
 
     @Override
-    public PageResultDTO<OptionDTO, Option> getList(PageRequestDTO requestDTO) {
+    public PageResultDTO<StructureDTO, Structure> getList(PageRequestDTO requestDTO) {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending());
 
-        Page<Option> result = repository.findAll(pageable);
+        Page<Structure> result = repository.findAll(pageable);
 
-        Function<Option, OptionDTO> fn = (entity -> entityToDto(entity));
+        Function<Structure, StructureDTO> fn = (entity -> entityToDto(entity));
 
         return new PageResultDTO<>(result, fn);
     }
 
-    @Override
-    public OptionDTO read(Long houseNum) {
 
-        Optional<Option> result = repository.findByHouse(houseNum);
+    @Override
+    public StructureDTO read(Long houseNum) {
+
+        Optional<Structure> result = repository.findByHouse(houseNum);
 
         return result.isPresent() ? entityToDto(result.get()) : null;
-
     }
 
-    @Override
-    public void modify(OptionDTO dto) {
 
-        Optional<Option> result = repository.findByHouse(dto.getHouseNum());
+    @Override
+    public void modify(StructureDTO dto) {
+
+        Optional<Structure> result = repository.findByHouse(dto.getHouseNum());
 
         if(result.isPresent()){
 
-            Option entity = result.get();
+            Structure entity = result.get();
 
-            entity.changeOptions(dto.isTv(), dto.isAirConditioner(), dto.isRefrigerator(), dto.isWasher(), dto.isDryer()
-            ,dto.isInduction(), dto.isGasStove(), dto.isSink(), dto.isDesk(), dto.isBookshelf(), dto.isBed(), dto.isCloset(), dto.isDishwasher(), dto.isShoeRack());
+            entity.chageStructures(dto.getRoom(), dto.getToilet(), dto.getLivingRoom(), dto.getVeranda());
 
             repository.save(entity);
         }
-
     }
+
+
 
     @Override
     public void remove(Long houseNum) {

@@ -15,9 +15,9 @@ public class CostDTO {
 
     private int totalCost;
 
-    private boolean electricity, gas, water, tv, internet, parking, etc;
+    private boolean electricity, gas, water, costTv, internet, costParking, etc;
 
-    private String content;
+    private String costContent;
 
     private Long houseNum;
 }

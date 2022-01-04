@@ -20,7 +20,8 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class HouseServiceImpl implements HouseService {
 
-    private final HouseRepository houseRepository;
+    private final HouseRepository repository;
+
 
     @Override
     public Long register(HouseDTO dto) {
@@ -31,34 +32,37 @@ public class HouseServiceImpl implements HouseService {
         House entity = dtoToEntity(dto);
         log.info(entity);
 
-        houseRepository.save(entity);
+        repository.save(entity);
         return entity.getHouseNum();
     }
+
 
     @Override
     public PageResultDTO<HouseDTO, House> getList(PageRequestDTO requestDTO) {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending());
 
-        Page<House> result = houseRepository.findAll(pageable);
+        Page<House> result = repository.findAll(pageable);
 
         Function<House, HouseDTO> fn = (entity -> entityToDto(entity));
 
         return new PageResultDTO<>(result, fn);
     }
 
+
     @Override
     public HouseDTO read(Long houseNum) {
 
-        Optional<House> result = houseRepository.findById(houseNum);
+        Optional<House> result = repository.findById(houseNum);
 
         return result.isPresent() ? entityToDto(result.get()) : null;
     }
 
+
     @Override
     public void modify(HouseDTO dto) {
 
-        Optional<House> result = houseRepository.findById(dto.getHouseNum());
+        Optional<House> result = repository.findById(dto.getHouseNum());
 
         if(result.isPresent()){
 
@@ -67,18 +71,15 @@ public class HouseServiceImpl implements HouseService {
             entity.changeStatus(dto.getStatus());
             entity.changeTitle(dto.getTitle());
             entity.changeContent(dto.getContent());
-            entity.changeInfo(dto.getAddress(), dto.getContractType(), dto.getMinTerm(), dto.getBrokerage(), dto.getMoveInDate(), dto.isLoan());
+            entity.changeInfo(dto.getAddress(), dto.getContractType(), dto.getMinTerm(), dto.getBrokerage(), dto.getMoveInDate(), dto.getCompletionDate(), dto.isLoan());
 
-            houseRepository.save(entity);
+            repository.save(entity);
         }
     }
 
+
     @Override
     public void remove(Long houseNum) {
-
-        houseRepository.deleteById(houseNum);
-
+        repository.deleteById(houseNum);
     }
-
-
 }

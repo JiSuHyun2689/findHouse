@@ -134,29 +134,143 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>방 개수</label>
-                                                <input type="number" class="form-control" name="room"  readonly>
+                                                <input type="number" class="form-control" name="room" th:value="${structureDto.room}" readonly>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>거실 개수</label>
-                                                <input type="number" class="form-control" name="livingRoom"   readonly>
+                                                <input type="number" class="form-control" name="livingRoom" th:value="${structureDto.livingRoom}" readonly>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>화장실 개수</label>
-                                                <input type="number" class="form-control" name="toilet"   readonly>
+                                                <input type="number" class="form-control" name="toilet" th:value="${structureDto.toilet}" readonly>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>베란다 개수</label>
-                                                <input type="number" class="form-control" name="veranda"   readonly>
+                                                <input type="number" class="form-control" name="veranda" th:value="${structureDto.veranda}" readonly>
                                             </div>
+                                        </div>
+
+
+                                        <div class="col-2 price">
+                                            <div class="form-group">
+                                                <label>가격 (만원)</label>
+                                                <input type="number" class="form-control price" name="price" th:value="${priceDto.price}" readonly>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-2 deposit" style="display:none">
+                                            <div class="form-group">
+                                                <label>보증금 (만원)</label>
+                                                <input type="number" class="form-control deposit" name="deposit" th:value="${priceDto.deposit}" readonly >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2 monthly" style="display:none">
+                                            <div class="form-group">
+                                                <label>월세 (만원)</label>
+                                                <input type="number" class="form-control monthly" name="monthly" th:value="${priceDto.monthly}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 (만원)</label>
+                                                <input type="number" class="form-control" name="totalCost" th:value="${costDto.totalCost}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 기타 항목</label>
+                                                <input type="text" class="form-control" name="costContent" th:value="${costDto.costContent}" readonly>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <label style="font-weight: bold">관리비 포함 항목</label>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="electricity" th:checked="${costDto.electricity}" disabled>
+                                                        <label class="form-check-label">전기세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gas" th:checked="${costDto.gas}" disabled>
+                                                        <label class="form-check-label">가스비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="water" th:checked="${costDto.water}" disabled>
+                                                        <label class="form-check-label">수도세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costTv" th:checked="${costDto.costTv}" disabled>
+                                                        <label class="form-check-label">TV</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="internet" th:checked="${costDto.internet}" disabled>
+                                                        <label class="form-check-label">인터넷</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costParking" th:checked="${costDto.costParking}" disabled>
+                                                        <label class="form-check-label">주차비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="etc" th:checked="${costDto.etc}" disabled>
+                                                        <label class="form-check-label">기타</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+
+
+
+
+                                        <div class="col-12">
+                                            <label style="font-weight: bold">가능 여부</label>
                                         </div>
 
                                         <div class="col-12">
@@ -365,35 +479,52 @@
 <script>
 
     $(document).ready(function (){
-        $('#moveInDate').datetimepicker({
-            language : 'ko',
-            pickTime : false,
-            defalutDate : [[${dto.moveInDate}]],
-            format: 'yyyy/MM/dd\'T\'HH:mm:ss',
-            autoclose: true
+        var contractType = $("#contractType");
+
+        contractType.on("change", function (event){
+            var contractTypeValue = contractType.val();
+
+            if(contractTypeValue == '월세'){
+                $(".price").hide();
+                $(".monthly").show();
+                $(".deposit").show();
+            }else{
+                $(".monthly").hide();
+                $(".deposit").hide();
+                $(".price").show();
+            }}
+        );
+
+
+        var form = $(".form");
+
+        $("#removeBtn").click(function (){
+            form.attr("action", "/house/remove").attr("method", "post");
+
+            Swal.fire({
+                title: '글을 삭제하시겠습니까?',
+                text: "삭제하시면 다시 복수시킬 수 없습니다.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        });
+
+        $("#modifyBtn").click(function (){
+            form.attr("action", "/house/modify").attr("method", "get");
+            form.submit();
+        });
+
+        $("#listBtn").click(function (){
+            form.attr("action", "/house/list").attr("method", "get");
+            form.submit();
         });
     });
-
-
-
-    var form = $(".form");
-
-    console.log(form);
-
-    $("#removeBtn").click(function (){
-        form.attr("action", "/house/remove").attr("method", "post");
-        form.submit();
-    });
-
-    $("#modifyBtn").click(function (){
-        form.attr("action", "/house/modify").attr("method", "get");
-        console.log(form);
-        form.submit();
-    });
-
-    $("#listBtn").click(function (){
-        form.attr("action", "/house/list").attr("method", "get");
-        form.submit();
-    });
-
 </script>

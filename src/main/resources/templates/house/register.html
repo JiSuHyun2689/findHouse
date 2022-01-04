@@ -57,7 +57,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>유형</label>
-                                                <select class="form-select" name="contractType">
+                                                <select class="form-select" name="contractType" id="contractType">
                                                     <option value="전세">전세</option>
                                                     <option value="월세">월세</option>
                                                     <option value="선세">선세</option>
@@ -151,9 +151,118 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-2 price">
+                                            <div class="form-group">
+                                                <label>가격 (만원)</label>
+                                                <input type="number" class="form-control price" name="price" placeholder="가격 (만원)" value="100000000">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-2 deposit" style="display:none">
+                                            <div class="form-group">
+                                                <label>보증금 (만원)</label>
+                                                <input type="number" class="form-control deposit" name="deposit" placeholder="보증금 (만원)" value="10000000" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2 monthly" style="display:none">
+                                            <div class="form-group">
+                                                <label>월세 (만원)</label>
+                                                <input type="number" class="form-control monthly" name="monthly" placeholder="월세 (만원)" value="7000000">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 (만원)</label>
+                                                <input type="number" class="form-control" name="totalCost" placeholder="관리비 (만원)" value="50000">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>관리비 기타 항목</label>
+                                                <input type="text" class="form-control" name="costContent" placeholder="관리비 기타 항목" value="전기, 수도, 가스 별도">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <label style="font-weight: bold">관리비 포함 항목</label>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="electricity">
+                                                        <label class="form-check-label">전기세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gas">
+                                                        <label class="form-check-label">가스비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="water">
+                                                        <label class="form-check-label">수도세</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costTv">
+                                                        <label class="form-check-label">TV</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="internet">
+                                                        <label class="form-check-label">인터넷</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costParking">
+                                                        <label class="form-check-label">주차비</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="d-inline-block me-2 mb-1">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="etc">
+                                                        <label class="form-check-label">기타</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+
+
                                         <div class="col-12">
                                             <label style="font-weight: bold">가능 여부</label>
                                         </div>
+
                                         <div class="col-12">
                                             <li class="d-inline-block me-2 mb-1">
                                             <div class="form-check">
@@ -191,6 +300,8 @@
                                                 </div>
                                             </li>
                                         </div>
+
+
                                     </div>
 
                                     <div class="col-12">
@@ -228,7 +339,7 @@
                                             <div class="form-check">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="washer">
-                                                    <label class="form-check-label">냉장고</label>
+                                                    <label class="form-check-label">세탁기</label>
                                                 </div>
                                             </div>
                                         </li>
@@ -335,11 +446,6 @@
                                         </div>
                                     </div>
 
-
-
-
-
-
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1 rounded-pill">Reset</button>
                                         <button type="submit" class="btn btn-primary me-1 mb-1 submitBtn rounded-pill">Submit</button>
@@ -359,31 +465,33 @@
 <script>
 
     $(document).ready(function (){
-        $('#moveInDate, #completionDate').datetimepicker({
-            language : 'ko',
-            pickTime : false,
-            defalutDate : new Date(),
-            format: 'yyyy/MM/dd\'T\'HH:mm:ss',
-            autoclose: true
+
+        var contractType = $("#contractType");
+
+        contractType.on("change", function (event){
+            var contractTypeValue = contractType.val();
+
+            if(contractTypeValue == '월세'){
+                $(".price").hide();
+                $(".monthly").show();
+                $(".deposit").show();
+            }else{
+                $(".monthly").hide();
+                $(".deposit").hide();
+                $(".price").show();
+            }
+        });
+
+        var form = $('#inputForm');
+
+        $('.submitBtn').click(function (){
+            var moveInDate = $('#moveInDate').val();
+            var comletionDate = $('#comletionDate').val();
+
+            form.append(moveInDate);
+            form.append(comletionDate);
+
+            form.submit();
         });
     });
-
-    console.log("test");
-
-    var form = $('#inputForm');
-
-    $('.submitBtn').click(function (){
-        console.log("click!");
-
-        var moveInDate = $('#moveInDate').val();
-        var comletionDate = $('#comletionDate').val();
-
-        form.append(moveInDate);
-        form.append(comletionDate);
-
-        console.log(form);
-        form.submit();
-    });
-
-
 </script>

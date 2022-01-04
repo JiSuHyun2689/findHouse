@@ -53,12 +53,13 @@ public class House extends BaseEntity{
         this.content = content;
     }
 
-    public void changeInfo(String address, String contractType, int minTerm, int brokerage, LocalDate moveInDate, boolean loan){
+    public void changeInfo(String address, String contractType, int minTerm, int brokerage, LocalDate moveInDate, LocalDate completionDate, boolean loan){
         this.address = address;
         this.contractType = contractType;
         this.minTerm = minTerm;
         this.brokerage = brokerage;
         this.moveInDate = moveInDate;
+        this.completionDate = completionDate;
         this.loan = loan;
     }
 

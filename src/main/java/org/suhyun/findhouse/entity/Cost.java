@@ -14,7 +14,7 @@ public class Cost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cost_num;
+    private Long costNum;
 
     private int totalCost;
 

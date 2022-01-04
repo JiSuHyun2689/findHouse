@@ -6,10 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.Structure;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
+
 public interface StructureRepository extends JpaRepository<Structure, Long> {
 
     @Modifying
-    @Query("delete from Structure s where s.house =:house")
-    void deletebyHouse(House house);
+    @Transactional
+    @Query("delete from Structure s where s.house.houseNum =:houseNum")
+    void deleteByHouse(Long houseNum);
 
+    @Query("select s from Structure s where s.house.houseNum =:houseNum")
+    Optional<Structure> findByHouse(Long houseNum);
 }

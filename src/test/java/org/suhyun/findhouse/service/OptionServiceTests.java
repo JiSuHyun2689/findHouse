@@ -16,18 +16,19 @@ import java.util.stream.LongStream;
 public class OptionServiceTests {
 
     @Autowired
-    private OptionService optionService;
+    private OptionService service;
+
 
     @Test
     public void registerTest(){
 
         LongStream.rangeClosed(1, 200).forEach(i->{
 
-            OptionDTO optionDTO = OptionDTO.builder().airConditioner(true).bed(false).bookshelf(false).closet(true)
+            OptionDTO dto = OptionDTO.builder().airConditioner(true).bed(false).bookshelf(false).closet(true)
                     .desk(false).dishwasher(false).dryer(false).gasStove(false).induction(true).refrigerator(true).shoeRack(true)
                     .tv(false).sink(true).washer(true).houseNum(i).build();
 
-            optionService.register(optionDTO);
+            service.register(dto);
         });
     }
 
@@ -35,29 +36,29 @@ public class OptionServiceTests {
     @Test
     public void readTest(){
 
-        OptionDTO option = optionService.read(200L);
+        OptionDTO entity = service.read(200L);
 
-        System.out.println(option);
-
+        System.out.println(entity);
     }
+
 
     @Test
     public void modifyTest(){
 
-        OptionDTO dto = optionService.read(200L);
+        OptionDTO dto = service.read(200L);
 
-        Option entity = optionService.dtoToEntity(dto);
+        Option entity = service.dtoToEntity(dto);
 
         entity.changeOptions(true,true,true,true,true,true,true,true,true,true,true,true,true,true);
 
-        OptionDTO optionDTO = optionService.entityToDto(entity);
+        OptionDTO optionDto = service.entityToDto(entity);
 
-        optionService.modify(optionDTO);
+        service.modify(optionDto);
     }
+
 
     @Test
     public void removeTest(){
-
-        optionService.remove(199L);
+        service.remove(199L);
     }
 }

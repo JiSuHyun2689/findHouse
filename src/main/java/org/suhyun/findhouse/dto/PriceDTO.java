@@ -16,4 +16,6 @@ public class PriceDTO {
 
     private int price, deposit, monthly;
 
+    private Long houseNum;
+
 }

@@ -63,16 +63,16 @@ public class House extends BaseEntity{
         this.loan = loan;
     }
 
-    @OneToOne(mappedBy = "house")
+    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Option option;
 
-    @OneToOne(mappedBy = "house")
+    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Price price;
 
-    @OneToOne(mappedBy = "house")
+    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Structure structure;
 
-    @OneToOne(mappedBy = "house")
+    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Cost cost;
 
 }

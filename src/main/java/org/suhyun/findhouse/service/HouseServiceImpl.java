@@ -1,7 +1,10 @@
 package org.suhyun.findhouse.service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.el.parser.BooleanNode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,6 +13,7 @@ import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.House;
+import org.suhyun.findhouse.entity.QHouse;
 import org.suhyun.findhouse.repository.HouseRepository;
 
 import java.util.Optional;
@@ -42,7 +46,9 @@ public class HouseServiceImpl implements HouseService {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending());
 
-        Page<House> result = repository.findAll(pageable);
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+
+        Page<House> result = repository.findAll(booleanBuilder, pageable);
 
         Function<House, HouseDTO> fn = (entity -> entityToDto(entity));
 
@@ -81,5 +87,40 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public void remove(Long houseNum) {
         repository.deleteById(houseNum);
+    }
+
+
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO){
+
+        String type = requestDTO.getType();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        QHouse qHouse = QHouse.house;
+
+        String keyword = requestDTO.getKeyword();
+
+        BooleanExpression expression = qHouse.houseNum.gt(0L);
+
+        booleanBuilder.and(expression);
+
+        if(type == null || type.trim().length() == 0){
+            return booleanBuilder;
+        }
+
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if(type.contains("t"))
+            conditionBuilder.or(qHouse.title.contains(keyword));
+
+        if(type.contains("c"))
+            conditionBuilder.or(qHouse.content.contains(keyword));
+
+        if(type.contains("w"))
+            conditionBuilder.or(qHouse.id.contains(keyword));
+
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;
     }
 }

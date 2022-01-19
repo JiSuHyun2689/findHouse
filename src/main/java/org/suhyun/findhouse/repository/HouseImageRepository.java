@@ -9,6 +9,6 @@ import org.suhyun.findhouse.entity.HouseImage;
 public interface HouseImageRepository extends JpaRepository<HouseImage, Long> {
 
     @Modifying
-    @Query("delete from HouseImage hI where hI.house =:house")
-    void deletebyHouse(House house);
+    @Query("delete from HouseImage hI where hI.house.houseNum =:houseNum")
+    void deleteByHouse(Long houseNum);
 }

@@ -25,6 +25,11 @@
                                         <input type="hidden" name="id" value="user200">
                                         <input type="hidden" name="houseNum" th:value="${dto.houseNum}">
 
+                                        <input type="hidden" name="page" th:value="${requestDTO.page}">
+                                        <input type="hidden" name="type" th:value="${requestDTO.type}">
+                                        <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+
+
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>제목</label>
@@ -470,8 +475,8 @@
 
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1 rounded-pill">Reset</button>
-                                        <button type="submit" class="btn btn-primary me-1 mb-1 submitBtn rounded-pill">Submit</button>
-                                        <a th:href="@{/house/list}"><button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill">List</button></a>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1 rounded-pill submitBtn">Submit</button>
+                                        <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">List</button>
                                     </div>
                                 </div>
                         </div>
@@ -492,14 +497,25 @@
     $(document).ready(function () {
         var form = $('#inputForm');
 
-        $('.submitBtn').click(function () {
 
+        $('.submitBtn').click(function () {
             var moveInDate = $('#moveInDate').val();
             var comletionDate = $('#comletionDate').val();
 
             form.append(moveInDate);
             form.append(comletionDate);
+            form.submit();
+        });
 
+
+        $('.listBtn').click(function (){
+            var page = $("input[name='page']");
+            var type = $("input[name='type']");
+            var keyword = $("input[name='keyword']");
+
+            form.empty();
+            form.attr("action", "/house/list")
+                .attr("method", "get");
             form.submit();
         });
     });

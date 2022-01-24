@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhyun.findhouse.dto.*;
 import org.suhyun.findhouse.entity.Option;
@@ -103,7 +100,7 @@ public class HouseController {
 
 
     @PostMapping("/modify")
-    public String modify(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+    public String modifyPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
 
         log.info("house modify post "+ dto.getHouseNum() + " ...........................");
 
@@ -115,15 +112,18 @@ public class HouseController {
 
 
         redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("type", requestDTO.getType());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
         redirectAttributes.addAttribute("houseNum", dto.getHouseNum());
         redirectAttributes.addFlashAttribute("msg", "매물 수정이 완료되었습니다.");
 
-        return "redirect:/house/list";
+        return "redirect:/house/read";
     }
 
 
 
-    @PostMapping("/remove")
+
+    @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, path = "/remove")
     public String remove(Long houseNum, RedirectAttributes redirectAttributes){
 
         log.info("house remove "+ houseNum + " ...........................");

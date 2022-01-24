@@ -18,8 +18,7 @@
                             <h4 class="card-title"></h4>
                         </div>
                         <div class="card-body">
-
-                            <form class="form form-vertical" method="post" action="/house/register" id="inputForm">
+                            <form class="form form-vertical" method="post" >
                                 <div class="form-body">
                                     <div class="row">
 
@@ -447,10 +446,14 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill" id="removeBtn" th:href="@{/house/remove?(houseNum=${dto.houseNum})}">Remove</button>
-                                        <button type="button" class="btn btn-warning me-1 mb-1 rounded-pill" id="modifyBtn" th:href="@{/house/modify?(houseNum=${dto.houseNum})}">Modify</button>
-                                        <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill" id="listBtn" th:href="@{/house/list}">List</button>
+                                        <a th:href="@{/house/remove?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                            <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill" id="removeBtn">Remove</button></a>
+                                        <a th:href="@{/house/modify?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                            <button type="button" class="btn btn-warning me-1 mb-1 rounded-pill" id="modifyBtn">Modify</button></a>
+                                        <a th:href="@{/house/list?(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                            <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill" id="listBtn">List</button></a>
                                     </div>
                                 </div>
                         </div>
@@ -502,22 +505,13 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: '삭제',
-                cancelButtonText: '취소'
+                cancelButtonText: '취소',
+                delay: 2000
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
                 }
             })
-        });
-
-        $("#modifyBtn").click(function (){
-            form.attr("action", "/house/modify").attr("method", "get");
-            form.submit();
-        });
-
-        $("#listBtn").click(function (){
-            form.attr("action", "/house/list").attr("method", "get");
-            form.submit();
         });
     });
 </script>

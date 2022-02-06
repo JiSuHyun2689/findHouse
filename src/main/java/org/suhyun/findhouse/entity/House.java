@@ -53,7 +53,7 @@ public class House extends BaseEntity{
         this.content = content;
     }
 
-    public void changeInfo(String address, String contractType, int minTerm, int brokerage, LocalDate moveInDate, LocalDate completionDate, boolean loan){
+    public void changeInfo(String address, String contractType, int minTerm, int brokerage, LocalDate moveInDate, LocalDate completionDate, boolean loan, boolean elevator, boolean pet, boolean parking){
         this.address = address;
         this.contractType = contractType;
         this.minTerm = minTerm;
@@ -61,8 +61,12 @@ public class House extends BaseEntity{
         this.moveInDate = moveInDate;
         this.completionDate = completionDate;
         this.loan = loan;
+        this.elevator = elevator;
+        this.pet = pet;
+        this.parking = parking;
     }
 
+    /*
     @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Option option;
 
@@ -74,5 +78,7 @@ public class House extends BaseEntity{
 
     @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
     private Cost cost;
+    */
+
 
 }

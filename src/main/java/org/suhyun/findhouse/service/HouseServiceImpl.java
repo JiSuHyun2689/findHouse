@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.el.parser.BooleanNode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +14,7 @@ import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.QHouse;
 import org.suhyun.findhouse.repository.HouseRepository;
+
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -77,7 +77,16 @@ public class HouseServiceImpl implements HouseService {
             entity.changeStatus(dto.getStatus());
             entity.changeTitle(dto.getTitle());
             entity.changeContent(dto.getContent());
-            entity.changeInfo(dto.getAddress(), dto.getContractType(), dto.getMinTerm(), dto.getBrokerage(), dto.getMoveInDate(), dto.getCompletionDate(), dto.isLoan());
+            entity.changeInfo(dto.getAddress(),
+                    dto.getContractType(),
+                    dto.getMinTerm(),
+                    dto.getBrokerage(),
+                    dto.getMoveInDate(),
+                    dto.getCompletionDate(),
+                    dto.isLoan(),
+                    dto.isElevator(),
+                    dto.isPet(),
+                    dto.isParking());
 
             repository.save(entity);
         }

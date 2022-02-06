@@ -35,6 +35,8 @@ public class ReviewRepositoryTests {
                     .content("이 중개인 평점..")
                     .build();
 
+            System.out.println(review);
+
             reviewRepository.save(review);
         });
     }

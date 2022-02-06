@@ -25,6 +25,7 @@ public class HouseController {
 
 
 
+
     @GetMapping("/")
     public String index(){
         return "redirect:/house/list";
@@ -48,6 +49,7 @@ public class HouseController {
         log.info("house read "+ houseNum + " ...........................");
 
         HouseDTO dto = houseService.read(houseNum);
+        System.out.println("house read test : " + dto);
         OptionDTO optionDto = optionService.read(houseNum);
         StructureDTO structureDto = structureService.read(houseNum);
         PriceDTO priceDto = priceService.read(houseNum);
@@ -109,7 +111,6 @@ public class HouseController {
         structureService.modify(structureDto);
         optionService.modify(optionDto);
         houseService.modify(dto);
-
 
         redirectAttributes.addAttribute("page", requestDTO.getPage());
         redirectAttributes.addAttribute("type", requestDTO.getType());

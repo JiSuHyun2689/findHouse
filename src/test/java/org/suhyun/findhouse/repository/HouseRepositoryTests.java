@@ -3,6 +3,9 @@ package org.suhyun.findhouse.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
@@ -11,6 +14,7 @@ import org.suhyun.findhouse.entity.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -37,9 +41,9 @@ public class HouseRepositoryTests {
     @Autowired CostRepository costRepository;
 
     @Test
-    public void insertTest(){
+    public void insertHouseTest(){
 
-        LocalDate date = LocalDate.of(2021,12,31);
+        LocalDate date = LocalDate.of(2022,12,31);
 
 
         House house = House.builder()
@@ -69,14 +73,13 @@ public class HouseRepositoryTests {
 
 
     @Test
-    public void houseInsertTest(){
+    public void insertTest(){
 
-        LocalDate date = LocalDate.of(2021,12,31);
+        LocalDate date = LocalDate.of(2022,12,31);
 
         IntStream.rangeClosed(1, 200).forEach(i ->{
 
             House house = House.builder()
-                    .completionDate(date)
                     .title("사회 초년생이 살기 너무 좋은 집")
                     .address("서울 ... " + i )
                     .buildingType("오피스텔")
@@ -84,6 +87,7 @@ public class HouseRepositoryTests {
                     .content("content..." + i)
                     .id("user" + i)
                     .moveInDate(date)
+                    .completionDate(date)
                     .area(21)
                     .brokerage(20)
                     .minTerm(3)
@@ -256,4 +260,16 @@ public class HouseRepositoryTests {
 
     }
 
+
+    @Test
+    public void testListPage(){
+
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "houseNum"));
+
+        Page<Object[]> result = houseRepository.getListPage(pageRequest);
+
+        for(Object[] objects : result.getContent()){
+            System.out.println(Arrays.toString(objects));
+        }
+    }
 }

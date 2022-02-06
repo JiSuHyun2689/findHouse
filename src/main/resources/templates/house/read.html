@@ -507,7 +507,8 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: '삭제',
                 cancelButtonText: '취소',
-                delay: 2000
+                timer : 5000,
+                delay: 5000
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

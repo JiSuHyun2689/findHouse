@@ -3,10 +3,13 @@ package org.suhyun.findhouse.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.Member;
 import org.suhyun.findhouse.entity.Review;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -14,6 +17,11 @@ public class ReviewRepositoryTests {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+
 
     @Test
     public void insertReviewTests(){
@@ -40,4 +48,39 @@ public class ReviewRepositoryTests {
             reviewRepository.save(review);
         });
     }
+
+    @Transactional
+    @Test
+    public void testGetHouseReviews(){
+
+        House house = House.builder().houseNum(20L).build();
+
+        List<Review> result = reviewRepository.findByHouse(house);
+
+        result.forEach(houseReview ->{
+            System.out.println(houseReview.getHouse());
+            System.out.println("\t"+houseReview.getGrade());
+            System.out.println("\t"+houseReview.getContent());
+            System.out.println("\t"+houseReview.getMember().getId());
+            System.out.println("-------------------------------------------------------------------");
+        });
+    }
+
+
+
+
+    @Transactional
+    @Commit
+    @Test
+    public void testDeleteMember(){
+
+        String id = "user200";
+
+        Member member = Member.builder().id(id).build();
+
+        reviewRepository.deleteByMember(member);
+
+        memberRepository.deleteById(id);
+    }
+
 }

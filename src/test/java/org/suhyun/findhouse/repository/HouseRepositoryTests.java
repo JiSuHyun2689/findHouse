@@ -15,6 +15,7 @@ import org.suhyun.findhouse.entity.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -271,5 +272,32 @@ public class HouseRepositoryTests {
         for(Object[] objects : result.getContent()){
             System.out.println(Arrays.toString(objects));
         }
+    }
+
+    /*
+    @Test
+    public void testGetListPageTest(){
+
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "houseNum"));
+
+        Page<Object[]> result = houseRepository.getListPageTest(pageRequest);
+
+        for(Object[] objects : result.getContent()){
+            System.out.println(Arrays.toString(objects));
+        }
+    }*/
+
+
+    @Test
+    public void testGetHouseWithAll(){
+
+        List<Object[]> result = houseRepository.getHouseWithAll(1L);
+
+        //System.out.println(result);
+
+        for(Object[] arr : result){
+            System.out.println(Arrays.toString(arr));
+        }
+
     }
 }

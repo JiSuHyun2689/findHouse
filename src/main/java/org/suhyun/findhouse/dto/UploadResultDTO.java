@@ -1,29 +1,23 @@
 package org.suhyun.findhouse.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.suhyun.findhouse.entity.House;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class HouseImageDTO {
+public class UploadResultDTO implements Serializable {
 
-    private Long imageNum;
-
-    private String imageName, path, uuid;
+    private String fileName;
+    private String uuid;
+    private String folderPath;
 
     public String getImageURL(){
         try{
-            return URLEncoder.encode(path + "/" + uuid + "_" + imageName, "UTF-8");
+            return URLEncoder.encode(folderPath + "/" + uuid + "_" + fileName, "UTF-8");
         }catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
@@ -32,11 +26,10 @@ public class HouseImageDTO {
 
     public String getThumbnailURL(){
         try {
-            return URLEncoder.encode(path + "/s_" + uuid + "_" + imageName, "UTF-8");
+            return URLEncoder.encode(folderPath + "/s_" + uuid + "_" + fileName, "UTF-8");
         }catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
         return "";
     }
-
 }

@@ -12,10 +12,15 @@ import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.House;
+import org.suhyun.findhouse.entity.HouseImage;
 import org.suhyun.findhouse.entity.QHouse;
+import org.suhyun.findhouse.repository.HouseImageRepository;
 import org.suhyun.findhouse.repository.HouseRepository;
 
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -26,18 +31,30 @@ public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository repository;
 
+    private final HouseImageRepository houseImageRepository;
+
 
     @Override
+    @Transactional
     public Long register(HouseDTO dto) {
 
         log.info("House DTO--------------------------");
+
         log.info(dto);
 
-        House entity = dtoToEntity(dto);
-        log.info(entity);
+        Map<String, Object> entityMap =dtoToEntity(dto);
 
-        repository.save(entity);
-        return entity.getHouseNum();
+        House house = (House) entityMap.get("house");
+
+        List<HouseImage> houseImageList = (List<HouseImage>)entityMap.get("imgList");
+
+        repository.save(house);
+
+        houseImageList.forEach(houseImage -> {
+            houseImageRepository.save(houseImage);
+        });
+
+        return house.getHouseNum();
     }
 
 

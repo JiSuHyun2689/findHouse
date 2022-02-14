@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.16'
+
 
     /*
     testImplementation 'org.springframework.batch:spring-batch-test'

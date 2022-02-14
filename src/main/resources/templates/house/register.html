@@ -431,6 +431,49 @@
 
 
 
+                                    <div class="col-12">
+                                        <div class="form-group fileForm custom-control">
+                                            <label class="form-check-label">Image Files</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input files" id="fileInput" multiple>
+                                                <label class="custom-file-label" data-browse="Browse"></label>
+                                            </div>
+
+                                        <div class="uploadResult">
+                                            <ul>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <!--
+                                    <div class="col-12">
+                                        <div class="filepond--root multiple-files-filepond filepond--hopper" data-style-button-remove-item-position="left" data-style-button-process-item-position="right" data-style-load-indicator-position="right" data-style-progress-indicator-position="right" data-style-button-remove-item-align="false" style="height: 192px;">
+                                            <input class="filepond--browser custom-file-input" name="uploadFiles" type="file" id="filepond--browser-81r65xb82" aria-controls="filepond--assistant-81r65xb82" aria-labelledby="filepond--drop-label-81r65xb82" accept="" multiple="">
+                                            <div class="filepond--drop-label" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+                                                <label for="filepond--browser-81r65xb82" id="filepond--drop-label-81r65xb82" aria-hidden="true">
+                                                    <font style="vertical-align: inherit;">
+                                                        <font style="vertical-align: inherit;">파일을 끌어다 놓기 또는 </font>
+                                                    </font>
+                                                    <span class="filepond--label-action" tabindex="0">
+                                                        <font style="vertical-align: inherit;">
+                                                            <font style="vertical-align: inherit;">찾아보기</font>
+                                                        </font>
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="filepond--list-scroller uploadResult" style="transform: translate3d(0px, 60px, 0px);">
+                                                <ul class="filepond--list" role="list">
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    -->
 
 
                                     <div class="col-12">
@@ -458,6 +501,36 @@
 </th:block>
 
 
+<style>
+    .uploadResult{
+        width: 100%;
+        background-color: gray;
+        margin-top: 10px;
+    }
+
+    .uploadResult ul{
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+        vertical-align: top;
+        overflow: auto;
+    }
+
+    .uploadResult ul li{
+        list-style: none;
+        padding: 10px;
+        margin-left: 2em;
+    }
+
+    .uploadResult ul li img{
+        width: 100px;
+    }
+</style>
+
+
+
+
 <script>
 
     $(document).ready(function (){
@@ -465,6 +538,7 @@
         var contractType = $("#contractType");
 
         contractType.on("change", function (event){
+
             var contractTypeValue = contractType.val();
 
             if(contractTypeValue == '월세'){
@@ -489,5 +563,189 @@
 
             form.submit();
         });
+
+
+
+        // File upload
+        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+        var maxSize = 10485760; // 10MB
+
+        function checkExtension(fileName, fileSize){
+
+            if(fileSize >= maxSize){
+                alert("파일 사이즈 초과");
+                return false;
+            }
+
+            if(regex.test(fileName)){
+                alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                return false;
+            }
+            return true;
+        } // end checkExtension
+
+
+
+        $(".custom-file-input").on("change", function (){
+
+            var fileName = $(this).val().split("\\").pop();
+            //$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+            var formData = new FormData();
+            var inputFile = $(this);
+            var files = inputFile[0].files;
+            var appended = false;
+
+            for(var i=0; i<files.length; i++){
+
+                if(!checkExtension(files[i].name, files[i].size)){
+                    return false;
+                }
+
+                console.log(files[i]);
+                formData.append("uploadFiles", files[i]);
+                appended = true;
+            }
+
+            if(!appended) {
+                return;
+            }
+
+            for(var value of formData.values()){
+                console.log(value);
+            }
+
+            $.ajax({
+                url : '/uploadAjax',
+                processData : false,
+                contentType : false,
+                data : formData,
+                type : 'POST',
+                dataType : 'json',
+                success : function (result){
+                    console.log(result);
+                    showResult(result);
+                },
+                error : function (jpXHR, textStatus, errorThrown){
+                    console.log(textStatus);
+                }
+            }); // end ajax
+        }); // end custom-file-input change event
+
+
+        function showResult(uploadResultArr){
+
+            var uploadUL = $(".uploadResult ul");
+            var str = "";
+
+            $(uploadResultArr).each(function (i, obj){
+                str += "<li data-name ='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
+                str += "<div>";
+                str += "<button type='button' data-file=\'" + obj.imageURL + "\' class='btn-waring btn-sm'>X</button><br>";
+                str += "<img src ='/display?fileName="+ obj.thumbnailURL +"'>";
+                str += "</div>";
+                str += "</li>";
+            });
+            uploadUL.append(str);
+        } // end showResult
+
+
+        $(".uploadResult").on("click", "li button", function (e){
+
+            console.log("delete file");
+
+            var targetFile = $(this).data("file");
+            var targetLi = $(this).closest("li");
+
+            $.ajax({
+                url: '/removeFile',
+                data: {fileName: targetFile},
+                dataType: 'text',
+                type: 'POST',
+                success: function (result){
+                    alert(result);
+                    targetLi.remove();
+                }
+            }); // end ajax
+        }); // end uploadResult li button click event
+
+
+        $(".btn-primary").on("click", function(e) {
+
+            e.preventDefault();
+
+            var str = "";
+
+            $(".uploadResult li").each(function(i,obj){
+                var target = $(obj);
+
+                str += "<input type='hidden' name='imageDTOList["+i+"].imgName' value='"+target.data('name') +"'>";
+
+                str += "<input type='hidden' name='imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
+
+                str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
+            });
+
+            //태그들이 추가된 것을 확인한 후에 comment를 제거
+            $(".box").html(str);
+
+            $("form").submit();
+
+        });
+
     });
+
+
+
+
+
+
+
+
+    /*
+
+    // register desired plugins...
+    FilePond.registerPlugin(
+        // validates the size of the file...
+        FilePondPluginFileValidateSize,
+        // validates the file type...
+        FilePondPluginFileValidateType,
+
+        // calculates & dds cropping info based on the input image dimensions and the set crop ratio...
+        FilePondPluginImageCrop,
+        // preview the image file type...
+        FilePondPluginImagePreview,
+        // filter the image file
+        FilePondPluginImageFilter,
+        // corrects mobile image orientation...
+        FilePondPluginImageExifOrientation,
+        // calculates & adds resize information...
+        FilePondPluginImageResize,
+    );
+
+    // Filepond: Multiple Files
+    FilePond.create( document.querySelector('.multiple-files-filepond'), {
+        allowImagePreview: true,
+        allowMultiple: true,
+        allowFileEncode: false,
+        required: false
+    });
+
+
+    // Filepond: Image Preview
+    FilePond.create( document.querySelector('.image-preview-filepond'), {
+        allowImagePreview: true,
+        allowImageFilter: false,
+        allowImageExifOrientation: false,
+        allowImageCrop: false,
+        acceptedFileTypes: ['image/png','image/jpg','image/jpeg'],
+        fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+            // Do custom type detection here and return with promise
+            resolve(type);
+        })
+    });
+
+     */
+
+
 </script>

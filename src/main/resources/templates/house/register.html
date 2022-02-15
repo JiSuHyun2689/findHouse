@@ -431,18 +431,25 @@
 
 
 
+
+
                                     <div class="col-12">
                                         <div class="form-group fileForm custom-control">
                                             <label class="form-check-label">Image Files</label>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input files" id="fileInput" multiple>
-                                                <label class="custom-file-label" data-browse="Browse"></label>
+                                                <!--<label class="custom-file-label" data-browse="Browse"></label>-->
                                             </div>
 
-                                        <div class="uploadResult">
-                                            <ul>
+                                            <div class="box">
 
-                                            </ul>
+                                            </div>
+
+                                            <div class="uploadResult">
+                                                <ul>
+
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -490,7 +497,6 @@
                                     </div>
 
                                 </div>
-                            </div>
                             </form>
                         </div>
                     </div>
@@ -537,6 +543,7 @@
 
         var contractType = $("#contractType");
 
+
         contractType.on("change", function (event){
 
             var contractTypeValue = contractType.val();
@@ -552,8 +559,9 @@
             }
         });
 
-        var form = $('#inputForm');
 
+
+        /*
         $('.submitBtn').click(function (){
             var moveInDate = $('#moveInDate').val();
             var comletionDate = $('#comletionDate').val();
@@ -563,6 +571,8 @@
 
             form.submit();
         });
+
+         */
 
 
 
@@ -674,22 +684,28 @@
 
             e.preventDefault();
 
+            var form = $("#inputForm");
+            var moveInDate = $("#moveInDate").val();
+            var comletionDate = $("#comletionDate").val();
             var str = "";
+
+            /* 해결해야함 ! - submit 시 moveInDate이 comment 하단에 html 추가됨 */
+            form.append(moveInDate);
+            form.append(comletionDate);
+
 
             $(".uploadResult li").each(function(i,obj){
                 var target = $(obj);
 
-                str += "<input type='hidden' name='imageDTOList["+i+"].imgName' value='"+target.data('name') +"'>";
+                str += "<input type='hidden' name='imageDTOList["+i+"].imageName' value='"+target.data('name') +"'>";
 
                 str += "<input type='hidden' name='imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
 
                 str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
             });
 
-            //태그들이 추가된 것을 확인한 후에 comment를 제거
             $(".box").html(str);
-
-            $("form").submit();
+            //$("form").submit();
 
         });
 

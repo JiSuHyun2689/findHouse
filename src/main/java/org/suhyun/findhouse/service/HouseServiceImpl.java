@@ -50,9 +50,11 @@ public class HouseServiceImpl implements HouseService {
 
         repository.save(house);
 
-        houseImageList.forEach(houseImage -> {
-            houseImageRepository.save(houseImage);
-        });
+        if(houseImageList != null) {
+            houseImageList.forEach(houseImage -> {
+                houseImageRepository.save(houseImage);
+            });
+        }
 
         return house.getHouseNum();
     }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhyun.findhouse.dto.*;
+import org.suhyun.findhouse.entity.HouseImage;
 import org.suhyun.findhouse.entity.Option;
 import org.suhyun.findhouse.service.*;
 
@@ -22,7 +23,6 @@ public class HouseController {
     private final StructureService structureService;
     private final PriceService priceService;
     private final CostService costService;
-
 
 
 
@@ -49,17 +49,8 @@ public class HouseController {
         log.info("house read "+ houseNum + " ...........................");
 
         HouseDTO dto = houseService.read(houseNum);
-        System.out.println("house read test : " + dto);
-        OptionDTO optionDto = optionService.read(houseNum);
-        StructureDTO structureDto = structureService.read(houseNum);
-        PriceDTO priceDto = priceService.read(houseNum);
-        CostDTO costDto = costService.read(houseNum);
 
         model.addAttribute("dto", dto);
-        model.addAttribute("optionDto", optionDto);
-        model.addAttribute("structureDto", structureDto);
-        model.addAttribute("priceDto", priceDto);
-        model.addAttribute("costDto", costDto);
     }
 
 
@@ -129,10 +120,6 @@ public class HouseController {
 
         log.info("house remove "+ houseNum + " ...........................");
 
-        costService.remove(houseNum);
-        priceService.remove(houseNum);
-        structureService.remove(houseNum);
-        optionService.remove(houseNum);
         houseService.remove(houseNum);
 
         redirectAttributes.addFlashAttribute("msg", "삭제가 완료되었습니다.");

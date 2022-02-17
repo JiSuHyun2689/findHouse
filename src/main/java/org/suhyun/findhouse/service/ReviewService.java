@@ -1,0 +1,43 @@
+package org.suhyun.findhouse.service;
+
+import org.suhyun.findhouse.dto.ReviewDTO;
+import org.suhyun.findhouse.entity.House;
+import org.suhyun.findhouse.entity.Member;
+import org.suhyun.findhouse.entity.Review;
+
+import java.util.List;
+
+public interface ReviewService {
+
+    List<ReviewDTO> getListOfHouse(Long houseNum);
+
+    Long register(ReviewDTO houseReviewDTO);
+
+    void modify(ReviewDTO houseReviewDTO);
+
+    default Review dtoToEntiy(ReviewDTO dto){
+
+        Review entity = Review.builder()
+                .reviewNum(dto.getReviewNum())
+                .house(House.builder().houseNum(dto.getHouseNum()).build())
+                .targetId(dto.getTargetId())
+                .member(Member.builder().id(dto.getRaterId()).build())
+                .grade(dto.getGrade())
+                .content(dto.getContent()).build();
+
+        return entity;
+    }
+
+    default ReviewDTO entityToDto(Review entity){
+
+        ReviewDTO dto = ReviewDTO.builder()
+                .reviewNum(entity.getReviewNum())
+                .houseNum(entity.getHouse().getHouseNum())
+                .targetId(entity.getTargetId())
+                .raterId(entity.getMember().getId())
+                .grade(entity.getGrade())
+                .content(entity.getContent()).build();
+
+        return dto;
+    }
+}

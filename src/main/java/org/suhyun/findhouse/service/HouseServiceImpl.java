@@ -11,17 +11,13 @@ import org.springframework.stereotype.Service;
 import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
-import org.suhyun.findhouse.entity.House;
-import org.suhyun.findhouse.entity.HouseImage;
-import org.suhyun.findhouse.entity.QHouse;
+import org.suhyun.findhouse.entity.*;
 import org.suhyun.findhouse.repository.HouseImageRepository;
 import org.suhyun.findhouse.repository.HouseRepository;
 
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -61,15 +57,24 @@ public class HouseServiceImpl implements HouseService {
 
 
     @Override
-    public PageResultDTO<HouseDTO, House> getList(PageRequestDTO requestDTO) {
+    public PageResultDTO<HouseDTO, Object[]> getList(PageRequestDTO requestDTO) {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending());
 
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
 
-        Page<House> result = repository.findAll(booleanBuilder, pageable);
+        Page<Object[]> result = repository.getListPage(pageable);
 
-        Function<House, HouseDTO> fn = (entity -> entityToDto(entity));
+        Function<Object[], HouseDTO> fn = (arr -> entityToDto(
+                (House) arr[0],
+                Arrays.asList((HouseImage)arr[1]),
+                (Double) arr[2],
+                (Long)arr[3],
+                (Option) arr[4],
+                (Price) arr[5],
+                (Structure) arr[6],
+                (Cost)arr[7])
+        );
 
         return new PageResultDTO<>(result, fn);
     }
@@ -78,9 +83,26 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public HouseDTO read(Long houseNum) {
 
-        Optional<House> result = repository.findById(houseNum);
+        List<Object[]> result = repository.getHouseWithAll(houseNum);
 
-        return result.isPresent() ? entityToDto(result.get()) : null;
+        House house = (House) result.get(0)[0];
+
+        List<HouseImage> houseImageList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            HouseImage houseImage = (HouseImage) arr[1];
+            houseImageList.add(houseImage);
+        });
+
+        Double avg = (Double) result.get(0)[2];
+        Long reviewCnt = (Long) result.get(0)[3];
+        Option option = (Option) result.get(0)[4];
+        Price price = (Price) result.get(0)[5];
+        Structure structure = (Structure) result.get(0)[6];
+        Cost cost = (Cost) result.get(0)[7];
+
+
+        return entityToDto(house, houseImageList, avg, reviewCnt, option, price, structure, cost);
     }
 
 
@@ -113,8 +135,12 @@ public class HouseServiceImpl implements HouseService {
 
 
     @Override
+    @Transactional
     public void remove(Long houseNum) {
+
+        houseImageRepository.deleteByHouse(houseNum);
         repository.deleteById(houseNum);
+
     }
 
 

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"option", "price", "structure", "cost"})
 public class House extends BaseEntity{
 
     @Id
@@ -66,19 +66,18 @@ public class House extends BaseEntity{
         this.parking = parking;
     }
 
-    /*
-    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
+
+
+    @OneToOne(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Option option;
 
-    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Price price;
 
-    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Structure structure;
 
-    @OneToOne(mappedBy = "house",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Cost cost;
-    */
-
 
 }

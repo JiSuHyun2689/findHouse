@@ -31,4 +31,12 @@ public class Review extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rater_id")
     private Member member;
+
+    public void changeGrade(int grage){
+        this.grade = grage;
+    }
+
+    public void changeText(String content){
+        this.content = content;
+    }
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.suhyun.findhouse.entity.Cost;
+import org.suhyun.findhouse.entity.Option;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,4 +41,15 @@ public class HouseDTO {
     @Builder.Default
     private List<HouseImageDTO>imageDTOList = new ArrayList<>();
 
+    private double avg;
+
+    private int reviewCnt;
+
+    private CostDTO costDto;
+
+    private OptionDTO optionDto;
+
+    private PriceDTO priceDto;
+
+    private StructureDTO structureDto;
 }

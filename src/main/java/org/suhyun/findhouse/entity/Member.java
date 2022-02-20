@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -21,7 +20,7 @@ public class Member extends BaseEntity{
     private String id;
 
     @Column(nullable = false)
-    private String password, username;
+    private String password, userName, nickName;
 
     @Column(nullable = false)
     private LocalDate birth;

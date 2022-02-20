@@ -550,87 +550,192 @@
                                         </div>
 
                                         <div class="imageModal modal" tabindex="-2" role="dialog">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Picture</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
+                                            <div class="modal fade text-left" id="backdrop" tabindex="-1"
+                                                 aria-labelledby="myModalLabel4" style="display: none;"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                     role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel4">Picture</h4>
+                                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <i data-feather="x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
 
-                                                    <div class="modal-body">
-
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light-secondary"
+                                                                    data-bs-dismiss="modal">
+                                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Close</span>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                    </div>
+                                        </div>
 
 
-                                    <div class="col-12">
-                                        <div class="form-floating">
+                                        <div class="col-12">
+                                            <div class="form-floating">
                                             <textarea class="form-control" name="content"
                                                       style="margin-top: 1em; margin-bottom: 1em; height: 77px;"
                                                       readonly>[[${dto.content}]]</textarea>
-                                            <label>Comments</label>
+                                                <label>Comments</label>
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="col-12 d-flex justify-content-end">
-                                        <a th:href="@{/house/remove?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
-                                            <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill"
-                                                    id="removeBtn">Remove
-                                            </button>
-                                        </a>
-                                        <a th:href="@{/house/modify?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
-                                            <button type="button" class="btn btn-warning me-1 mb-1 rounded-pill"
-                                                    id="modifyBtn">Modify
-                                            </button>
-                                        </a>
-                                        <a th:href="@{/house/list?(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
-                                            <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill"
-                                                    id="listBtn">List
-                                            </button>
-                                        </a>
+                                        <div class="col-12 d-flex justify-content-between">
+
+                                            <div class="reviewSet">
+                                                <!--
+                                                <button type="button"
+                                                        class="btn btn-outline-primary me-1 mb-1 rounded-pill"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                    평가보기
+                                                    <span class="badge bg-primary">[[${dto.reviewCnt}]]</span>
+                                                </button>
+                                                -->
+
+                                                <button type="button"
+                                                        class="btn btn-outline-primary me-1 mb-1 rounded-pill addReviewBtn"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                    평가하기
+                                                </button>
+                                                <div class="modal fade reviewModal" id="exampleModalCenter"
+                                                     tabindex="-1"
+                                                     aria-labelledby="exampleModalCenterTitle"
+                                                     style="display: none;"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                                         role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-primary">
+                                                                <h5 class="modal-title" id="exampleModalCenterTitle"
+                                                                    style="color:white">
+                                                                    해당 집을 둘러본 후기를 남겨주세요.
+                                                                </h5>
+                                                                <button type="button" class="close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: bold">Reviewer
+                                                                        ID</label>
+                                                                    <input type="text" class="form-control"
+                                                                           name="reviewerId"
+                                                                           th:value="user1" readonly>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: bold">Grade <span
+                                                                            class="grade"></span></label><br>
+                                                                    <div id="step"></div>
+                                                                    <input type="hidden" name="grade">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="font-weight: bold">Comment</label>
+                                                                    <input type="text" class="form-control"
+                                                                           name="content"
+                                                                           placeholder="해당 매물 혹은 중개인에 대한 후기를 작성해주세요."
+                                                                           value="리뷰 테스트">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button type="button"
+                                                                        class="btn btn-danger ml-1 rounded-pill reviewRemoveBtn"
+                                                                        data-bs-dismiss="modal">
+                                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Remove</span>
+                                                                </button>
+
+                                                                <button type="button"
+                                                                        class="btn btn-warning ml-1 rounded-pill reviewModifyBtn"
+                                                                        data-bs-dismiss="modal">
+                                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Modify</span>
+                                                                </button>
+
+                                                                <button type="button"
+                                                                        class="btn btn-light-secondary rounded-pill"
+                                                                        data-bs-dismiss="modal">
+                                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Close</span>
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn btn-primary ml-1 rounded-pill reviewSaveBtn"
+                                                                        data-bs-dismiss="modal">
+                                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                                    <span class="d-none d-sm-block">Accept</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="buttonSet">
+                                                <a th:href="@{/house/remove?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                                    <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill"
+                                                            id="removeBtn">Remove
+                                                    </button>
+                                                </a>
+                                                <a th:href="@{/house/modify?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                                    <button type="button" class="btn btn-warning me-1 mb-1 rounded-pill"
+                                                            id="modifyBtn">Modify
+                                                    </button>
+                                                </a>
+                                                <a th:href="@{/house/list?(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                                    <button type="button"
+                                                            class="btn btn-secondary me-1 mb-1 rounded-pill"
+                                                            id="listBtn">List
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="list-group reviewList">
+
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
+                </section>
             </div>
-            </section>
-        </div>
         </div>
 
     </th:block>
 </th:block>
 
+
 <script>
 
     $(document).ready(function () {
 
-        var contractType = $("#contractType");
         var form = $(".form");
+        var reviewModal = $(".reviewModal");
+        var inputRating = $('input[name="grade"]');
+        var inputId = $('input[name="reviewerId"]');
+        var inputContent = $('input[name="content"]');
+        var houseNum = [[${dto.houseNum}]];
+        var targetId = '[[${dto.id}]]';
+        var reviewNum;
 
-        contractType.on("change", function (event) {
-                var contractTypeValue = contractType.val();
 
-                if (contractTypeValue == '월세') {
-                    $(".price").hide();
-                    $(".monthly").show();
-                    $(".deposit").show();
-                } else {
-                    $(".monthly").hide();
-                    $(".deposit").hide();
-                    $(".price").show();
-                }
-            }
-        ); //
+
 
 
         $("#removeBtn").click(function () {
@@ -645,8 +750,8 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: '삭제',
                 cancelButtonText: '취소',
-                timer: 5000,
-                delay: 5000
+                timer: 10000,
+                delay: 10000
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -655,8 +760,9 @@
         }); // end removeBtn event
 
 
-        $(".uploadResult li").click(function (){
 
+        // file show
+        $(".uploadResult li").click(function () {
             var file = $(this).data("file");
 
             console.log(file);
@@ -664,5 +770,109 @@
             $(".imageModal .image-body").html("<img style='width:100%' src='/display?fileName=" + file + "$size=1'>");
             $(".imageModal").modal("show");
         });
+
+
+
+        // review rating
+        window.raterJs({
+            element: document.querySelector("#step"),
+            rateCallback: function rateCallback(rating, done) {
+                this.setRating(rating);
+                console.log(rating);
+                inputRating.attr('value', rating);
+                done();
+            },
+            starSize: 32,
+            step: 0.5
+        })
+
+
+
+        $(".addReviewBtn").click(function (){
+            //inputId.val() = "";
+            //inputContent.val() = "";
+
+            $(".reviewRemoveBtn, .reviewModifyBtn").hide();
+            $(".reviewSaveBtn").show();
+
+            reviewModal.show();
+        })
+
+
+        // review register event
+        $(".reviewSaveBtn").click(function (e) {
+            var data = {
+                houseNum: houseNum,
+                grade: inputRating.val(),
+                content: inputContent.val(),
+                reviewerId: inputId.val(),
+                targetId: targetId
+            };
+
+            console.log(data);
+
+            $.ajax({
+                url:'/review/'+houseNum,
+                type:"POST",
+                data:JSON.stringify(data),
+                contentType:"application/json; charset=utf-8",
+                dataType:"text",
+                success: function(result){
+                    console.log("result: " + result);
+                    self.location.reload();
+                }
+            })
+        });
+
+
+        // review
+        function getHouseReviews(){
+
+            function formatTime(str){
+                var date = new Date(str);
+                return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+            }
+
+            $.getJSON("/review/" + houseNum + "/all", function (arr){
+                var str = "";
+
+                $.each(arr, function (idx, review){
+                    console.log(review);
+
+                    str += '<div class="card-body" data-reviewNum=' + review.reviewNum +' data-reviewerId=' + review.reviewerId + '>';
+                    str += '<h5 class="card-title star-rating">' + review.content + ' <span>' + review.grade + '</span></h5>';
+                    str += '<h6 class="card-subtitle mb-2 text-muted">' + review.nickName +'</h6>';
+                    str += '<p class="card-text">' + formatTime(review.regDate) +'</p></div>';
+                });
+                $(".reviewList").html(str);
+            });
+        }
+
+        getHouseReviews();
+
+
+
+        // review modify
+        $(".reviewList").on("click", ".card-body", function (){
+
+            $(".reviewSaveBtn").hide();
+            $(".removeBtn", ".modifyBtn").show();
+
+            var targetReview = $(this);
+
+            console.log(targetReview);
+
+            reviewNum = targetReview.data("reviewNum");
+            console.log("reviewNum : " + reviewNum);
+            inputId.val(targetReview.data("reviewerId"));
+            inputContent.val(targetReview.find('.card-title').clone().children().remove().end().text());
+
+            var grade = targetReview.find('.card-title span').html();
+
+            $(".reviewModal").modal('show');
+
+
+        });
+
     });
 </script>

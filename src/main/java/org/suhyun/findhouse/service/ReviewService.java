@@ -15,13 +15,15 @@ public interface ReviewService {
 
     void modify(ReviewDTO houseReviewDTO);
 
-    default Review dtoToEntiy(ReviewDTO dto){
+    void remove(Long reviewNum);
+
+    default Review dtoToEntity(ReviewDTO dto){
 
         Review entity = Review.builder()
                 .reviewNum(dto.getReviewNum())
                 .house(House.builder().houseNum(dto.getHouseNum()).build())
                 .targetId(dto.getTargetId())
-                .member(Member.builder().id(dto.getRaterId()).build())
+                .member(Member.builder().id(dto.getReviewerId()).build())
                 .grade(dto.getGrade())
                 .content(dto.getContent()).build();
 
@@ -34,8 +36,11 @@ public interface ReviewService {
                 .reviewNum(entity.getReviewNum())
                 .houseNum(entity.getHouse().getHouseNum())
                 .targetId(entity.getTargetId())
-                .raterId(entity.getMember().getId())
+                .nickName(entity.getMember().getNickName())
+                .reviewerId(entity.getMember().getId())
                 .grade(entity.getGrade())
+                .modDate(entity.getModDate())
+                .regDate(entity.getRegDate())
                 .content(entity.getContent()).build();
 
         return dto;

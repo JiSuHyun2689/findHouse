@@ -20,7 +20,8 @@ public class MemberRepositoryTests {
         IntStream.rangeClosed(1, 200).forEach(i->{
 
             Member member = Member.builder()
-                    .id("user"+i).username("이름"+i)
+                    .id("user"+i).userName("이름"+i)
+                    .nickName("헤헤헤"+i)
                     .contract(0102222333+i).password("1111")
                     .birth(LocalDate.of(1996,1,29))
                     .fromSocial(false).build();

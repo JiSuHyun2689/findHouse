@@ -20,7 +20,7 @@ public class Review extends BaseEntity{
     private String targetId;
 
     @Column(nullable = false)
-    private int grade;
+    private double grade;
 
     private String content;
 
@@ -29,14 +29,14 @@ public class Review extends BaseEntity{
     private House house;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rater_id")
+    @JoinColumn(name = "reviewer_Id")
     private Member member;
 
-    public void changeGrade(int grage){
-        this.grade = grage;
+    public void changeGrade(double grade){
+        this.grade = grade;
     }
 
-    public void changeText(String content){
+    public void changeContent(String content){
         this.content = content;
     }
 }

@@ -52,7 +52,7 @@ public class HouseServiceTests {
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
 
-        PageResultDTO<HouseDTO, House> resultDTO = service.getList(pageRequestDTO);
+        PageResultDTO<HouseDTO, Object[]> resultDTO = service.getList(pageRequestDTO);
 
         for(HouseDTO houseDTO : resultDTO.getDtoList()){
             System.out.println(houseDTO);
@@ -71,7 +71,7 @@ public class HouseServiceTests {
                 .build();
 
 
-        PageResultDTO<HouseDTO, House> resultDTO = service.getList(pageRequestDTO);
+        PageResultDTO<HouseDTO, Object[]> resultDTO = service.getList(pageRequestDTO);
 
         System.out.println("prev : " + resultDTO.isPrev());
         System.out.println("next : " + resultDTO.isNext());

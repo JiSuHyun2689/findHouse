@@ -46,7 +46,7 @@ public interface HouseRepository extends JpaRepository<House, Long>, QuerydslPre
             "inner join Structure s on s.house = h " +
             "inner join Cost c on c.house = h " +
             "left outer join HouseImage hi on hi.house = h " +
-            "left outer join Review r on r.member = h.id " +
+            "left outer join Review r on r.targetId = h.id " +
             "where h.houseNum = :houseNum " +
             "group by hi")
     List<Object[]> getHouseWithAll(@Param("houseNum") Long houseNum);

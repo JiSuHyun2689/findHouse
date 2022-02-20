@@ -15,7 +15,7 @@ public class MemberDTO {
 
     private String id;
 
-    private String password, username;
+    private String password, username, nickName;
 
     private LocalDateTime birth;
 

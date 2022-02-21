@@ -20,7 +20,7 @@ public class Review extends BaseEntity{
     private String targetId;
 
     @Column(nullable = false)
-    private double grade;
+    private int grade;
 
     private String content;
 
@@ -32,7 +32,7 @@ public class Review extends BaseEntity{
     @JoinColumn(name = "reviewer_Id")
     private Member member;
 
-    public void changeGrade(double grade){
+    public void changeGrade(int grade){
         this.grade = grade;
     }
 

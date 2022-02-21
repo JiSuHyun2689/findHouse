@@ -17,7 +17,7 @@ public class ReviewDTO {
 
     private String targetId, reviewerId, nickName, content;
 
-    private double grade;
+    private int grade;
 
     private Long houseNum;
 

@@ -633,10 +633,10 @@
                                                                            th:value="user1" readonly>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label style="font-weight: bold">Grade <span
-                                                                            class="grade"></span></label><br>
-                                                                    <div id="step"></div>
-                                                                    <input type="hidden" name="grade">
+                                                                    <label style="font-weight: bold">Grade<span
+                                                                            class="grade"></span></label>
+                                                                    <div class="starrr" style="z-index: 3"></div>
+                                                                    <!--<input type="hidden" name="grade">-->
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label style="font-weight: bold">Comment</label>
@@ -646,34 +646,37 @@
                                                                            value="리뷰 테스트">
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
+                                                            <div class="modal-footer justify-content-between">
+                                                                <div>
+                                                                    <button type="button"
+                                                                            class="btn btn-danger ml-1 rounded-pill reviewRemoveBtn"
+                                                                            data-bs-dismiss="modal">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Remove</span>
+                                                                    </button>
 
-                                                                <button type="button"
-                                                                        class="btn btn-danger ml-1 rounded-pill reviewRemoveBtn"
-                                                                        data-bs-dismiss="modal">
-                                                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                                                    <span class="d-none d-sm-block">Remove</span>
-                                                                </button>
+                                                                    <button type="button"
+                                                                            class="btn btn-warning ml-1 rounded-pill reviewModifyBtn"
+                                                                            data-bs-dismiss="modal">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Modify</span>
+                                                                    </button>
 
-                                                                <button type="button"
-                                                                        class="btn btn-warning ml-1 rounded-pill reviewModifyBtn"
-                                                                        data-bs-dismiss="modal">
-                                                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                                                    <span class="d-none d-sm-block">Modify</span>
-                                                                </button>
-
-                                                                <button type="button"
-                                                                        class="btn btn-light-secondary rounded-pill"
-                                                                        data-bs-dismiss="modal">
-                                                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                                                    <span class="d-none d-sm-block">Close</span>
-                                                                </button>
-                                                                <button type="button"
-                                                                        class="btn btn-primary ml-1 rounded-pill reviewSaveBtn"
-                                                                        data-bs-dismiss="modal">
-                                                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                                                    <span class="d-none d-sm-block">Accept</span>
-                                                                </button>
+                                                                </div>
+                                                                <div>
+                                                                    <button type="button"
+                                                                            class="btn btn-light-secondary rounded-pill"
+                                                                            data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn btn-primary ml-1 rounded-pill reviewSaveBtn"
+                                                                            data-bs-dismiss="modal">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Accept</span>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -727,17 +730,15 @@
 
         var form = $(".form");
         var reviewModal = $(".reviewModal");
-        var inputRating = $('input[name="grade"]');
         var inputId = $('input[name="reviewerId"]');
         var inputContent = $('input[name="content"]');
         var houseNum = [[${dto.houseNum}]];
         var targetId = '[[${dto.id}]]';
         var reviewNum;
+        var grade = 0;
 
 
-
-
-
+        // house remove button event
         $("#removeBtn").click(function () {
             form.attr("action", "/house/remove").attr("method", "post");
 
@@ -760,7 +761,6 @@
         }); // end removeBtn event
 
 
-
         // file show
         $(".uploadResult li").click(function () {
             var file = $(this).data("file");
@@ -772,25 +772,21 @@
         });
 
 
-
-        // review rating
-        window.raterJs({
-            element: document.querySelector("#step"),
-            rateCallback: function rateCallback(rating, done) {
-                this.setRating(rating);
-                console.log(rating);
-                inputRating.attr('value', rating);
-                done();
-            },
-            starSize: 32,
-            step: 0.5
-        })
+        // star rating
+        $('.starrr').starrr({
+            rating: grade,
+            change: function (e, value) {
+                if (value) {
+                    console.log(value);
+                    grade = value;
+                }
+            }
+        });
 
 
-
-        $(".addReviewBtn").click(function (){
-            //inputId.val() = "";
-            //inputContent.val() = "";
+        $(".addReviewBtn").click(function () {
+            //inputId.val("");
+            //inputContent.val("");
 
             $(".reviewRemoveBtn, .reviewModifyBtn").hide();
             $(".reviewSaveBtn").show();
@@ -803,7 +799,7 @@
         $(".reviewSaveBtn").click(function (e) {
             var data = {
                 houseNum: houseNum,
-                grade: inputRating.val(),
+                grade: grade,
                 content: inputContent.val(),
                 reviewerId: inputId.val(),
                 targetId: targetId
@@ -811,13 +807,14 @@
 
             console.log(data);
 
+
             $.ajax({
-                url:'/review/'+houseNum,
-                type:"POST",
-                data:JSON.stringify(data),
-                contentType:"application/json; charset=utf-8",
-                dataType:"text",
-                success: function(result){
+                url: '/review/' + houseNum,
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (result) {
                     console.log("result: " + result);
                     self.location.reload();
                 }
@@ -826,34 +823,34 @@
 
 
         // review
-        function getHouseReviews(){
+        function getHouseReviews() {
 
-            function formatTime(str){
+            function formatTime(str) {
                 var date = new Date(str);
                 return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
             }
 
-            $.getJSON("/review/" + houseNum + "/all", function (arr){
+            $.getJSON("/review/" + houseNum + "/all", function (arr) {
                 var str = "";
 
-                $.each(arr, function (idx, review){
+                $.each(arr, function (idx, review) {
                     console.log(review);
 
-                    str += '<div class="card-body" data-reviewNum=' + review.reviewNum +' data-reviewerId=' + review.reviewerId + '>';
-                    str += '<h5 class="card-title star-rating">' + review.content + ' <span>' + review.grade + '</span></h5>';
-                    str += '<h6 class="card-subtitle mb-2 text-muted">' + review.nickName +'</h6>';
-                    str += '<p class="card-text">' + formatTime(review.regDate) +'</p></div>';
+                    str += '<div class="card-body" data-reviewNum=' + review.reviewNum + ' data-reviewerId=' + review.reviewerId + ' style="padding-left: 0px; padding-bottom: 10px">';
+                    str += '<h6 class="card-title star-rating">' + review.content + ' <span>' + review.grade + '</div></span></h6>';
+                    str += '<h7 class="card-subtitle mb-2 text-muted">' + review.nickName + '</h7>';
+                    str += '<p class="card-text">' + formatTime(review.regDate) + '</p></div>';
                 });
                 $(".reviewList").html(str);
             });
         }
 
+
         getHouseReviews();
 
 
-
         // review modify
-        $(".reviewList").on("click", ".card-body", function (){
+        $(".reviewList").on("click", ".card-body", function () {
 
             $(".reviewSaveBtn").hide();
             $(".removeBtn", ".modifyBtn").show();
@@ -862,13 +859,13 @@
 
             console.log(targetReview);
 
-            reviewNum = targetReview.data("reviewNum");
+            reviewNum = targetReview.data("reviewnum");
             console.log("reviewNum : " + reviewNum);
-            inputId.val(targetReview.data("reviewerId"));
+            inputId.val(targetReview.data("reviewerid"));
             inputContent.val(targetReview.find('.card-title').clone().children().remove().end().text());
 
             var grade = targetReview.find('.card-title span').html();
-
+            $(".starrr a:nth-child("+grade+")").trigger('click');
             $(".reviewModal").modal('show');
 
 

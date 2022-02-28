@@ -17,7 +17,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form class="form form-vertical" method="post" action="/house/modify" id="inputForm" >
+                            <form class="form form-vertical" method="post" action="/house/modify" id="inputForm">
                                 <div class="form-body">
                                     <div class="row">
 
@@ -33,14 +33,18 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>제목</label>
-                                                <input type="text" class="form-control" name="title" placeholder="Title" th:value="${dto.title}">
+                                                <input type="text" class="form-control" name="title" placeholder="Title"
+                                                       th:value="${dto.title}">
                                             </div>
                                         </div>
 
                                         <div class="col-8">
                                             <div class="form-group">
-                                                <label>주소</label><small class="text-muted"> <code class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히 표시되지 않습니다!</i></small>
-                                                <input type="text" class="form-control" name="address" th:value="${dto.address}">
+                                                <label>주소</label><small class="text-muted"> <code
+                                                    class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히
+                                                표시되지 않습니다!</i></small>
+                                                <input type="text" class="form-control" name="address"
+                                                       th:value="${dto.address}">
                                             </div>
                                         </div>
 
@@ -48,8 +52,10 @@
                                             <div class="form-group">
                                                 <label>상태</label>
                                                 <select class="form-select" name="status">
-                                                    <option value="거래가능">거래가능</option>
-                                                    <option value="거래불가">거래불가</option>
+                                                    <option value="거래가능" th:selected="${dto.status} == '거래가능'">거래가능
+                                                    </option>
+                                                    <option value="거래불가" th:selected="${dto.status} == '거래불가'">거래불가
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -57,21 +63,24 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>면적(㎡)</label>
-                                                <input type="text" class="form-control" name="area" th:value="${dto.area}">
+                                                <input type="text" class="form-control" name="area"
+                                                       th:value="${dto.area}">
                                             </div>
                                         </div>
-
-
 
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>유형</label>
                                                 <select class="form-select" name="contractType">
-                                                    <option value="전세" th:selected="${dto.contractType} == '전세'">전세</option>
-                                                    <option value="월세" th:selected="${dto.contractType} == '월세'">월세</option>
-                                                    <option value="선세" th:selected="${dto.contractType} == '선세'">선세</option>
-                                                    <option value="매매" th:selected="${dto.contractType} == '매매'">매매</option>
+                                                    <option value="전세" th:selected="${dto.contractType} == '전세'">전세
+                                                    </option>
+                                                    <option value="월세" th:selected="${dto.contractType} == '월세'">월세
+                                                    </option>
+                                                    <option value="선세" th:selected="${dto.contractType} == '선세'">선세
+                                                    </option>
+                                                    <option value="매매" th:selected="${dto.contractType} == '매매'">매매
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -80,13 +89,22 @@
                                             <div class="form-group">
                                                 <label>건물유형</label>
                                                 <select class="form-select" name="buildingType">
-                                                    <option value="원룸" th:selected="${dto.buildingType} == '원룸'">원룸</option>
-                                                    <option value="투룸" th:selected="${dto.buildingType} == '투룸'">투룸</option>
-                                                    <option value="빌라" th:selected="${dto.buildingType} == '빌라'">빌라</option>
-                                                    <option value="오피스텔" th:selected="${dto.buildingType} == '오피스텔'">오피스텔</option>
-                                                    <option value="아파트" th:selected="${dto.buildingType} == '아파트'">아파트</option>
-                                                    <option value="단독주택" th:selected="${dto.buildingType} == '단독주택'">단독주택</option>
-                                                    <option value="기타" th:selected="${dto.buildingType} == '기타'">기타</option>
+                                                    <option value="원룸" th:selected="${dto.buildingType} == '원룸'">원룸
+                                                    </option>
+                                                    <option value="투룸" th:selected="${dto.buildingType} == '투룸'">투룸
+                                                    </option>
+                                                    <option value="빌라" th:selected="${dto.buildingType} == '빌라'">빌라
+                                                    </option>
+                                                    <option value="오피스텔" th:selected="${dto.buildingType} == '오피스텔'">
+                                                        오피스텔
+                                                    </option>
+                                                    <option value="아파트" th:selected="${dto.buildingType} == '아파트'">아파트
+                                                    </option>
+                                                    <option value="단독주택" th:selected="${dto.buildingType} == '단독주택'">
+                                                        단독주택
+                                                    </option>
+                                                    <option value="기타" th:selected="${dto.buildingType} == '기타'">기타
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -94,87 +112,92 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>중개수수료 (만원)</label>
-                                                <input type="number" class="form-control" name="brokerage" th:value="${dto.brokerage}">
+                                                <input type="number" class="form-control" name="brokerage"
+                                                       th:value="${dto.brokerage}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>최소 계약기간 (개월)</label>
-                                                <input type="number" class="form-control" name="minTerm" th:value="${dto.minTerm}">
+                                                <input type="number" class="form-control" name="minTerm"
+                                                       th:value="${dto.minTerm}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>해당 층 수</label>
-                                                <input type="number" class="form-control" name="theFloor" th:value="${dto.theFloor}">
+                                                <input type="number" class="form-control" name="theFloor"
+                                                       th:value="${dto.theFloor}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>전체 층 수</label>
-                                                <input type="number" class="form-control" name="wholeFloor" th:value="${dto.wholeFloor}">
+                                                <input type="number" class="form-control" name="wholeFloor"
+                                                       th:value="${dto.wholeFloor}">
                                             </div>
                                         </div>
-
-
-
 
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>입주 가능 날짜</label>
-                                                <input type="date" id="moveInDate" class="form-control"  name="moveInDate" th:value="${#temporals.format(dto.moveInDate, 'yyyy-MM-dd')}" >
+                                                <input type="date" id="moveInDate" class="form-control"
+                                                       name="moveInDate"
+                                                       th:value="${#temporals.format(dto.moveInDate, 'yyyy-MM-dd')}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>준공 날짜</label>
-                                                <input type="date" id="completionDate" class="form-control"  name="completionDate" th:value="${#temporals.format(dto.completionDate, 'yyyy-MM-dd')}" >
+                                                <input type="date" id="completionDate" class="form-control"
+                                                       name="completionDate"
+                                                       th:value="${#temporals.format(dto.completionDate, 'yyyy-MM-dd')}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>방 개수</label>
-                                                <input type="number" class="form-control" name="room" th:value="${structureDto.room}">
+                                                <input type="number" class="form-control" name="room"
+                                                       th:value="${dto.structureDto.room}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>거실 개수</label>
-                                                <input type="number" class="form-control" name="livingRoom" th:value="${structureDto.livingRoom}">
+                                                <input type="number" class="form-control" name="livingRoom"
+                                                       th:value="${dto.structureDto.livingRoom}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>화장실 개수</label>
-                                                <input type="number" class="form-control" name="toilet" th:value="${structureDto.toilet}">
+                                                <input type="number" class="form-control" name="toilet"
+                                                       th:value="${dto.structureDto.toilet}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>베란다 개수</label>
-                                                <input type="number" class="form-control" name="veranda" th:value="${structureDto.veranda}">
+                                                <input type="number" class="form-control" name="veranda"
+                                                       th:value="${dto.structureDto.veranda}">
                                             </div>
                                         </div>
-
-
-
-
-
 
 
                                         <div class="col-2 price">
                                             <div class="form-group">
                                                 <label>가격 (만원)</label>
-                                                <input type="number" class="form-control price" name="price" th:value="${priceDto.price}">
+                                                <input type="number" class="form-control price" name="price"
+                                                       th:value="${dto.priceDto.price}">
                                             </div>
                                         </div>
 
@@ -182,28 +205,32 @@
                                         <div class="col-2 deposit" style="display:none">
                                             <div class="form-group">
                                                 <label>보증금 (만원)</label>
-                                                <input type="number" class="form-control deposit" name="deposit" th:value="${priceDto.deposit}" >
+                                                <input type="number" class="form-control deposit" name="deposit"
+                                                       th:value="${dto.priceDto.deposit}">
                                             </div>
                                         </div>
 
                                         <div class="col-2 monthly" style="display:none">
                                             <div class="form-group">
                                                 <label>월세 (만원)</label>
-                                                <input type="number" class="form-control monthly" name="monthly" th:value="${priceDto.monthly}">
+                                                <input type="number" class="form-control monthly" name="monthly"
+                                                       th:value="${dto.priceDto.monthly}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>관리비 (만원)</label>
-                                                <input type="number" class="form-control" name="totalCost" th:value="${costDto.totalCost}">
+                                                <input type="number" class="form-control" name="totalCost"
+                                                       th:value="${dto.costDto.totalCost}">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>관리비 기타 항목</label>
-                                                <input type="text" class="form-control" name="costContent" th:value="${costDto.costContent}">
+                                                <input type="text" class="form-control" name="costContent"
+                                                       th:value="${dto.costDto.costContent}">
                                             </div>
                                         </div>
 
@@ -216,7 +243,10 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="electricity" th:checked="${costDto.electricity}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="electricity"
+                                                               th:checked="${dto.costDto.electricity}">
                                                         <label class="form-check-label">전기세</label>
                                                     </div>
                                                 </div>
@@ -225,7 +255,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gas" th:checked="${costDto.gas}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="gas" th:checked="${dto.costDto.gas}">
                                                         <label class="form-check-label">가스비</label>
                                                     </div>
                                                 </div>
@@ -234,7 +266,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="water" th:checked="${costDto.water}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="water" th:checked="${dto.costDto.water}">
                                                         <label class="form-check-label">수도세</label>
                                                     </div>
                                                 </div>
@@ -243,7 +277,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costTv" th:checked="${costDto.costTv}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="costTv" th:checked="${dto.costDto.costTv}">
                                                         <label class="form-check-label">TV</label>
                                                     </div>
                                                 </div>
@@ -252,7 +288,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="internet" th:checked="${costDto.internet}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="internet" th:checked="${dto.costDto.internet}">
                                                         <label class="form-check-label">인터넷</label>
                                                     </div>
                                                 </div>
@@ -261,7 +299,10 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="costParking" th:checked="${costDto.costParking}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="costParking"
+                                                               th:checked="${dto.costDto.costParking}">
                                                         <label class="form-check-label">주차비</label>
                                                     </div>
                                                 </div>
@@ -270,15 +311,14 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="etc" th:checked="${costDto.etc}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="etc" th:checked="${dto.costDto.etc}">
                                                         <label class="form-check-label">기타</label>
                                                     </div>
                                                 </div>
                                             </li>
                                         </div>
-
-
-
 
 
                                         <div class="col-12">
@@ -289,7 +329,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="elevator" th:checked="${dto.elevator}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-primary form-check-glow"
+                                                               name="elevator" th:checked="${dto.elevator}">
                                                         <label class="form-check-label">엘레베이터</label>
                                                     </div>
                                                 </div>
@@ -298,7 +340,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="pet" th:checked="${dto.pet}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-primary form-check-glow"
+                                                               name="pet" th:checked="${dto.pet}">
                                                         <label class="form-check-label">애완동물</label>
                                                     </div>
                                                 </div>
@@ -307,7 +351,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="parking" th:checked="${dto.parking}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-primary form-check-glow"
+                                                               name="parking" th:checked="${dto.parking}">
                                                         <label class="form-check-label">주차</label>
                                                     </div>
                                                 </div>
@@ -316,17 +362,14 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"  name="loan" th:checked="${dto.loan}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-primary form-check-glow"
+                                                               name="loan" th:checked="${dto.loan}">
                                                         <label class="form-check-label">대출</label>
                                                     </div>
                                                 </div>
                                             </li>
                                         </div>
-
-
-
-
-
 
 
                                         <div class="col-12">
@@ -336,7 +379,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="tv" th:checked="${optionDto.tv}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="tv" th:checked="${dto.optionDto.tv}">
                                                         <label class="form-check-label">TV</label>
                                                     </div>
                                                 </div>
@@ -345,7 +390,10 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="airConditioner" th:checked="${optionDto.airConditioner}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="airConditioner"
+                                                               th:checked="${dto.optionDto.airConditioner}">
                                                         <label class="form-check-label">에어컨</label>
                                                     </div>
                                                 </div>
@@ -354,7 +402,10 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="refrigerator" th:checked="${optionDto.refrigerator}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="refrigerator"
+                                                               th:checked="${dto.optionDto.refrigerator}">
                                                         <label class="form-check-label">냉장고</label>
                                                     </div>
                                                 </div>
@@ -363,7 +414,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="washer" th:checked="${optionDto.washer}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="washer" th:checked="${dto.optionDto.washer}">
                                                         <label class="form-check-label">세탁기</label>
                                                     </div>
                                                 </div>
@@ -372,7 +425,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="dryer" th:checked="${optionDto.dryer}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="dryer" th:checked="${dto.optionDto.dryer}">
                                                         <label class="form-check-label">건조기</label>
                                                     </div>
                                                 </div>
@@ -381,7 +436,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="induction" th:checked="${optionDto.induction}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="induction" th:checked="${dto.optionDto.induction}">
                                                         <label class="form-check-label">인덕션</label>
                                                     </div>
                                                 </div>
@@ -390,7 +447,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="gasStove" th:checked="${optionDto.gasStove}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="gasStove" th:checked="${dto.optionDto.gasStove}">
                                                         <label class="form-check-label">가스레인지</label>
                                                     </div>
                                                 </div>
@@ -399,7 +458,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="sink" th:checked="${optionDto.sink}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="sink" th:checked="${dto.optionDto.sink}">
                                                         <label class="form-check-label">싱크대</label>
                                                     </div>
                                                 </div>
@@ -408,7 +469,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="desk" th:checked="${optionDto.desk}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="desk" th:checked="${dto.optionDto.desk}">
                                                         <label class="form-check-label">책상</label>
                                                     </div>
                                                 </div>
@@ -417,7 +480,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="bookshelf" th:checked="${optionDto.bookshelf}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="bookshelf" th:checked="${dto.optionDto.bookshelf}">
                                                         <label class="form-check-label">책장</label>
                                                     </div>
                                                 </div>
@@ -426,7 +491,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="bed" th:checked="${optionDto.bed}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="bed" th:checked="${dto.optionDto.bed}">
                                                         <label class="form-check-label">침대</label>
                                                     </div>
                                                 </div>
@@ -435,7 +502,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="closet" th:checked="${optionDto.closet}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="closet" th:checked="${dto.optionDto.closet}">
                                                         <label class="form-check-label">옷장</label>
                                                     </div>
                                                 </div>
@@ -444,7 +513,10 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="dishwasher" th:checked="${optionDto.dishwasher}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="dishwasher"
+                                                               th:checked="${dto.optionDto.dishwasher}">
                                                         <label class="form-check-label">식기세척기</label>
                                                     </div>
                                                 </div>
@@ -453,7 +525,9 @@
                                             <li class="d-inline-block me-2 mb-1">
                                                 <div class="form-check">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="form-check-input form-check-secondary form-check-glow" name="shoeRack" th:checked="${optionDto.shoeRack}">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-secondary form-check-glow"
+                                                               name="shoeRack" th:checked="${dto.optionDto.shoeRack}">
                                                         <label class="form-check-label">신발장</label>
                                                     </div>
                                                 </div>
@@ -462,21 +536,99 @@
                                     </div>
 
 
+                                    <div class="col-12">
+                                        <div class="form-group fileForm custom-control">
+                                            <label style="font-weight: bold">Image Files</label>
+                                            <div class="custom-file-input-group">
+                                                <div class="filepond--root multiple-files-filepond filepond--hopper custom-file-input-zone"
+                                                     data-style-button-remove-item-position="left"
+                                                     data-style-button-process-item-position="right"
+                                                     data-style-load-indicator-position="right"
+                                                     data-style-progress-indicator-position="right"
+                                                     data-style-button-remove-item-align="false"
+                                                     style="height: 100px; background-color: rgba(219, 219, 219, 0.3); border-radius: 10px; z-index: 1">
+                                                    <div class="filepond--drop-label"
+                                                         style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+
+                                                        <input type="file"
+                                                               class="filepond--browser custom-file-input custom-file-input files"
+                                                               id="filepond--browser-81r65xb82"
+                                                               aria-controls="filepond--assistant-81r65xb82"
+                                                               aria-labelledby="filepond--drop-label-81r65xb82"
+                                                               accept="" multiple="">
+                                                        <label for="filepond--browser-81r65xb82"
+                                                               id="filepond--drop-label-81r65xb82" aria-hidden="true">
+                                                            <font style="vertical-align: inherit;">
+                                                                <font style="vertical-align: inherit;">파일을 끌어다 놓기
+                                                                    또는 </font>
+                                                            </font>
+                                                            <span class="filepond--label-action" tabindex="0">
+                                                        <font style="vertical-align: inherit;">
+                                                            <font style="vertical-align: inherit;">찾아보기</font>
+                                                        </font>
+                                                    </span>
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div class="uploadResult" style="z-index: 2">
+                                                        <ul>
+                                                            <li th:each="houseImage : ${dto.imageDTOList}"
+                                                                th:data-file="${houseImage.getThumbnailURL()}"
+                                                                th:data-name="${houseImage.imageName}"
+                                                                th:data-path="${houseImage.path}"
+                                                                th:data-uuid="${houseImage.uuid}"
+                                                                th:data-before="true">
+                                                                <button type='button'
+                                                                        th:data-file='${houseImage.getImageURL()}'
+                                                                        class='btn btn-outline-dark btn-sm fileDeleteBtn'
+                                                                        style='float: right'>X
+                                                                </button>
+                                                                <img th:if="${houseImage.path != null}"
+                                                                     th:src="|/display?fileName=${houseImage.getThumbnailURL()}|">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="box">
+
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" name="content" style="margin-top: 1em; margin-bottom: 1em; height: 77px;">[[${dto.content}]]</textarea>
+                                            <textarea class="form-control" name="content"
+                                                      style="margin-top: 1em; margin-bottom: 1em; height: 77px;">[[${dto.content}]]</textarea>
                                             <label>Comments</label>
                                         </div>
                                     </div>
 
 
-
-                                    <div class="col-12 d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1 rounded-pill">Reset</button>
-                                        <button type="submit" class="btn btn-primary me-1 mb-1 rounded-pill submitBtn">Submit</button>
-                                        <button type="button" class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">List</button>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <div>
+                                            <a th:href="@{/house/remove?(houseNum=${dto.houseNum}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                                <button type="button" class="btn btn-danger me-1 mb-1 rounded-pill"
+                                                        id="removeBtn">Remove
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1 rounded-pill">
+                                                Reset
+                                            </button>
+                                            <button type="submit"
+                                                    class="btn btn-primary me-1 mb-1 rounded-pill submitBtn">
+                                                Submit
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">
+                                                List
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                         </div>
@@ -490,14 +642,17 @@
 </th:block>
 
 
-
-
 <script>
 
     $(document).ready(function () {
         var form = $('#inputForm');
+        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+        var maxSize = 10485760; // 10MB
+        var fileZone = $(".custom-file-input-zone");
+        $(".filepond--root").css({"height": "250px"});
 
 
+        /*
         $('.submitBtn').click(function () {
             var moveInDate = $('#moveInDate').val();
             var comletionDate = $('#comletionDate').val();
@@ -505,10 +660,32 @@
             form.append(moveInDate);
             form.append(comletionDate);
             form.submit();
-        });
+        });*/
+
+        // house remove button event
+        $("#removeBtn").click(function () {
+            form.attr("action", "/house/remove").attr("method", "post");
+
+            Swal.fire({
+                title: '글을 삭제하시겠습니까?',
+                text: "삭제하시면 다시 복수시킬 수 없습니다.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                timer: 10000,
+                delay: 10000
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        }); // end removeBtn event
 
 
-        $('.listBtn').click(function (){
+        $('.listBtn').click(function () {
             var page = $("input[name='page']");
             var type = $("input[name='type']");
             var keyword = $("input[name='keyword']");
@@ -518,6 +695,165 @@
                 .attr("method", "get");
             form.submit();
         });
+
+
+        fileZone.on("dragenter dragover", function (event) {
+            event.preventDefault();
+            $(this).css('border', '2px solid rgba(26, 26, 26, 0.8)').css('background',
+                'rgba(219, 219, 219, 1)');
+        });
+
+        fileZone.on("drop dragleave", function (event) {
+            $(this).css('border', '2px dotted rgba(26, 26, 26, 0.8)').css('background',
+                'rgba(219, 219, 219, 0.6)');
+        });
+
+        fileZone.on("drop", function (event) {
+            console.log("drop event");
+            event.preventDefault();
+            $(this).css('border', '0px').css('background',
+                'rgba(219, 219, 219, 0.3)');
+            var files = event.originalEvent.dataTransfer.files;
+            uploadFile(files);
+        });
+
+
+        $(".custom-file-input").on("change", function () {
+
+            var inputFile = $(this);
+            var files = inputFile[0].files;
+            uploadFile(files);
+
+        });
+
+
+        function uploadFile(files) {
+
+            var formData = new FormData();
+            var appended = false;
+
+            for (var i = 0; i < files.length; i++) {
+
+                if (!checkExtension(files[i].name, files[i].size)) {
+                    return false;
+                }
+
+                console.log(files[i]);
+                formData.append("uploadFiles", files[i]);
+                appended = true;
+            }
+
+            if (!appended) {
+                return;
+            }
+
+            $.ajax({
+                url: '/uploadAjax',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    showResult(result);
+                },
+                error: function (jpXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            }); // end ajax
+        }; // end uploadFile
+
+        function checkExtension(fileName, fileSize) {
+            if (fileSize >= maxSize) {
+                alert("파일 사이즈 초과");
+                return false;
+            }
+
+            if (regex.test(fileName)) {
+                alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                return false;
+            }
+            return true;
+        } // end checkExtension
+
+
+
+
+        function showResult(uploadResultArr) {
+
+            var uploadUL = $(".uploadResult ul");
+            var str = "";
+
+            $(uploadResultArr).each(function (i, obj) {
+                str += "<li data-name ='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
+                str += "<div>";
+                str += "<button type='button' data-file=\'" + obj.imageURL + "\' class='btn btn-outline-dark btn-sm fileDeleteBtn' style='float: right'>X</button>";
+                str += "<img src ='/display?fileName=" + obj.thumbnailURL + "'>";
+                str += "</div>";
+                str += "</li>";
+            });
+            uploadUL.append(str);
+        } // end showResult
+
+
+
+
+        $(".uploadResult ").on("click", ".fileDeleteBtn", function (e) {
+
+            console.log("delete file");
+
+            var targetFile = $(this).data("file");
+            var targetLi = $(this).closest("li");
+            var before = targetLi.data("before");
+
+            console.log(before);
+
+            if (before != true) {
+                $.ajax({
+                    url: '/removeFile',
+                    data: {fileName: targetFile},
+                    dataType: 'text',
+                    type: 'POST',
+                    success: function (result) {
+                        targetLi.remove();
+                    }
+                }); // end ajax
+            }else{
+                targetLi.remove();
+            }
+        });
+
+
+
+        $(".submitBtn").on("click", function (e) {
+
+            /*
+            var moveInDate = $('#moveInDate').val();
+            var comletionDate = $('#comletionDate').val();
+
+            form.append(moveInDate);
+            form.append(comletionDate);
+
+             */
+
+            e.preventDefault();
+
+            var str = "";
+
+            $(".uploadResult li").each(function (i, obj) {
+                var target = $(obj);
+
+                str += "<input type='hidden' name='imageDTOList[" + i + "].imageName' value='" + target.data('name') + "'>";
+                str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + target.data('path') + "'>";
+                str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + target.data('uuid') + "'>";
+            });
+
+            $(".box").html(str);
+
+            form.submit();
+        });
+
     });
 
 </script>

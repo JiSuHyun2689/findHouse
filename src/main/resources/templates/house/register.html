@@ -631,7 +631,6 @@
         });
 
 
-
         function uploadFile(files) {
 
             var formData = new FormData();
@@ -695,7 +694,6 @@
                 str += "<div>";
                 str += "<button type='button' data-file=\'" + obj.imageURL + "\' class='btn btn-outline-dark btn-sm fileDeleteBtn' style='float: right'>X</button>";
                 str += "<img src ='/display?fileName=" + obj.thumbnailURL + "'>";
-
                 str += "</div>";
                 str += "</li>";
             });
@@ -719,6 +717,8 @@
                     targetLi.remove();
                 }
             }); // end ajax
+
+
         });
 
 

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.Member;
 import org.suhyun.findhouse.entity.Review;
@@ -20,4 +21,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("delete from Review r " +
             "where r.member = :member")
     void deleteByMember(Member member);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Review r " +
+            "where r.house.houseNum = :houseNum")
+    void deleteByHouse(@Param("houseNum")Long houseNum);
 }

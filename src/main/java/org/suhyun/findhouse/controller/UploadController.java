@@ -63,7 +63,6 @@ public class UploadController {
             Path savePath = Paths.get(saveName);
 
             try {
-
                 uploadFile.transferTo(savePath);
 
                 String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid + "_" + fileName;
@@ -104,19 +103,20 @@ public class UploadController {
 
         ResponseEntity<byte[]> result = null;
 
-        try {
-
+        try{
             String srcFileName = URLDecoder.decode(fileName, "UTF-8");
 
-            log.info("fileName : " + srcFileName);
+            log.info("FileName : " + srcFileName);
+
+            log.info("Size : " + size);
 
             File file = new File(uploadPath + File.separator + srcFileName);
 
-            if (size != null && size.equals("1")) {
+            if(size != null && size.equals("1")){
                 file = new File(file.getParent(), file.getName().substring(2));
             }
 
-            log.info("file : " + file);
+            log.info("File : " + file);
 
             HttpHeaders header = new HttpHeaders();
 
@@ -125,9 +125,7 @@ public class UploadController {
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
 
         }catch (Exception e){
-
             log.error(e.getMessage());
-
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;

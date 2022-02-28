@@ -17,6 +17,8 @@ public interface ReviewService {
 
     void remove(Long reviewNum);
 
+    void removeByHouse(Long houseNum);
+
     default Review dtoToEntity(ReviewDTO dto){
 
         Review entity = Review.builder()

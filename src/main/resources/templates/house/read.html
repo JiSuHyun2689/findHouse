@@ -24,6 +24,8 @@
 
                                         <input type="hidden" name="houseNum" th:value="${dto.houseNum}">
                                         <input type="hidden" name="page" th:value="${requestDTO.page}">
+                                        <input type="hidden" name="type" th:value="${requestDTO.type}">
+                                        <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
 
                                         <div class="col-9">
                                             <div class="form-group">
@@ -535,7 +537,8 @@
 
                                                     <div class="uploadResult" style="z-index: 2">
                                                         <ul>
-                                                            <li th:each="houseImage : ${dto.imageDTOList}">
+                                                            <li th:each="houseImage : ${dto.imageDTOList}"
+                                                                th:data-file="${houseImage.getThumbnailURL()}">
                                                                 <img th:if="${houseImage.path != null}"
                                                                      th:src="|/display?fileName=${houseImage.getThumbnailURL()}|">
                                                             </li>
@@ -549,30 +552,31 @@
                                             </div>
                                         </div>
 
-                                        <div class="imageModal modal" tabindex="-2" role="dialog">
-                                            <div class="modal fade text-left" id="backdrop" tabindex="-1"
-                                                 aria-labelledby="myModalLabel4" style="display: none;"
-                                                 aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                                     role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel4">Picture</h4>
-                                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <i data-feather="x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
 
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light-secondary"
-                                                                    data-bs-dismiss="modal">
-                                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                                <span class="d-none d-sm-block">Close</span>
-                                                            </button>
-                                                        </div>
+
+                                        <div class="modal fade text-left imageModal" id="backdrop" tabindex="-1"
+                                             aria-labelledby="myModalLabel4" style="display: none;" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel4">Picture
+                                                        </h4>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                                class="btn btn-light-secondary rounded-pill"
+                                                                data-bs-dismiss="modal">
+                                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">Close</span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -590,17 +594,7 @@
 
 
                                         <div class="col-12 d-flex justify-content-between">
-
                                             <div class="reviewSet">
-                                                <!--
-                                                <button type="button"
-                                                        class="btn btn-outline-primary me-1 mb-1 rounded-pill"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                                    평가보기
-                                                    <span class="badge bg-primary">[[${dto.reviewCnt}]]</span>
-                                                </button>
-                                                -->
-
                                                 <button type="button"
                                                         class="btn btn-outline-primary me-1 mb-1 rounded-pill addReviewBtn"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
@@ -636,7 +630,6 @@
                                                                     <label style="font-weight: bold">Grade<span
                                                                             class="grade"></span></label>
                                                                     <div class="starrr" style="z-index: 3"></div>
-                                                                    <!--<input type="hidden" name="grade">-->
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label style="font-weight: bold">Comment</label>
@@ -765,9 +758,10 @@
         $(".uploadResult li").click(function () {
             var file = $(this).data("file");
 
+            console.log("image file click");
             console.log(file);
 
-            $(".imageModal .image-body").html("<img style='width:100%' src='/display?fileName=" + file + "$size=1'>");
+            $(".imageModal .modal-body").html("<img style='width:100%' src='/display?fileName=" + file + "&size=1'>");
             $(".imageModal").modal("show");
         });
 
@@ -781,7 +775,10 @@
                     grade = value;
                 }
             }
+            // readOnly: true
         });
+
+
 
 
         $(".addReviewBtn").click(function () {
@@ -818,7 +815,7 @@
                     console.log("result: " + result);
                     self.location.reload();
                 }
-            })
+            });
         });
 
 
@@ -837,23 +834,30 @@
                     console.log(review);
 
                     str += '<div class="card-body" data-reviewNum=' + review.reviewNum + ' data-reviewerId=' + review.reviewerId + ' style="padding-left: 0px; padding-bottom: 10px">';
-                    str += '<h6 class="card-title star-rating">' + review.content + ' <span>' + review.grade + '</div></span></h6>';
+                    str += '<h6 class="card-title">' + review.content + '<div class"star-rating" data-rating="'+review.grade+'"></div><span>' + review.grade + '</div></span></h6>';
                     str += '<h7 class="card-subtitle mb-2 text-muted">' + review.nickName + '</h7>';
                     str += '<p class="card-text">' + formatTime(review.regDate) + '</p></div>';
+
+                    /* 리뷰 조회 - 별점 보이게 수정하기
+                    $('.star-rating').starrr({
+                        rating : review.grade,
+                    });*/
                 });
                 $(".reviewList").html(str);
             });
         }
 
 
+
         getHouseReviews();
+
 
 
         // review modify
         $(".reviewList").on("click", ".card-body", function () {
 
             $(".reviewSaveBtn").hide();
-            $(".removeBtn", ".modifyBtn").show();
+            $(".reviewRemoveBtn", ".reviewModifyBtn").show();
 
             var targetReview = $(this);
 
@@ -865,10 +869,58 @@
             inputContent.val(targetReview.find('.card-title').clone().children().remove().end().text());
 
             var grade = targetReview.find('.card-title span').html();
-            $(".starrr a:nth-child("+grade+")").trigger('click');
+            console.log(grade);
+            $(".starrr a:nth-child(" + grade + ")").trigger('click');
             $(".reviewModal").modal('show');
 
+        });
 
+
+        $(".reviewModifyBtn").on("click", function () {
+            var data = {
+                reviewNum: reviewNum,
+                houseNum: houseNum,
+                grade: grade,
+                content: inputContent.val(),
+                reviewerId: inputId.val(),
+                targetId: targetId
+            };
+
+            console.log(data);
+
+            $.ajax({
+                url: '/review/' + houseNum + "/" + reviewNum,
+                type: "PUT",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (result) {
+                    console.log("result: " + result);
+                    self.location.reload();
+                }
+            });
+            reviewModal.modal("hide");
+        });
+
+
+        $(".reviewRemoveBtn").on("click", function () {
+
+            var data = {reviewNum: reviewNum};
+
+            console.log(data);
+
+            $.ajax({
+                url: '/review/' + houseNum + "/" + reviewNum,
+                type: "DELETE",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (result) {
+                    console.log("result: " + result);
+                    self.location.reload();
+                }
+            });
+            reviewModal.modal("hide");
         });
 
     });

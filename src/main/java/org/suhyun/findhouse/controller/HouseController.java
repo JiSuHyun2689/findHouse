@@ -12,6 +12,8 @@ import org.suhyun.findhouse.entity.HouseImage;
 import org.suhyun.findhouse.entity.Option;
 import org.suhyun.findhouse.service.*;
 
+import javax.transaction.Transactional;
+
 @Controller
 @Log4j2
 @RequestMapping("/house")
@@ -23,6 +25,7 @@ public class HouseController {
     private final StructureService structureService;
     private final PriceService priceService;
     private final CostService costService;
+    private final ReviewService reviewService;
 
 
 
@@ -115,10 +118,13 @@ public class HouseController {
 
 
 
+
     @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, path = "/remove")
     public String remove(Long houseNum, RedirectAttributes redirectAttributes){
 
         log.info("house remove "+ houseNum + " ...........................");
+
+        reviewService.removeByHouse(houseNum);
 
         houseService.remove(houseNum);
 

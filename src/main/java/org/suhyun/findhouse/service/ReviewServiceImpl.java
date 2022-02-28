@@ -60,4 +60,8 @@ public class ReviewServiceImpl implements ReviewService{
     public void remove(Long reviewNum) {
         repository.deleteById(reviewNum);
     }
+
+    public void removeByHouse(Long houseNum){
+        repository.deleteByHouse(houseNum);
+    }
 }

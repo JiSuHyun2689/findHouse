@@ -139,6 +139,7 @@ public class HouseServiceImpl implements HouseService {
     public void remove(Long houseNum) {
 
         houseImageRepository.deleteByHouse(houseNum);
+
         repository.deleteById(houseNum);
 
     }

@@ -10,11 +10,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.suhyun.findhouse.entity.House;
+import org.suhyun.findhouse.repository.search.SearchHouseRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface HouseRepository extends JpaRepository<House, Long>, QuerydslPredicateExecutor<House> {
+public interface HouseRepository extends JpaRepository<House, Long>, QuerydslPredicateExecutor<House>, SearchHouseRepository {
 
 /*
     @Query("select h, hi, avg(coalesce(r.grade, 0)), count(distinct r) " +

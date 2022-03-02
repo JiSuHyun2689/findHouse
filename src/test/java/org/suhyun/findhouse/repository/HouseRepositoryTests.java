@@ -1,26 +1,30 @@
 package org.suhyun.findhouse.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.*;
+import org.suhyun.findhouse.repository.search.SearchHouseRepository;
+import org.suhyun.findhouse.service.HouseService;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 @SpringBootTest
+@WebAppConfiguration
 public class HouseRepositoryTests {
 
 
@@ -39,12 +43,17 @@ public class HouseRepositoryTests {
     @Autowired
     private StructureRepository structureRepository;
 
-    @Autowired CostRepository costRepository;
+    @Autowired
+    private CostRepository costRepository;
+
+    @Autowired
+    private HouseService houseService;
+
 
     @Test
-    public void insertHouseTest(){
+    public void insertHouseTest() {
 
-        LocalDate date = LocalDate.of(2022,12,31);
+        LocalDate date = LocalDate.of(2022, 12, 31);
 
 
         House house = House.builder()
@@ -74,15 +83,15 @@ public class HouseRepositoryTests {
 
 
     @Test
-    public void insertTest(){
+    public void insertTest() {
 
-        LocalDate date = LocalDate.of(2022,12,31);
+        LocalDate date = LocalDate.of(2022, 12, 31);
 
-        IntStream.rangeClosed(1, 200).forEach(i ->{
+        IntStream.rangeClosed(1, 200).forEach(i -> {
 
             House house = House.builder()
                     .title("사회 초년생이 살기 너무 좋은 집")
-                    .address("서울 ... " + i )
+                    .address("서울 ... " + i)
                     .buildingType("오피스텔")
                     .contractType("월세")
                     .content("content..." + i)
@@ -155,15 +164,15 @@ public class HouseRepositoryTests {
 
             costRepository.save(cost);
 
-            int random = (int)(Math.random() * 5) + 1;
+            int random = (int) (Math.random() * 5) + 1;
 
-            for(int j=0; j<random; j++){
+            for (int j = 0; j < random; j++) {
 
                 HouseImage houseImage = HouseImage.builder()
                         .uuid(UUID.randomUUID().toString())
                         .house(house)
                         .imageName("imgName..." + i)
-                        .path("path..."+i)
+                        .path("path..." + i)
                         .build();
 
                 houseImageRepository.save(houseImage);
@@ -174,7 +183,7 @@ public class HouseRepositoryTests {
     @Test
     @Transactional
     @Commit
-    public void houseUpdateTest(){
+    public void houseUpdateTest() {
 
         House house = houseRepository.getById(20L);
 
@@ -185,7 +194,7 @@ public class HouseRepositoryTests {
     }
 
     @Test
-    public void houseGetTest(){
+    public void houseGetTest() {
 
         Optional<House> result = houseRepository.findById(200L);
 
@@ -197,7 +206,7 @@ public class HouseRepositoryTests {
     @Test
     @Transactional
     @Commit
-    public void houseDeleteTest(){
+    public void houseDeleteTest() {
 
         Long houseNum = 60L;
         House house = House.builder().houseNum(houseNum).build();
@@ -221,9 +230,9 @@ public class HouseRepositoryTests {
     @Commit
     @Transactional
     @Test
-    public void insertHouses(){
+    public void insertHouses() {
 
-        IntStream.rangeClosed(1, 20).forEach(i ->{
+        IntStream.rangeClosed(1, 20).forEach(i -> {
 
             House house = House.builder()
                     .title("이미지 테스트")
@@ -231,8 +240,8 @@ public class HouseRepositoryTests {
                     .area(12.9)
                     .brokerage(200000)
                     .buildingType("오피스텔")
-                    .completionDate(LocalDate.of(2022,05,05))
-                    .moveInDate(LocalDate.of(2022,05,10))
+                    .completionDate(LocalDate.of(2022, 05, 05))
+                    .moveInDate(LocalDate.of(2022, 05, 10))
                     .status("거래불가")
                     .wholeFloor(10)
                     .theFloor(5)
@@ -250,10 +259,10 @@ public class HouseRepositoryTests {
 
             houseRepository.save(house);
 
-            int count = ((int)(Math.random()) * 5) + 1;
+            int count = ((int) (Math.random()) * 5) + 1;
 
-            for(int j=0; j<count; j++){
-                HouseImage houseImage = HouseImage.builder().uuid(UUID.randomUUID().toString()).house(house).imageName("test"+j+".jpg").build();
+            for (int j = 0; j < count; j++) {
+                HouseImage houseImage = HouseImage.builder().uuid(UUID.randomUUID().toString()).house(house).imageName("test" + j + ".jpg").build();
                 houseImageRepository.save(houseImage);
             }
             System.out.println("==================================================================");
@@ -263,13 +272,13 @@ public class HouseRepositoryTests {
 
 
     @Test
-    public void testListPage(){
+    public void testListPage() {
 
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "houseNum"));
 
         Page<Object[]> result = houseRepository.getListPage(pageRequest);
 
-        for(Object[] objects : result.getContent()){
+        for (Object[] objects : result.getContent()) {
             System.out.println(Arrays.toString(objects));
         }
     }
@@ -289,15 +298,71 @@ public class HouseRepositoryTests {
 
 
     @Test
-    public void testGetHouseWithAll(){
+    public void testGetHouseWithAll() {
 
-        List<Object[]> result = houseRepository.getHouseWithAll(1L);
+        List<Object[]> result = houseRepository.getHouseWithAll(3L);
 
         //System.out.println(result);
 
-        for(Object[] arr : result){
+        for (Object[] arr : result) {
             System.out.println(Arrays.toString(arr));
         }
 
+    }
+
+    @Test
+    public void testSearch() {
+        houseRepository.search();
+    }
+
+    @Test
+    public void testSearchPage() {
+
+        PageRequestDTO requestDTO = new PageRequestDTO();
+        requestDTO.setPage(0);
+        requestDTO.setKeyword("수정");
+        requestDTO.setSize(10);
+        requestDTO.setType("c");
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("houseNum").descending().and(Sort.by("title").ascending()));
+        Page<Object[]> result = houseRepository.searchPageWithAll(requestDTO);
+
+    }
+
+
+    @Test
+    public void testSearch1() {
+
+        PageRequestDTO requestDTO = new PageRequestDTO();
+        requestDTO.setPage(1);
+        requestDTO.setKeyword("수정");
+        requestDTO.setSize(10);
+        requestDTO.setType("c");
+
+        Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending().and(Sort.by("title").ascending()));
+
+        Page<Object[]> result = houseRepository.searchPageWithAll(requestDTO);
+
+        Function<Object[], HouseDTO> fn = (arr -> houseService.entityToDto(
+                (House) arr[0],
+                Arrays.asList((HouseImage) arr[1]),
+                (Option) arr[2],
+                (Price) arr[3],
+                (Structure) arr[4],
+                (Cost) arr[5],
+                (Long) arr[6])
+        );
+
+        System.out.println(fn.toString());
+        System.out.println(result);
+
+    }
+
+
+    @Test
+    public void testFindByHouse(){
+
+        List<HouseImage> result = houseImageRepository.findByHouse(4L);
+
+        System.out.println(result);
     }
 }

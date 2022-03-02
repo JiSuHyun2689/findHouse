@@ -8,11 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhyun.findhouse.dto.*;
-import org.suhyun.findhouse.entity.HouseImage;
-import org.suhyun.findhouse.entity.Option;
 import org.suhyun.findhouse.service.*;
-
-import javax.transaction.Transactional;
 
 @Controller
 @Log4j2
@@ -41,7 +37,8 @@ public class HouseController {
 
         log.info("house list ....................... " + pageRequestDTO);
 
-        model.addAttribute("result", houseService.getList(pageRequestDTO));
+        //model.addAttribute("result", houseService.getList(pageRequestDTO));
+        model.addAttribute("result", houseService.getSearchList(pageRequestDTO));
     }
 
 
@@ -88,6 +85,8 @@ public class HouseController {
         priceService.register(priceDto);
         costService.register(costDto);
 
+
+
         redirectAttributes.addFlashAttribute("msg", "매물이 성공적으로 등록되었습니다.");
 
         return "redirect:/house/list";
@@ -99,6 +98,7 @@ public class HouseController {
     public String modifyPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
 
         log.info("house modify post "+ dto.getHouseNum() + " ...........................");
+
 
         costService.modify(costDto);
         priceService.modify(priceDto);

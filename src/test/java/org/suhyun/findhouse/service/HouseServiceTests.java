@@ -1,15 +1,22 @@
 package org.suhyun.findhouse.service;
 
+import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
-import org.suhyun.findhouse.entity.House;
+import org.suhyun.findhouse.entity.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 public class HouseServiceTests {
@@ -19,9 +26,9 @@ public class HouseServiceTests {
 
 
     @Test
-    public void testRegister(){
+    public void testRegister() {
 
-        LocalDate date = LocalDate.of(2021,12,31);
+        LocalDate date = LocalDate.of(2021, 12, 31);
 
         HouseDTO houseDTO = HouseDTO.builder()
                 .completionDate(date)
@@ -48,20 +55,20 @@ public class HouseServiceTests {
     }
 
     @Test
-    public void testList(){
+    public void testList() {
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
 
         PageResultDTO<HouseDTO, Object[]> resultDTO = service.getList(pageRequestDTO);
 
-        for(HouseDTO houseDTO : resultDTO.getDtoList()){
+        for (HouseDTO houseDTO : resultDTO.getDtoList()) {
             System.out.println(houseDTO);
         }
 
     }
 
     @Test
-    public void testSearch(){
+    public void testSearch() {
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
@@ -79,11 +86,20 @@ public class HouseServiceTests {
 
         System.out.println("--------------------------------------------------------------");
 
-        for(HouseDTO houseDTO : resultDTO.getDtoList()){
+        for (HouseDTO houseDTO : resultDTO.getDtoList()) {
             System.out.println(houseDTO);
         }
         System.out.println("===================================================================");
-        resultDTO.getPageList().forEach(i-> System.out.println(i));
+        resultDTO.getPageList().forEach(i -> System.out.println(i));
 
+    }
+
+
+    @Test
+    public void checkModifyFileTest(){
+
+        HouseDTO house = service.read(4L);
+
+        service.checkModifyFile(4L, HouseDTO.builder().houseNum(4L).build());
     }
 }

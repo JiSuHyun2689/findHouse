@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.suhyun.findhouse.dto.HouseDTO;
+import org.suhyun.findhouse.dto.HouseImageDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.*;
@@ -23,7 +24,7 @@ import java.util.function.Function;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class HouseServiceImpl implements HouseService {
+public class HouseServiceImpl implements HouseService{
 
     private final HouseRepository repository;
 
@@ -67,15 +68,35 @@ public class HouseServiceImpl implements HouseService {
 
         Function<Object[], HouseDTO> fn = (arr -> entityToDto(
                 (House) arr[0],
-                Arrays.asList((HouseImage)arr[1]),
-                (Double) arr[2],
-                (Long)arr[3],
-                (Option) arr[4],
-                (Price) arr[5],
-                (Structure) arr[6],
-                (Cost)arr[7])
+                Arrays.asList((HouseImage) arr[1]),
+                (Option) arr[2],
+                (Price) arr[3],
+                (Structure) arr[4],
+                (Cost) arr[5],
+                (Long) arr[6])
         );
 
+        return new PageResultDTO<>(result, fn);
+    }
+
+
+
+    @Override
+    public  PageResultDTO<HouseDTO, Object[]> getSearchList(PageRequestDTO requestDTO){
+
+        Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending().ascending());
+
+        Page<Object[]> result = repository.searchPageWithAll(requestDTO);
+
+        Function<Object[], HouseDTO> fn = (arr -> entityToDto(
+                (House) arr[0],
+                Arrays.asList((HouseImage) arr[1]),
+                (Option) arr[2],
+                (Price) arr[3],
+                (Structure) arr[4],
+                (Cost) arr[5],
+                (Long) arr[6])
+        );
         return new PageResultDTO<>(result, fn);
     }
 
@@ -102,8 +123,11 @@ public class HouseServiceImpl implements HouseService {
         Cost cost = (Cost) result.get(0)[7];
 
 
-        return entityToDto(house, houseImageList, avg, reviewCnt, option, price, structure, cost);
+        return entityToDto(house, houseImageList, option, price, structure, cost,  reviewCnt);
     }
+
+
+
 
 
     @Override
@@ -144,6 +168,30 @@ public class HouseServiceImpl implements HouseService {
 
     }
 
+    @Override
+    public void checkModifyFile(Long houseNum, HouseDTO dto) {
+
+        List<HouseImage> before = houseImageRepository.findByHouse(houseNum);
+
+        Map<String, Object> after = dtoToEntity(dto);
+
+        List<HouseImage> houseImageList = (List<HouseImage>)after.get("imgList");
+
+        log.info("test!!!!!!!!!!!!!!!!!!!!!");
+
+        log.info("before : " + before);
+
+        log.info("after : " + after);
+
+        for(int i=0; i<before.size(); i++){
+           // log.info(houseImageList.contains(before.get(i)));
+
+        }
+
+
+
+    }
+
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO){
 
@@ -178,4 +226,7 @@ public class HouseServiceImpl implements HouseService {
 
         return booleanBuilder;
     }
+
+
+
 }

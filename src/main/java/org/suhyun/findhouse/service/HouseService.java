@@ -14,11 +14,15 @@ public interface HouseService {
 
     public PageResultDTO<HouseDTO, Object[]> getList(PageRequestDTO requestDTO);
 
+    public PageResultDTO<HouseDTO, Object[]> getSearchList(PageRequestDTO requestDTO);
+
     HouseDTO read(Long houseNum);
 
     void modify(HouseDTO dto);
 
     void remove(Long houseNum);
+
+    void checkModifyFile(Long houseNum, HouseDTO dto);
 
     default Map<String, Object> dtoToEntity(HouseDTO dto) {
 
@@ -50,7 +54,7 @@ public interface HouseService {
         return entityMap;
     }
 
-    default HouseDTO entityToDto(House entity, List<HouseImage> houseImages, Double avg, Long reviewCnt, Option option, Price price, Structure structure, Cost cost) {
+    default HouseDTO entityToDto(House entity, List<HouseImage> houseImages, Option option, Price price, Structure structure, Cost cost, Long reviewCnt) {
 
         HouseDTO dto = HouseDTO.builder().houseNum(entity.getHouseNum()).buildingType(entity.getBuildingType()).contractType(entity.getContractType())
                 .address(entity.getAddress()).area(entity.getArea()).brokerage(entity.getBrokerage()).completionDate(entity.getCompletionDate())
@@ -86,7 +90,7 @@ public interface HouseService {
         dto.setStructureDto(structureDto);
         dto.setCostDto(costDto);
         dto.setImageDTOList(houseImageDTOList);
-        dto.setAvg(avg);
+        //dto.setAvg(avg);
         dto.setReviewCnt(reviewCnt.intValue());
 
         return dto;

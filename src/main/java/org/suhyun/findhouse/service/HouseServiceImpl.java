@@ -13,8 +13,7 @@ import org.suhyun.findhouse.dto.HouseImageDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
 import org.suhyun.findhouse.dto.PageResultDTO;
 import org.suhyun.findhouse.entity.*;
-import org.suhyun.findhouse.repository.HouseImageRepository;
-import org.suhyun.findhouse.repository.HouseRepository;
+import org.suhyun.findhouse.repository.*;
 
 
 import javax.transaction.Transactional;
@@ -24,11 +23,19 @@ import java.util.function.Function;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class HouseServiceImpl implements HouseService{
+public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository repository;
 
     private final HouseImageRepository houseImageRepository;
+
+    private final StructureRepository structureRepository;
+
+    private final CostRepository costRepository;
+
+    private final OptionRepository optionRepository;
+
+    private final PriceRepository priceRepository;
 
 
     @Override
@@ -39,15 +46,23 @@ public class HouseServiceImpl implements HouseService{
 
         log.info(dto);
 
-        Map<String, Object> entityMap =dtoToEntity(dto);
+        Map<String, Object> entityMap = dtoToEntity(dto);
 
         House house = (House) entityMap.get("house");
 
-        List<HouseImage> houseImageList = (List<HouseImage>)entityMap.get("imgList");
+        List<HouseImage> houseImageList = (List<HouseImage>) entityMap.get("imgList");
+
+        Cost cost = (Cost) entityMap.get("cost");
+
+        Option option = (Option) entityMap.get("option");
+
+        Price price = (Price) entityMap.get("price");
+
+        Structure structure = (Structure) entityMap.get("structure");
 
         repository.save(house);
 
-        if(houseImageList != null) {
+        if (houseImageList != null) {
             houseImageList.forEach(houseImage -> {
                 houseImageRepository.save(houseImage);
             });
@@ -80,9 +95,8 @@ public class HouseServiceImpl implements HouseService{
     }
 
 
-
     @Override
-    public  PageResultDTO<HouseDTO, Object[]> getSearchList(PageRequestDTO requestDTO){
+    public PageResultDTO<HouseDTO, Object[]> getSearchList(PageRequestDTO requestDTO) {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending().ascending());
 
@@ -123,11 +137,8 @@ public class HouseServiceImpl implements HouseService{
         Cost cost = (Cost) result.get(0)[7];
 
 
-        return entityToDto(house, houseImageList, option, price, structure, cost,  reviewCnt);
+        return entityToDto(house, houseImageList, option, price, structure, cost, reviewCnt);
     }
-
-
-
 
 
     @Override
@@ -135,9 +146,11 @@ public class HouseServiceImpl implements HouseService{
 
         Optional<House> result = repository.findById(dto.getHouseNum());
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
 
             House entity = result.get();
+
+            //checkModifyFile(entity.getHouseNum(), en);
 
             entity.changeStatus(dto.getStatus());
             entity.changeTitle(dto.getTitle());
@@ -175,7 +188,7 @@ public class HouseServiceImpl implements HouseService{
 
         Map<String, Object> after = dtoToEntity(dto);
 
-        List<HouseImage> houseImageList = (List<HouseImage>)after.get("imgList");
+        List<HouseImage> houseImageList = (List<HouseImage>) after.get("imgList");
 
         log.info("test!!!!!!!!!!!!!!!!!!!!!");
 
@@ -183,17 +196,19 @@ public class HouseServiceImpl implements HouseService{
 
         log.info("after : " + after);
 
-        for(int i=0; i<before.size(); i++){
-           // log.info(houseImageList.contains(before.get(i)));
+        for (int i = 0; i < before.size(); i++) {
+            log.info(before.get(i));
+            if (!houseImageList.contains(before.get(i).getUuid())) {
+                houseImageRepository.deleteById(before.get(i).getImageNum());
+            }
 
         }
-
 
 
     }
 
 
-    private BooleanBuilder getSearch(PageRequestDTO requestDTO){
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
 
         String type = requestDTO.getType();
 
@@ -207,26 +222,25 @@ public class HouseServiceImpl implements HouseService{
 
         booleanBuilder.and(expression);
 
-        if(type == null || type.trim().length() == 0){
+        if (type == null || type.trim().length() == 0) {
             return booleanBuilder;
         }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
 
-        if(type.contains("t"))
+        if (type.contains("t"))
             conditionBuilder.or(qHouse.title.contains(keyword));
 
-        if(type.contains("c"))
+        if (type.contains("c"))
             conditionBuilder.or(qHouse.content.contains(keyword));
 
-        if(type.contains("w"))
+        if (type.contains("w"))
             conditionBuilder.or(qHouse.id.contains(keyword));
 
         booleanBuilder.and(conditionBuilder);
 
         return booleanBuilder;
     }
-
 
 
 }

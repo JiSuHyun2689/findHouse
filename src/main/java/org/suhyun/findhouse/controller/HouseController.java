@@ -24,16 +24,14 @@ public class HouseController {
     private final ReviewService reviewService;
 
 
-
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "redirect:/house/list";
     }
 
 
-
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("house list ....................... " + pageRequestDTO);
 
@@ -42,11 +40,10 @@ public class HouseController {
     }
 
 
-
     @GetMapping({"/read", "/modify"})
-    public void read(Long houseNum, @ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Model model){
+    public void read(Long houseNum, @ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Model model) {
 
-        log.info("house read "+ houseNum + " ...........................");
+        log.info("house read " + houseNum + " ...........................");
 
         HouseDTO dto = houseService.read(houseNum);
 
@@ -54,27 +51,27 @@ public class HouseController {
     }
 
 
-
     @GetMapping("/register")
-    public void register(){
+    public void register() {
         log.info("house register get ...........................");
     }
 
 
-
     @PostMapping("/register")
-    public String registerPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, RedirectAttributes redirectAttributes){
-
+    public String registerPost(@ModelAttribute("dto") HouseDTO dto, RedirectAttributes redirectAttributes) {
+        //, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto
         log.info("house register post ...........................");
 
         log.info("HouseDTO : " + dto);
+        /*
         log.info("OptionDTO : " + optionDto);
         log.info("StructureDTO : " + structureDto);
         log.info("PriceDTO : " + priceDto);
         log.info("CostDTO : " + costDto);
-
+        */
         Long houseNum = houseService.register(dto);
 
+        /*
         optionDto.setHouseNum(houseNum);
         structureDto.setHouseNum(houseNum);
         priceDto.setHouseNum(houseNum);
@@ -84,7 +81,7 @@ public class HouseController {
         structureService.register(structureDto);
         priceService.register(priceDto);
         costService.register(costDto);
-
+        */
 
 
         redirectAttributes.addFlashAttribute("msg", "매물이 성공적으로 등록되었습니다.");
@@ -93,11 +90,10 @@ public class HouseController {
     }
 
 
-
     @PostMapping("/modify")
-    public String modifyPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+    public String modifyPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
 
-        log.info("house modify post "+ dto.getHouseNum() + " ...........................");
+        log.info("house modify post " + dto.getHouseNum() + " ...........................");
 
 
         costService.modify(costDto);
@@ -116,13 +112,10 @@ public class HouseController {
     }
 
 
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, path = "/remove")
+    public String remove(Long houseNum, RedirectAttributes redirectAttributes) {
 
-
-
-    @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, path = "/remove")
-    public String remove(Long houseNum, RedirectAttributes redirectAttributes){
-
-        log.info("house remove "+ houseNum + " ...........................");
+        log.info("house remove " + houseNum + " ...........................");
 
         reviewService.removeByHouse(houseNum);
 

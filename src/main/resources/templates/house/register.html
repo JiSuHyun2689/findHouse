@@ -130,28 +130,32 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>방 개수</label>
-                                                <input type="number" class="form-control" name="room" value="1">
+                                                <input type="number" class="form-control"
+                                                       th:field="*{dto.structureDto.room}" value="1">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>거실 개수</label>
-                                                <input type="number" class="form-control" name="livingRoom" value="1">
+                                                <input type="number" class="form-control"
+                                                       th:field="*{dto.structureDto.livingRoom}" value="1">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>화장실 개수</label>
-                                                <input type="number" class="form-control" name="toilet" value="1">
+                                                <input type="number" class="form-control"
+                                                       th:field="*{dto.structureDto.toilet}" value="1">
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>베란다 개수</label>
-                                                <input type="number" class="form-control" name="veranda" value="1">
+                                                <input type="number" class="form-control"
+                                                       th:field="*{dto.structureDto.veranda}" value="1">
                                             </div>
                                         </div>
 
@@ -159,7 +163,8 @@
                                         <div class="col-2 price">
                                             <div class="form-group">
                                                 <label>가격 (만원)</label>
-                                                <input type="number" class="form-control price" name="price"
+                                                <input type="number" class="form-control price"
+                                                       th:field="*{dto.costDto.totalCost}"
                                                        placeholder="가격 (만원)" value="100000000">
                                             </div>
                                         </div>
@@ -168,7 +173,8 @@
                                         <div class="col-2 deposit" style="display:none">
                                             <div class="form-group">
                                                 <label>보증금 (만원)</label>
-                                                <input type="number" class="form-control deposit" name="deposit"
+                                                <input type="number" class="form-control deposit"
+                                                       th:field="*{dto.costDto.totalCost}"
                                                        placeholder="보증금 (만원)" value="10000000">
                                             </div>
                                         </div>
@@ -176,7 +182,8 @@
                                         <div class="col-2 monthly" style="display:none">
                                             <div class="form-group">
                                                 <label>월세 (만원)</label>
-                                                <input type="number" class="form-control monthly" name="monthly"
+                                                <input type="number" class="form-control monthly"
+                                                       th:field="*{dto.costDto.totalCost}"
                                                        placeholder="월세 (만원)" value="7000000">
                                             </div>
                                         </div>
@@ -184,7 +191,8 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>관리비 (만원)</label>
-                                                <input type="number" class="form-control" name="totalCost"
+                                                <input type="number" class="form-control"
+                                                       th:field="*{dto.costDto.totalCost}"
                                                        placeholder="관리비 (만원)" value="50000">
                                             </div>
                                         </div>
@@ -192,7 +200,8 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>관리비 기타 항목</label>
-                                                <input type="text" class="form-control" name="costContent"
+                                                <input type="text" class="form-control"
+                                                       th:field="*{dto.costDto.costContent}"
                                                        placeholder="관리비 기타 항목" value="전기, 수도, 가스 별도">
                                             </div>
                                         </div>
@@ -208,7 +217,7 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="electricity">
+                                                               th:field="*{dto.costDto.electricity}">
                                                         <label class="form-check-label">전기세</label>
                                                     </div>
                                                 </div>
@@ -219,7 +228,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="gas">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.gas">
                                                         <label class="form-check-label">가스비</label>
                                                     </div>
                                                 </div>
@@ -230,7 +240,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="water">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.water">
                                                         <label class="form-check-label">수도세</label>
                                                     </div>
                                                 </div>
@@ -241,7 +252,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="costTv">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.costTv">
                                                         <label class="form-check-label">TV</label>
                                                     </div>
                                                 </div>
@@ -252,7 +264,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="internet">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.internet">
                                                         <label class="form-check-label">인터넷</label>
                                                     </div>
                                                 </div>
@@ -263,7 +276,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="costParking">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.costParking">
                                                         <label class="form-check-label">주차비</label>
                                                     </div>
                                                 </div>
@@ -274,7 +288,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox"
                                                                class="form-check-input form-check-secondary form-check-glow"
-                                                               name="etc">
+                                                               th:field="*{dto.costDto.electricity}"
+                                                               name="dto.costDto.etc">
                                                         <label class="form-check-label">기타</label>
                                                     </div>
                                                 </div>
@@ -344,7 +359,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="tv">
+                                                           th:field="*{dto.optionDto.tv}">
                                                     <label class="form-check-label">TV</label>
                                                 </div>
                                             </div>
@@ -355,7 +370,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="airConditioner">
+                                                           th:field="*{dto.optionDto.airConditioner}">
                                                     <label class="form-check-label">에어컨</label>
                                                 </div>
                                             </div>
@@ -366,7 +381,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="refrigerator">
+                                                           th:field="*{dto.optionDto.refrigerator}">
                                                     <label class="form-check-label">냉장고</label>
                                                 </div>
                                             </div>
@@ -377,7 +392,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="washer">
+                                                           th:field="*{dto.optionDto.washer}">
                                                     <label class="form-check-label">세탁기</label>
                                                 </div>
                                             </div>
@@ -388,7 +403,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="dryer">
+                                                           th:field="*{dto.optionDto.dryer}">
                                                     <label class="form-check-label">건조기</label>
                                                 </div>
                                             </div>
@@ -399,7 +414,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="induction">
+                                                           th:field="*{dto.optionDto.induction}">
                                                     <label class="form-check-label">인덕션</label>
                                                 </div>
                                             </div>
@@ -410,7 +425,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="gasStove">
+                                                           th:field="*{dto.optionDto.gasStove}">
                                                     <label class="form-check-label">가스레인지</label>
                                                 </div>
                                             </div>
@@ -421,7 +436,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="sink">
+                                                           th:field="*{dto.optionDto.sink}">
                                                     <label class="form-check-label">싱크대</label>
                                                 </div>
                                             </div>
@@ -432,7 +447,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="desk">
+                                                           th:field="*{dto.optionDto.desk}">
                                                     <label class="form-check-label">책상</label>
                                                 </div>
                                             </div>
@@ -443,7 +458,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="bookshelf">
+                                                           th:field="*{dto.optionDto.bookshelf}">
                                                     <label class="form-check-label">책장</label>
                                                 </div>
                                             </div>
@@ -454,7 +469,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="bed">
+                                                           th:field="*{dto.optionDto.bed}">
                                                     <label class="form-check-label">침대</label>
                                                 </div>
                                             </div>
@@ -465,7 +480,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="closet">
+                                                           th:field="*{dto.optionDto.closet}">
                                                     <label class="form-check-label">옷장</label>
                                                 </div>
                                             </div>
@@ -476,7 +491,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="dishwasher">
+                                                           th:field="*{dto.optionDto.dishwasher}">
                                                     <label class="form-check-label">식기세척기</label>
                                                 </div>
                                             </div>
@@ -487,7 +502,7 @@
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox"
                                                            class="form-check-input form-check-secondary form-check-glow"
-                                                           name="shoeRack">
+                                                           th:field="*{dto.optionDto.shoeRack}">
                                                     <label class="form-check-label">신발장</label>
                                                 </div>
                                             </div>

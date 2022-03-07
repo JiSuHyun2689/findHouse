@@ -100,6 +100,11 @@ public class HouseServiceTests {
 
         HouseDTO house = service.read(4L);
 
-        service.checkModifyFile(4L, HouseDTO.builder().houseNum(4L).build());
+        service.checkModifyFile(4L, house);
+    }
+
+    @Test
+    public void testRead(){
+        System.out.println(service.read(4L));
     }
 }

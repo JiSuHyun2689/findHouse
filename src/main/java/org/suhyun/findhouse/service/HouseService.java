@@ -41,6 +41,7 @@ public interface HouseService {
         if (imageDTOList != null && imageDTOList.size() > 0) {
             List<HouseImage> houseImageList = imageDTOList.stream().map(houseImageDTO -> {
                 HouseImage houseImage = HouseImage.builder()
+                        .imageNum(houseImageDTO.getImageNum())
                         .path(houseImageDTO.getPath())
                         .imageName(houseImageDTO.getImageName())
                         .uuid(houseImageDTO.getUuid())
@@ -51,16 +52,49 @@ public interface HouseService {
 
             entityMap.put("imgList", houseImageList);
         }
+
+        OptionDTO optionDTO = dto.getOptionDto();
+        Option option = Option.builder().optionNum(optionDTO.getOptionNum())
+                .airConditioner(optionDTO.isAirConditioner()).bed(optionDTO.isBed()).bookshelf(optionDTO.isBookshelf())
+                .closet(optionDTO.isCloset()).desk(optionDTO.isDesk()).dishwasher(optionDTO.isDishwasher())
+                .dryer(optionDTO.isDryer()).gasStove(optionDTO.isGasStove()).induction(optionDTO.isInduction())
+                .refrigerator(optionDTO.isRefrigerator()).sink(optionDTO.isSink()).tv(optionDTO.isTv())
+                .washer(optionDTO.isWasher()).house(entity).build();
+        entityMap.put("option", option);
+
+
+        PriceDTO priceDTO = dto.getPriceDto();
+        Price price = Price.builder().price(priceDTO.getPrice()).house(entity).priceNum(priceDTO.getPriceNum())
+                .monthly(priceDTO.getMonthly()).deposit(priceDTO.getDeposit()).build();
+        entityMap.put("price", price);
+
+        StructureDTO structureDTO = dto.getStructureDto();
+        Structure structure = Structure.builder().livingRoom(structureDTO.getLivingRoom()).room(structureDTO.getRoom())
+                .toilet(structureDTO.getToilet()).veranda(structureDTO.getVeranda())
+                .structureNum(structureDTO.getStructureNum()).house(entity).build();
+        entityMap.put("structure", structure);
+
+        CostDTO costDTO = dto.getCostDto();
+        Cost cost = Cost.builder().costNum(costDTO.getCostNum()).content(costDTO.getCostContent()).totalCost(costDTO.getTotalCost())
+                .electricity(costDTO.isElectricity()).etc(costDTO.isEtc()).gas(costDTO.isGas()).internet(costDTO.isInternet())
+                .parking(costDTO.isCostParking()).tv(costDTO.isCostTv()).water(costDTO.isWater())
+                .house(House.builder().houseNum(dto.getHouseNum()).build()).build();
+        entityMap.put("cost", cost);
+
+
+
         return entityMap;
     }
 
     default HouseDTO entityToDto(House entity, List<HouseImage> houseImages, Option option, Price price, Structure structure, Cost cost, Long reviewCnt) {
 
-        HouseDTO dto = HouseDTO.builder().houseNum(entity.getHouseNum()).buildingType(entity.getBuildingType()).contractType(entity.getContractType())
-                .address(entity.getAddress()).area(entity.getArea()).brokerage(entity.getBrokerage()).completionDate(entity.getCompletionDate())
-                .content(entity.getContent()).elevator(entity.isElevator()).id(entity.getId()).loan(entity.isLoan()).minTerm(entity.getMinTerm())
-                .pet(entity.isPet()).moveInDate(entity.getMoveInDate()).modDate(entity.getModDate()).parking(entity.isParking()).regDate(entity.getRegDate())
-                .status(entity.getStatus()).theFloor(entity.getTheFloor()).wholeFloor(entity.getWholeFloor()).view(entity.getView()).title(entity.getTitle())
+        HouseDTO dto = HouseDTO.builder().houseNum(entity.getHouseNum()).buildingType(entity.getBuildingType())
+                .contractType(entity.getContractType()).address(entity.getAddress()).area(entity.getArea())
+                .brokerage(entity.getBrokerage()).completionDate(entity.getCompletionDate()).content(entity.getContent())
+                .elevator(entity.isElevator()).id(entity.getId()).loan(entity.isLoan()).minTerm(entity.getMinTerm())
+                .pet(entity.isPet()).moveInDate(entity.getMoveInDate()).modDate(entity.getModDate()).parking(entity.isParking())
+                .regDate(entity.getRegDate()).status(entity.getStatus()).theFloor(entity.getTheFloor())
+                .wholeFloor(entity.getWholeFloor()).view(entity.getView()).title(entity.getTitle())
                 .build();
 
         List<HouseImageDTO> houseImageDTOList = houseImages.stream().map(houseImage -> HouseImageDTO.builder()
@@ -78,8 +112,8 @@ public interface HouseService {
         PriceDTO priceDto = PriceDTO.builder().price(price.getPrice()).houseNum(price.getHouse().getHouseNum()).priceNum(price.getPriceNum())
                 .monthly(price.getMonthly()).deposit(price.getDeposit()).build();
 
-        StructureDTO structureDto = StructureDTO.builder().structureNum(structure.getStructureNum()).houseNum(structure.getStructureNum()).livingRoom(structure.getLivingRoom())
-                .room(structure.getRoom()).toilet(structure.getToilet()).veranda(structure.getVeranda()).build();
+        StructureDTO structureDto = StructureDTO.builder().structureNum(structure.getStructureNum()).houseNum(structure.getStructureNum())
+                .livingRoom(structure.getLivingRoom()).room(structure.getRoom()).toilet(structure.getToilet()).veranda(structure.getVeranda()).build();
 
         CostDTO costDto = CostDTO.builder().costNum(cost.getCostNum()).costContent(cost.getContent()).totalCost(cost.getTotalCost()).etc(cost.isEtc())
                 .electricity(cost.isElectricity()).gas(cost.isGas()).houseNum(entity.getHouseNum()).internet(cost.isInternet())
@@ -95,4 +129,6 @@ public interface HouseService {
 
         return dto;
     }
+
+
 }

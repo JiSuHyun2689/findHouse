@@ -137,7 +137,7 @@ public class SearchHouseRepositoryImpl extends QuerydslRepositorySupport impleme
 
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
-        Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending().and(Sort.by("title").ascending()));
 
         QHouse house = QHouse.house;
         QReview review = QReview.review;
@@ -201,6 +201,6 @@ public class SearchHouseRepositoryImpl extends QuerydslRepositorySupport impleme
 
         log.info("Search List Page Result : " + result);
 
-        return new PageImpl<Object[]>(result.stream().map(t -> t.toArray()).collect(Collectors.toList()), pageable, count);
+        return new PageImpl<>(result.stream().map(t -> t.toArray()).collect(Collectors.toList()), pageable, count);
     }
 }

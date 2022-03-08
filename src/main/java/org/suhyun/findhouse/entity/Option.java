@@ -1,6 +1,7 @@
 package org.suhyun.findhouse.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionNum;
 
+    @Column(nullable = true)
     private boolean tv, airConditioner, refrigerator, washer, dryer, induction, gasStove, sink, desk, bookshelf, bed, closet, dishwasher, shoeRack;
 
     public void changeOptions(boolean tv, boolean airConditioner, boolean refrigerator, boolean washer, boolean dryer, boolean induction, boolean gasStove,

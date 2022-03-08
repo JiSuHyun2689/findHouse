@@ -20,5 +20,4 @@ public class OptionDTO {
 
     private boolean tv, airConditioner, refrigerator, washer, dryer, induction, gasStove, sink, desk, bookshelf, bed, closet, dishwasher, shoeRack;
 
-    private Long houseNum;
 }

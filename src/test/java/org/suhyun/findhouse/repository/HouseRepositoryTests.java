@@ -208,7 +208,7 @@ public class HouseRepositoryTests {
     @Commit
     public void houseDeleteTest() {
 
-        Long houseNum = 60L;
+        Long houseNum = 8L;
         House house = House.builder().houseNum(houseNum).build();
         System.out.println(house);
 

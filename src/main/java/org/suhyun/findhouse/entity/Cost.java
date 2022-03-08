@@ -22,11 +22,7 @@ public class Cost {
 
     private String content;
 
-    public void changeContent(String content){
-        this.content = content;
-    }
-
-    public void changeCosts(int totalCost, boolean electricity, boolean gas, boolean water, boolean tv, boolean internet, boolean parking, boolean etc){
+    public void changeCosts(int totalCost, boolean electricity, boolean gas, boolean water, boolean tv, boolean internet, boolean parking, boolean etc, String content){
         this.totalCost = totalCost;
         this.electricity = electricity;
         this.gas = gas;
@@ -35,9 +31,11 @@ public class Cost {
         this.internet = internet;
         this.parking = parking;
         this.etc = etc;
+        this.content = content;
     }
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_num")
     private House house;
+
 }

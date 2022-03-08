@@ -18,5 +18,4 @@ public class StructureDTO {
 
     private int room, toilet, livingRoom, veranda;
 
-    private Long houseNum;
 }

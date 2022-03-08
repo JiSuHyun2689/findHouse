@@ -8,10 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.suhyun.findhouse.dto.HouseDTO;
-import org.suhyun.findhouse.dto.HouseImageDTO;
-import org.suhyun.findhouse.dto.PageRequestDTO;
-import org.suhyun.findhouse.dto.PageResultDTO;
+import org.suhyun.findhouse.dto.*;
 import org.suhyun.findhouse.entity.*;
 import org.suhyun.findhouse.repository.*;
 
@@ -42,7 +39,7 @@ public class HouseServiceImpl implements HouseService {
     @Transactional
     public Long register(HouseDTO dto) {
 
-        log.info("House DTO--------------------------");
+        log.info("House DTO-------------------------------------------------------------------------------");
 
         log.info(dto);
 
@@ -61,6 +58,13 @@ public class HouseServiceImpl implements HouseService {
         Structure structure = (Structure) entityMap.get("structure");
 
         repository.save(house);
+        optionRepository.save(option);
+        priceRepository.save(price);
+        structureRepository.save(structure);
+
+        if (cost != null) {
+            costRepository.save(cost);
+        }
 
         if (houseImageList != null) {
             houseImageList.forEach(houseImage -> {
@@ -98,9 +102,8 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public PageResultDTO<HouseDTO, Object[]> getSearchList(PageRequestDTO requestDTO) {
 
-        Pageable pageable = requestDTO.getPageable(Sort.by("houseNum").descending().ascending());
-
         Page<Object[]> result = repository.searchPageWithAll(requestDTO);
+
 
         Function<Object[], HouseDTO> fn = (arr -> entityToDto(
                 (House) arr[0],
@@ -125,8 +128,10 @@ public class HouseServiceImpl implements HouseService {
         List<HouseImage> houseImageList = new ArrayList<>();
 
         result.forEach(arr -> {
-            HouseImage houseImage = (HouseImage) arr[1];
-            houseImageList.add(houseImage);
+            if (arr[1] != null) {
+                HouseImage houseImage = (HouseImage) arr[1];
+                houseImageList.add(houseImage);
+            }
         });
 
         Double avg = (Double) result.get(0)[2];
@@ -143,7 +148,7 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public void modify(HouseDTO dto) {
-
+        /*
         Optional<House> result = repository.findById(dto.getHouseNum());
 
         if (result.isPresent()) {
@@ -167,6 +172,79 @@ public class HouseServiceImpl implements HouseService {
                     dto.isParking());
 
             repository.save(entity);
+        }*/
+
+        List<Object[]> result = repository.getHouseWithAll(dto.getHouseNum());
+
+        if (!result.isEmpty()) {
+
+            House house = (House) result.get(0)[0];
+            Option option = (Option) result.get(0)[4];
+            Price price = (Price) result.get(0)[5];
+            Structure structure = (Structure) result.get(0)[6];
+            Cost cost = (Cost) result.get(0)[7];
+
+            List<HouseImage> houseImageList = new ArrayList<>();
+
+            result.forEach(arr -> {
+                if (arr[1] != null) {
+                    HouseImage houseImage = (HouseImage) arr[1];
+                    houseImageList.add(houseImage);
+                    System.out.println(houseImage);
+                }
+            });
+
+            /*
+            result.forEach(arr -> {
+                HouseImage houseImage = (HouseImage) arr[1];
+                houseImageList.add(houseImage);
+            });*/
+
+            CostDTO costDTO = dto.getCostDto();
+            cost.changeCosts(costDTO.getTotalCost(), costDTO.isElectricity(), costDTO.isGas(), costDTO.isWater(),
+                    costDTO.isCostTv(), costDTO.isInternet(), costDTO.isCostParking(), costDTO.isEtc(), costDTO.getCostContent());
+
+            OptionDTO optionDTO = dto.getOptionDto();
+            option.changeOptions(optionDTO.isTv(), optionDTO.isAirConditioner(), optionDTO.isRefrigerator()
+                    , optionDTO.isWasher(), optionDTO.isDryer(), optionDTO.isInduction(), optionDTO.isGasStove(),
+                    optionDTO.isSink(), optionDTO.isDesk(), optionDTO.isBookshelf(), optionDTO.isBed(),
+                    optionDTO.isCloset(), optionDTO.isDishwasher(), optionDTO.isShoeRack());
+
+            PriceDTO priceDTO = dto.getPriceDto();
+            price.changePrices(priceDTO.getPrice(), priceDTO.getDeposit(), priceDTO.getMonthly());
+
+            StructureDTO structureDTO = dto.getStructureDto();
+            structure.chageStructures(structureDTO.getRoom(), structureDTO.getToilet(), structureDTO.getLivingRoom(),
+                    structureDTO.getVeranda());
+
+            house.changeStatus(dto.getStatus());
+            house.changeTitle(dto.getTitle());
+            house.changeContent(dto.getContent());
+            house.changeInfo(dto.getAddress(),
+                    dto.getContractType(),
+                    dto.getMinTerm(),
+                    dto.getBrokerage(),
+                    dto.getMoveInDate(),
+                    dto.getCompletionDate(),
+                    dto.isLoan(),
+                    dto.isElevator(),
+                    dto.isPet(),
+                    dto.isParking());
+
+
+            checkModifyFile(house.getHouseNum(), dto);
+
+            if (houseImageList != null) {
+                houseImageList.forEach(houseImage -> {
+                    houseImageRepository.save(houseImage);
+                });
+            }
+
+            costRepository.save(cost);
+            optionRepository.save(option);
+            priceRepository.save(price);
+            structureRepository.save(structure);
+            repository.save(house);
         }
     }
 
@@ -194,17 +272,16 @@ public class HouseServiceImpl implements HouseService {
 
         log.info("before : " + before);
 
-        log.info("after : " + after);
+        log.info("after : " + houseImageList);
 
-        for (int i = 0; i < before.size(); i++) {
-            log.info(before.get(i));
-            if (!houseImageList.contains(before.get(i).getUuid())) {
-                houseImageRepository.deleteById(before.get(i).getImageNum());
+        for (int i = 0; i < houseImageList.size(); i++) {
+            log.info(houseImageList.get(i));
+            if (!before.contains(houseImageList.get(i).getUuid())) {
+                log.info("check!" + houseImageList.get(i));
+                continue;
             }
-
+            houseImageRepository.deleteById(houseImageList.get(i).getImageNum());
         }
-
-
     }
 
 

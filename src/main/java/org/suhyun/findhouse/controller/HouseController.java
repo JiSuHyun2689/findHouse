@@ -17,10 +17,11 @@ import org.suhyun.findhouse.service.*;
 public class HouseController {
 
     private final HouseService houseService;
+    /*
     private final OptionService optionService;
     private final StructureService structureService;
     private final PriceService priceService;
-    private final CostService costService;
+    private final CostService costService;*/
     private final ReviewService reviewService;
 
 
@@ -59,30 +60,12 @@ public class HouseController {
 
     @PostMapping("/register")
     public String registerPost(@ModelAttribute("dto") HouseDTO dto, RedirectAttributes redirectAttributes) {
-        //, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto
+
         log.info("house register post ...........................");
 
         log.info("HouseDTO : " + dto);
-        /*
-        log.info("OptionDTO : " + optionDto);
-        log.info("StructureDTO : " + structureDto);
-        log.info("PriceDTO : " + priceDto);
-        log.info("CostDTO : " + costDto);
-        */
-        Long houseNum = houseService.register(dto);
 
-        /*
-        optionDto.setHouseNum(houseNum);
-        structureDto.setHouseNum(houseNum);
-        priceDto.setHouseNum(houseNum);
-        costDto.setHouseNum(houseNum);
-
-        optionService.register(optionDto);
-        structureService.register(structureDto);
-        priceService.register(priceDto);
-        costService.register(costDto);
-        */
-
+        houseService.register(dto);
 
         redirectAttributes.addFlashAttribute("msg", "매물이 성공적으로 등록되었습니다.");
 
@@ -91,24 +74,15 @@ public class HouseController {
 
 
     @PostMapping("/modify")
-    public String modifyPost(HouseDTO dto, OptionDTO optionDto, StructureDTO structureDto, PriceDTO priceDto, CostDTO costDto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+    public String modifyPost(HouseDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
 
         log.info("house modify post " + dto.getHouseNum() + " ...........................");
 
-
-        costService.modify(costDto);
-        priceService.modify(priceDto);
-        structureService.modify(structureDto);
-        optionService.modify(optionDto);
         houseService.modify(dto);
 
-        redirectAttributes.addAttribute("page", requestDTO.getPage());
-        redirectAttributes.addAttribute("type", requestDTO.getType());
-        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
-        redirectAttributes.addAttribute("houseNum", dto.getHouseNum());
         redirectAttributes.addFlashAttribute("msg", "매물 수정이 완료되었습니다.");
 
-        return "redirect:/house/read";
+        return "redirect:/house/read?houseNum="+dto.getHouseNum();
     }
 
 

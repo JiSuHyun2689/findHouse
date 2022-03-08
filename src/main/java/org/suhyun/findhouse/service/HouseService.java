@@ -34,9 +34,12 @@ public interface HouseService {
                 .moveInDate(dto.getMoveInDate()).parking(dto.isParking()).pet(dto.isPet()).status(dto.getStatus()).theFloor(dto.getTheFloor())
                 .wholeFloor(dto.getWholeFloor()).view(dto.getView()).houseNum(dto.getHouseNum()).title(dto.getTitle()).build();
 
-        entityMap.put("house", entity);
-
         List<HouseImageDTO> imageDTOList = dto.getImageDTOList();
+        OptionDTO optionDTO = dto.getOptionDto();
+        PriceDTO priceDTO = dto.getPriceDto();
+        StructureDTO structureDTO = dto.getStructureDto();
+        CostDTO costDTO = dto.getCostDto();
+
 
         if (imageDTOList != null && imageDTOList.size() > 0) {
             List<HouseImage> houseImageList = imageDTOList.stream().map(houseImageDTO -> {
@@ -53,35 +56,30 @@ public interface HouseService {
             entityMap.put("imgList", houseImageList);
         }
 
-        OptionDTO optionDTO = dto.getOptionDto();
         Option option = Option.builder().optionNum(optionDTO.getOptionNum())
                 .airConditioner(optionDTO.isAirConditioner()).bed(optionDTO.isBed()).bookshelf(optionDTO.isBookshelf())
                 .closet(optionDTO.isCloset()).desk(optionDTO.isDesk()).dishwasher(optionDTO.isDishwasher())
                 .dryer(optionDTO.isDryer()).gasStove(optionDTO.isGasStove()).induction(optionDTO.isInduction())
                 .refrigerator(optionDTO.isRefrigerator()).sink(optionDTO.isSink()).tv(optionDTO.isTv())
                 .washer(optionDTO.isWasher()).house(entity).build();
-        entityMap.put("option", option);
 
-
-        PriceDTO priceDTO = dto.getPriceDto();
         Price price = Price.builder().price(priceDTO.getPrice()).house(entity).priceNum(priceDTO.getPriceNum())
                 .monthly(priceDTO.getMonthly()).deposit(priceDTO.getDeposit()).build();
-        entityMap.put("price", price);
 
-        StructureDTO structureDTO = dto.getStructureDto();
         Structure structure = Structure.builder().livingRoom(structureDTO.getLivingRoom()).room(structureDTO.getRoom())
                 .toilet(structureDTO.getToilet()).veranda(structureDTO.getVeranda())
                 .structureNum(structureDTO.getStructureNum()).house(entity).build();
-        entityMap.put("structure", structure);
 
-        CostDTO costDTO = dto.getCostDto();
         Cost cost = Cost.builder().costNum(costDTO.getCostNum()).content(costDTO.getCostContent()).totalCost(costDTO.getTotalCost())
                 .electricity(costDTO.isElectricity()).etc(costDTO.isEtc()).gas(costDTO.isGas()).internet(costDTO.isInternet())
                 .parking(costDTO.isCostParking()).tv(costDTO.isCostTv()).water(costDTO.isWater())
-                .house(House.builder().houseNum(dto.getHouseNum()).build()).build();
+                .house(entity).build();
+
+        entityMap.put("house", entity);
+        entityMap.put("option", option);
+        entityMap.put("price", price);
+        entityMap.put("structure", structure);
         entityMap.put("cost", cost);
-
-
 
         return entityMap;
     }
@@ -107,16 +105,16 @@ public interface HouseService {
         OptionDTO opdionDto = OptionDTO.builder().optionNum(option.getOptionNum()).bed(option.isBed()).airConditioner(option.isAirConditioner())
                 .bookshelf(option.isBookshelf()).desk(option.isDesk()).closet(option.isCloset()).dishwasher(option.isDishwasher())
                 .dryer(option.isDryer()).gasStove(option.isGasStove()).induction(option.isInduction()).refrigerator(option.isRefrigerator())
-                .sink(option.isSink()).shoeRack(option.isShoeRack()).tv(option.isTv()).washer(option.isWasher()).houseNum(option.getHouse().getHouseNum()).build();
+                .sink(option.isSink()).shoeRack(option.isShoeRack()).tv(option.isTv()).washer(option.isWasher()).build();
 
-        PriceDTO priceDto = PriceDTO.builder().price(price.getPrice()).houseNum(price.getHouse().getHouseNum()).priceNum(price.getPriceNum())
+        PriceDTO priceDto = PriceDTO.builder().price(price.getPrice()).priceNum(price.getPriceNum())
                 .monthly(price.getMonthly()).deposit(price.getDeposit()).build();
 
-        StructureDTO structureDto = StructureDTO.builder().structureNum(structure.getStructureNum()).houseNum(structure.getStructureNum())
-                .livingRoom(structure.getLivingRoom()).room(structure.getRoom()).toilet(structure.getToilet()).veranda(structure.getVeranda()).build();
+        StructureDTO structureDto = StructureDTO.builder().structureNum(structure.getStructureNum()).livingRoom(structure.getLivingRoom())
+                .room(structure.getRoom()).toilet(structure.getToilet()).veranda(structure.getVeranda()).build();
 
         CostDTO costDto = CostDTO.builder().costNum(cost.getCostNum()).costContent(cost.getContent()).totalCost(cost.getTotalCost()).etc(cost.isEtc())
-                .electricity(cost.isElectricity()).gas(cost.isGas()).houseNum(entity.getHouseNum()).internet(cost.isInternet())
+                .electricity(cost.isElectricity()).gas(cost.isGas()).internet(cost.isInternet())
                 .costTv(cost.isTv()).costParking(entity.isParking()).water(cost.isWater()).build();
 
         dto.setOptionDto(opdionDto);

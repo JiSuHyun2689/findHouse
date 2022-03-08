@@ -19,5 +19,4 @@ public class CostDTO {
 
     private String costContent;
 
-    private Long houseNum;
 }

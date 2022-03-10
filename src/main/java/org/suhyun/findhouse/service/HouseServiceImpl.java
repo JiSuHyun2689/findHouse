@@ -12,10 +12,13 @@ import org.suhyun.findhouse.dto.*;
 import org.suhyun.findhouse.entity.*;
 import org.suhyun.findhouse.repository.*;
 
-
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -36,7 +39,6 @@ public class HouseServiceImpl implements HouseService {
 
 
     @Override
-    @Transactional
     public Long register(HouseDTO dto) {
 
         log.info("House DTO-------------------------------------------------------------------------------");
@@ -148,31 +150,6 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public void modify(HouseDTO dto) {
-        /*
-        Optional<House> result = repository.findById(dto.getHouseNum());
-
-        if (result.isPresent()) {
-
-            House entity = result.get();
-
-            //checkModifyFile(entity.getHouseNum(), en);
-
-            entity.changeStatus(dto.getStatus());
-            entity.changeTitle(dto.getTitle());
-            entity.changeContent(dto.getContent());
-            entity.changeInfo(dto.getAddress(),
-                    dto.getContractType(),
-                    dto.getMinTerm(),
-                    dto.getBrokerage(),
-                    dto.getMoveInDate(),
-                    dto.getCompletionDate(),
-                    dto.isLoan(),
-                    dto.isElevator(),
-                    dto.isPet(),
-                    dto.isParking());
-
-            repository.save(entity);
-        }*/
 
         List<Object[]> result = repository.getHouseWithAll(dto.getHouseNum());
 
@@ -183,22 +160,14 @@ public class HouseServiceImpl implements HouseService {
             Price price = (Price) result.get(0)[5];
             Structure structure = (Structure) result.get(0)[6];
             Cost cost = (Cost) result.get(0)[7];
-
             List<HouseImage> houseImageList = new ArrayList<>();
 
             result.forEach(arr -> {
                 if (arr[1] != null) {
                     HouseImage houseImage = (HouseImage) arr[1];
                     houseImageList.add(houseImage);
-                    System.out.println(houseImage);
                 }
             });
-
-            /*
-            result.forEach(arr -> {
-                HouseImage houseImage = (HouseImage) arr[1];
-                houseImageList.add(houseImage);
-            });*/
 
             CostDTO costDTO = dto.getCostDto();
             cost.changeCosts(costDTO.getTotalCost(), costDTO.isElectricity(), costDTO.isGas(), costDTO.isWater(),
@@ -231,14 +200,7 @@ public class HouseServiceImpl implements HouseService {
                     dto.isPet(),
                     dto.isParking());
 
-
-            checkModifyFile(house.getHouseNum(), dto);
-
-            if (houseImageList != null) {
-                houseImageList.forEach(houseImage -> {
-                    houseImageRepository.save(houseImage);
-                });
-            }
+            checkModifyFile(dto);
 
             costRepository.save(cost);
             optionRepository.save(option);
@@ -259,29 +221,33 @@ public class HouseServiceImpl implements HouseService {
 
     }
 
+
     @Override
-    public void checkModifyFile(Long houseNum, HouseDTO dto) {
+    @Transactional
+    public void checkModifyFile(HouseDTO dto) {
 
-        List<HouseImage> before = houseImageRepository.findByHouse(houseNum);
+        List<HouseImage> before = houseImageRepository.findByHouse(dto.getHouseNum());
 
-        Map<String, Object> after = dtoToEntity(dto);
+        List<HouseImage> after = (List<HouseImage>) dtoToEntity(dto).get("imgList");
 
-        List<HouseImage> houseImageList = (List<HouseImage>) after.get("imgList");
-
-        log.info("test!!!!!!!!!!!!!!!!!!!!!");
-
-        log.info("before : " + before);
-
-        log.info("after : " + houseImageList);
-
-        for (int i = 0; i < houseImageList.size(); i++) {
-            log.info(houseImageList.get(i));
-            if (!before.contains(houseImageList.get(i).getUuid())) {
-                log.info("check!" + houseImageList.get(i));
-                continue;
+        before.stream().filter(hi -> {
+            if (after.contains(hi)) {
+                return true;
+            } else {
+                log.info("Delete existing images : " + hi);
+                houseImageRepository.deleteById(hi.getImageNum());
+                return false;
             }
-            houseImageRepository.deleteById(houseImageList.get(i).getImageNum());
-        }
+        }).collect(Collectors.toList());
+
+        after.forEach(hi->{
+            if(before.contains(hi)){
+                log.info("The Image File that existed : " + hi);
+            }else{
+                log.info("Upload a New Image File : " + hi);
+                houseImageRepository.save(hi);
+            }
+        });
     }
 
 

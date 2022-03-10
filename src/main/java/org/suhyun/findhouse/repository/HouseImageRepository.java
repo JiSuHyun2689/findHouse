@@ -10,6 +10,7 @@ import org.suhyun.findhouse.entity.HouseImage;
 import org.suhyun.findhouse.entity.Review;
 import org.suhyun.findhouse.entity.Structure;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,4 @@ public interface HouseImageRepository extends JpaRepository<HouseImage, Long> {
 
     @Query("select hi from HouseImage hi where hi.house.houseNum =:houseNum")
     List<HouseImage> findByHouse(@Param("houseNum")Long houseNum);
-
-
 }

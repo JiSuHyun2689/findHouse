@@ -22,7 +22,7 @@ public interface HouseService {
 
     void remove(Long houseNum);
 
-    void checkModifyFile(Long houseNum, HouseDTO dto);
+    void checkModifyFile(HouseDTO dto);
 
     default Map<String, Object> dtoToEntity(HouseDTO dto) {
 

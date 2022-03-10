@@ -98,9 +98,9 @@ public class HouseServiceTests {
     @Test
     public void checkModifyFileTest(){
 
-        HouseDTO house = service.read(4L);
+        //HouseDTO house = service.read(4L);
 
-        service.checkModifyFile(4L, house);
+        //service.checkModifyFile(4L, house);
     }
 
     @Test

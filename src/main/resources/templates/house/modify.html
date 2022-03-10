@@ -844,8 +844,8 @@
                 str += "<input type='hidden' name='imageDTOList[" + i + "].imageName' value='" + target.data('name') + "'>";
                 str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + target.data('path') + "'>";
                 str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + target.data('uuid') + "'>";
-                if(target.data('imageNum') != null){
-                    str += "<input type='hidden' name='imageDTOList[" + i + "].imageNum' value='" + target.data('imageNum') + "'>";}
+                if(target.data('before') == true){
+                    str += "<input type='hidden' name='imageDTOList[" + i + "].imageNum' value='" + target.data('imagenum') + "'>";}
             });
 
             $(".box").html(str);

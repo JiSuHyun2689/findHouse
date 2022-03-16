@@ -62,7 +62,7 @@ public class WishRepositoryTests {
     @Commit
     public void testDeleteByMember(){
 
-        wishRepository.deleteByMember("user1");
+        wishRepository.deleteByMember("user1", 1L);
 
     }
 

@@ -46,6 +46,8 @@ public class HouseController {
 
         log.info("house read " + houseNum + " ...........................");
 
+        houseService.updateView(houseNum);
+
         HouseDTO dto = houseService.read(houseNum);
 
         model.addAttribute("dto", dto);

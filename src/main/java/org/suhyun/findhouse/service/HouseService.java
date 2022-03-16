@@ -24,6 +24,8 @@ public interface HouseService {
 
     void checkModifyFile(HouseDTO dto);
 
+    void updateView(Long houseNum);
+
     default Map<String, Object> dtoToEntity(HouseDTO dto) {
 
         Map<String, Object> entityMap = new HashMap<>();

@@ -27,6 +27,13 @@ public interface HouseRepository extends JpaRepository<House, Long>, QuerydslPre
 
  */
 
+    @Modifying
+    @Transactional
+    @Query("update House h " +
+            "set h.view = h.view + 1 " +
+            "where h.houseNum =:houseNum ")
+    int updateView(@Param("houseNum") Long houseNum);
+
 
     @Query("select h, hi, avg(coalesce(r.grade, 0)), count(distinct r), o, p, s, c " +
             "from House h " +

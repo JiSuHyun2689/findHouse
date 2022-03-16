@@ -250,6 +250,11 @@ public class HouseServiceImpl implements HouseService {
         });
     }
 
+    @Override
+    public void updateView(Long houseNum) {
+        repository.updateView(houseNum);
+    }
+
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
 
@@ -284,6 +289,7 @@ public class HouseServiceImpl implements HouseService {
 
         return booleanBuilder;
     }
+
 
 
 }

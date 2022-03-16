@@ -13,13 +13,15 @@ public interface WishService {
 
     List<WishDTO> getListOfMember(String id);
 
+    WishDTO getHouseWishOfMember(String id, Long houseNum);
+
     Long register(WishDTO wishDTO);
 
     void remove(Long wishNum);
 
     void removeByHouse(Long houseNum);
 
-    void removeByMember(String id);
+    void removeByMember(String id, Long houseNum);
 
     default Wish dtoToEntity(WishDTO dto){
 

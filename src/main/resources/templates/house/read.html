@@ -15,7 +15,13 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title"></h4>
+                                <span><img class="wishIcon" th:src="@{/images/icons/heart_black.png}"
+                                           th:data-current="black"
+                                           style="width: 1.3em; height: 1.3em; float: right">
+                                <label class="wishCount"
+                                       style="float: right; padding-right: 0.5em;font-weight: bold "></label></span>
+
+
                         </div>
                         <div class="card-body">
                             <form class="form form-vertical" method="post">
@@ -553,7 +559,6 @@
                                         </div>
 
 
-
                                         <div class="modal fade text-left imageModal" id="backdrop" tabindex="-1"
                                              aria-labelledby="myModalLabel4" style="display: none;" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
@@ -719,7 +724,7 @@
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function (qualifiedName) {
 
         var form = $(".form");
         var reviewModal = $(".reviewModal");
@@ -779,8 +784,6 @@
         });
 
 
-
-
         $(".addReviewBtn").click(function () {
             //inputId.val("");
             //inputContent.val("");
@@ -802,8 +805,7 @@
                 targetId: targetId
             };
 
-            console.log(data);
-
+            console.log("reivew save : " + data);
 
             $.ajax({
                 url: '/review/' + houseNum,
@@ -834,7 +836,7 @@
                     console.log(review);
 
                     str += '<div class="card-body" data-reviewNum=' + review.reviewNum + ' data-reviewerId=' + review.reviewerId + ' style="padding-left: 0px; padding-bottom: 10px">';
-                    str += '<h6 class="card-title">' + review.content + '<div class"star-rating" data-rating="'+review.grade+'"></div><span>' + review.grade + '</div></span></h6>';
+                    str += '<h6 class="card-title">' + review.content + '<div class"star-rating" data-rating="' + review.grade + '"></div><span>' + review.grade + '</div></span></h6>';
                     str += '<h7 class="card-subtitle mb-2 text-muted">' + review.nickName + '</h7>';
                     str += '<p class="card-text">' + formatTime(review.regDate) + '</p></div>';
 
@@ -846,11 +848,6 @@
                 $(".reviewList").html(str);
             });
         }
-
-
-
-        getHouseReviews();
-
 
 
         // review modify
@@ -923,5 +920,76 @@
             reviewModal.modal("hide");
         });
 
+
+        function getWishCountByHouse() {
+            $.getJSON("/wish/" + houseNum + "/all", function (count) {
+                console.log("get wish count : " + count);
+                $(".wishCount").html(count);
+            });
+        }
+
+        function getHouseWishOfMember(){
+            var id = "user100"; // 임시 아이디
+            $.getJSON("/wish/" + houseNum + "/" + id, function (arr) {
+                console.log("get house wish member : " + houseNum + ", " + id);
+                if(arr != null){
+                    $(".wishIcon").data("current", "red");
+                    $(".wishIcon").attr("src", "/images/icons/heart_red.png");
+                }
+            });
+        }
+
+
+        $(".wishIcon").on("click", function (e) {
+
+            var icon = $(this);
+            var current = icon.data("current");
+            var id = "user100"; // 임시 아이디
+            var data = {
+                houseNum: houseNum,
+                id: id
+            };
+
+            if (current == "black") {
+                // wish save
+                console.log("wish !!!!! houseNum : " + houseNum + ", id : " + id);
+                icon.data("current", "red");
+                icon.attr("src", "/images/icons/heart_red.png");
+
+                $.ajax({
+                    url: '/wish/' + houseNum,
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("result: " + result);
+                        getWishCountByHouse();
+                    }
+                }); // end ajax
+            } else {
+                // wish delete
+                console.log("do not wish !!!!! houseNum : " + houseNum + ", id : " + id);
+                icon.data("current", "black");
+                icon.attr("src", "/images/icons/heart_black.png");
+
+                $.ajax({
+                    url: '/wish/' + houseNum + "/" + id,
+                    type: "DELETE",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("result: " + result);
+                        getWishCountByHouse();
+                    }
+                }); // end ajax
+            } // end else
+
+        });
+
+        getHouseReviews();
+        getWishCountByHouse();
+        getHouseWishOfMember();
     });
 </script>

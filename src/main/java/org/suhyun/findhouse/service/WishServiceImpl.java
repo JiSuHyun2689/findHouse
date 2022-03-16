@@ -38,6 +38,14 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
+    public WishDTO getHouseWishOfMember(String id, Long houseNum) {
+
+        Wish wish = repository.findByIdAndHouseNum(id, houseNum);
+
+        return wish == null ? null : entityToDto(wish);
+    }
+
+    @Override
     public Long register(WishDTO wishDTO) {
 
         Wish wish = dtoToEntity(wishDTO);
@@ -60,8 +68,8 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
-    public void removeByMember(String id) {
+    public void removeByMember(String id, Long houseNum) {
 
-        repository.deleteByMember(id);
+        repository.deleteByMember(id, houseNum);
     }
 }

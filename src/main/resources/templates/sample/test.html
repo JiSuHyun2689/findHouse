@@ -6,66 +6,39 @@
 
         <h1>test!!!!!!!</h1>
 
-
-        <div class="reviewModal modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Movie Review</h5>
-
-                        <button type = "button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Reviewer ID</label>
-                            <input type="text" class="form-control" name="mid">
+        <div id="main-content">
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>Member join</h3>
+                            <p>본인이 원하는 매물을 찾아보세요!
+                                <code class="highlighter-rouge">필터</code> 를 이용하여 쉽게 찾아보세요.
+                            </p>
                         </div>
-                        <div class="form-group">
-                            <label>Grade<span class="grade"></span></label>
-                            <div class="starrr"></div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">List</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Layout Vertical Navbar
+                                    </li>
+                                </ol>
+                            </nav>
                         </div>
-                        <div class="form-group">
-                            <label>Review Text</label>
-                            <input type="text" class="form-control" name="text" placeholder="Good Movie!">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary reviewSaveBtn">Save Changes</button>
-                        <button type="button" class="btn btn-warning modifyBtn">Modify</button>
-                        <button type="button" class="btn btn-danger removeBtn">Remove</button>
                     </div>
                 </div>
+                <section class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Example Content</h4>
+                        </div>
+                        <div class="card-body">
+                            내요오오옹
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
+
     </th:block>
 </th:block>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-<script>
-
-    $(document).ready(function () {
-
-
-        var reviewModal = $(".reviewModal");
-        var grade = 0;
-
-
-        $('.starrr').starrr({
-            rating: grade,
-            change: function (e, value) {
-                if (value) {
-                    console.log(value);
-                    grade = value;
-                }
-            }
-        });
-
-        reviewModal.modal("show");
-
-
-    });
-</script>

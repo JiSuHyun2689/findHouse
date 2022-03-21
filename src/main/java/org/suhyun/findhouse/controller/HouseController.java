@@ -67,9 +67,10 @@ public class HouseController {
 
         log.info("HouseDTO : " + dto);
 
-        houseService.register(dto);
+        Long houseNum = houseService.register(dto);
 
-        redirectAttributes.addFlashAttribute("msg", "매물이 성공적으로 등록되었습니다.");
+        if(houseNum != null)
+            redirectAttributes.addFlashAttribute("msg", "매물이 성공적으로 등록되었습니다.");
 
         return "redirect:/house/list";
     }

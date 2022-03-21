@@ -13,6 +13,7 @@ import org.suhyun.findhouse.entity.*;
 import org.suhyun.findhouse.repository.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -199,6 +200,7 @@ public class HouseServiceImpl implements HouseService {
                     dto.isElevator(),
                     dto.isPet(),
                     dto.isParking());
+            house.changeModDate(LocalDateTime.now());
 
             checkModifyFile(dto);
 

@@ -66,6 +66,10 @@ public class House extends BaseEntity{
         this.parking = parking;
     }
 
+    public void changeModDate(LocalDateTime modDate){
+        this.modDate = modDate;
+    }
+
 
 
     @OneToOne(mappedBy = "house", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

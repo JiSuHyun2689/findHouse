@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
 
     @Id
     private String id;
@@ -26,9 +27,21 @@ public class Member extends BaseEntity{
     private LocalDate birth;
 
     @Column(nullable = false)
-    private int contract;
+    private String contact;
 
     @ColumnDefault("false")
     private boolean fromSocial;
+
+    public void changeInfo(String password, String userName, String nickName, LocalDate birth, String contract) {
+        this.password = password;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.birth = birth;
+        this.contact = contract;
+    }
+
+    public void changeModDate(LocalDateTime modDate){
+        this.modDate = modDate;
+    }
 
 }

@@ -29,6 +29,13 @@ public class MemberController {
 
     }
 
+    @GetMapping("/login")
+    public void login() {
+
+        log.info("Member login ------------------------------------------------------------------------");
+
+    }
+
     @GetMapping("/modify")
     public void modify(@Param("id") String id, Model model) {
 

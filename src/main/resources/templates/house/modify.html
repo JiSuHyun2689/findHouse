@@ -40,8 +40,10 @@
 
                                         <div class="col-8">
                                             <div class="form-group">
-                                                <label style="font-weight: bold">주소</label><small class="text-muted"> <code
-                                                    class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐 정확히
+                                                <label style="font-weight: bold">주소</label><small class="text-muted">
+                                                <code
+                                                        class="highlighter-rouge">Tip!</code><i>상세한 주소를 입력해주세요! 다른분들에겐
+                                                정확히
                                                 표시되지 않습니다!</i></small>
                                                 <input type="text" class="form-control" name="address"
                                                        th:value="${dto.address}">
@@ -635,10 +637,12 @@
                                                     class="btn btn-primary me-1 mb-1 rounded-pill submitBtn">
                                                 Submit
                                             </button>
-                                            <button type="button"
-                                                    class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">
-                                                List
-                                            </button>
+                                            <a th:href="@{/house/list?(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
+                                                <button type="button"
+                                                        class="btn btn-secondary me-1 mb-1 rounded-pill"
+                                                        id="listBtn">List
+                                                </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -844,8 +848,9 @@
                 str += "<input type='hidden' name='imageDTOList[" + i + "].imageName' value='" + target.data('name') + "'>";
                 str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + target.data('path') + "'>";
                 str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + target.data('uuid') + "'>";
-                if(target.data('before') == true){
-                    str += "<input type='hidden' name='imageDTOList[" + i + "].imageNum' value='" + target.data('imagenum') + "'>";}
+                if (target.data('before') == true) {
+                    str += "<input type='hidden' name='imageDTOList[" + i + "].imageNum' value='" + target.data('imagenum') + "'>";
+                }
             });
 
             $(".box").html(str);

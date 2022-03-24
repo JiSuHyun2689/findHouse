@@ -21,7 +21,6 @@
                                 <label class="wishCount"
                                        style="float: right; padding-right: 0.5em;font-weight: bold "></label></span>
 
-
                         </div>
                         <div class="card-body">
                             <form class="form form-vertical" method="post">
@@ -724,7 +723,7 @@
 
 <script>
 
-    $(document).ready(function (qualifiedName) {
+    $(document).ready(function () {
 
         var form = $(".form");
         var reviewModal = $(".reviewModal");
@@ -928,11 +927,11 @@
             });
         }
 
-        function getHouseWishOfMember(){
+        function getHouseWishOfMember() {
             var id = "user100"; // 임시 아이디
             $.getJSON("/wish/" + houseNum + "/" + id, function (arr) {
                 console.log("get house wish member : " + houseNum + ", " + id);
-                if(arr != null){
+                if (arr != null) {
                     $(".wishIcon").data("current", "red");
                     $(".wishIcon").attr("src", "/images/icons/heart_red.png");
                 }

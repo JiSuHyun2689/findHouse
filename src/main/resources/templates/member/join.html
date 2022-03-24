@@ -1,129 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+<title>FindHouse Join Page</title>
+<th:block th:replace="~{/layout/member_basic.html :: setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <div id="main-content">
-            <div class="page-heading">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Member Join</h3>
-                            <p>회원가입을 위한
-                                <code class="highlighter-rouge">정보</code> 를 입력해주세요.
-                            </p>
-                        </div>
+
+        <div id="auth">
+            <h3 class="auth-title">Member Join</h3>
+            <p class="auth-subtitle mb-5">회원가입을 위한
+                <code class="highlighter-rouge">정보</code> 를 입력해주세요.</p>
+
+            <form class="form form-vertical form-inline" method="post" action="/member/join" id="inputForm">
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">ID</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control " placeholder="아이디를 입력해주세요."
+                               name="id" value="user">
+                        <button class="btn btn-primary" type="button" id="checkId">
+                            중복체크
+                        </button>
                     </div>
                 </div>
-                <section class="section">
-                    <div class="card">
-                        <div class="card-header">
-                        </div>
-                        <div class="card-body">
-                            <form class="form form-vertical form-inline" method="post" action="/member/join"
-                                  id="inputForm">
+                <div class="form-group position-relative  mb-4">
+                    <label style="font-weight: bold">PASSWORD</label>
+                    <input type="password" class="form-control " placeholder="비밀번호를 입력해주세요."
+                           name="password" value="1111">
+                </div>
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">PASSWORD CHECK</label>
+                    <input type="password" class="form-control "
+                           placeholder="비밀번호를 다시 입력해주세요."
+                           name="passwordCheck" value="1111">
+                </div>
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">이름</label>
+                    <input type="text" class="form-control " placeholder="이름을 입력해주세요."
+                           name="userName" value="홍길동">
+                </div>
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">닉네임</label>
+                    <input type="text" class="form-control " placeholder="닉네임을 입력해주세요."
+                           name="nickName" value="star1">
+                </div>
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">생년월일</label>
+                    <input type="date" id="birth" class="form-control "
+                           name="birth">
+                </div>
+                <div class="form-group position-relative mb-4">
+                    <label style="font-weight: bold">연락처</label>
+                    <input type="text" class="form-control " placeholder="연락처를 입력해주세요."
+                           name="contact" value="01024442233">
+                </div>
 
-                                <div class="form-body">
-                                    <div class="row">
 
-                                        <div class="col-12">
-                                            <label style="font-weight: bold">ID</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder="아이디를 입력해주세요."
-                                                       name="id" value="user">
-                                                <button class="btn btn-primary" type="button" id="checkId">
-                                                    중복체크
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">PASSWORD</label>
-                                                <input type="password" class="form-control" placeholder="비밀번호를 입력해주세요."
-                                                       name="password" value="1111">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">PASSWORD CHECK</label>
-                                                <input type="password" class="form-control"
-                                                       placeholder="비밀번호를 다시 입력해주세요."
-                                                       name="passwordCheck" value="1111">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">이름</label>
-                                                <input type="text" class="form-control" placeholder="이름을 입력해주세요."
-                                                       name="userName" value="홍길동">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">닉네임</label>
-                                                <input type="text" class="form-control" placeholder="닉네임을 입력해주세요."
-                                                       name="nickName" value="star1">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">생년월일</label>
-                                                <input type="date" id="birth" class="form-control"
-                                                       name="birth">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label style="font-weight: bold">연락처</label>
-                                                <input type="text" class="form-control" placeholder="연락처를 입력해주세요."
-                                                       name="contact" value="01024442233">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 d-flex justify-content-end">
-                                            <div class="form-group">
-                                                <button type="reset"
-                                                        class="btn btn-light-secondary me-1 mb-1 rounded-pill">
-                                                    Reset
-                                                </button>
-                                                <button type="submit"
-                                                        class="btn btn-primary me-1 mb-1 submitBtn rounded-pill">
-                                                    Submit
-                                                </button>
-                                                <a th:href="@{/house/list}">
-                                                    <button type="button"
-                                                            class="btn btn-secondary me-1 mb-1 rounded-pill">
-                                                        List
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </section>
+                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-4">Sign Up</button>
+            </form>
+            <div class="text-center mt-4 text-lg fs-4">
+                <p class='text-gray-600'>Already have an account?
+                    <a th:href="@{/member/login}" class="font-bold">Log in</a>.</p>
             </div>
         </div>
 
+
     </th:block>
 </th:block>
-
-<script>
-
-
-    $(document).ready(function () {
-        console.log("ready");
-    });
-
-</script>

@@ -16,7 +16,7 @@ public class MemberDTO {
 
     private String id;
 
-    private String password, userName, nickName;
+    private String password, name, nickName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;

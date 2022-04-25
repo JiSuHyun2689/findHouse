@@ -3,11 +3,11 @@ package org.suhyun.findhouse.entity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -21,7 +21,7 @@ public class Member extends BaseEntity {
     private String id;
 
     @Column(nullable = false)
-    private String password, userName, nickName;
+    private String password, name, nickName;
 
     @Column(nullable = false)
     private LocalDate birth;
@@ -32,9 +32,9 @@ public class Member extends BaseEntity {
     @ColumnDefault("false")
     private boolean fromSocial;
 
-    public void changeInfo(String password, String userName, String nickName, LocalDate birth, String contract) {
+    public void changeInfo(String password, String name, String nickName, LocalDate birth, String contract) {
         this.password = password;
-        this.userName = userName;
+        this.name = name;
         this.nickName = nickName;
         this.birth = birth;
         this.contact = contract;
@@ -44,4 +44,11 @@ public class Member extends BaseEntity {
         this.modDate = modDate;
     }
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<>();
+
+    public void addMemberRole(MemberRole memberRole){
+        roleSet.add(memberRole);
+    }
 }

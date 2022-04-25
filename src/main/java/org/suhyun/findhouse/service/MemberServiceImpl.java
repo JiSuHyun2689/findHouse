@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = repository.getById(dto.getId());
 
         if (member != null) {
-            member.changeInfo(dto.getPassword(), dto.getUserName(), dto.getNickName(), dto.getBirth(), dto.getContact());
+            member.changeInfo(dto.getPassword(), dto.getName(), dto.getNickName(), dto.getBirth(), dto.getContact());
             member.changeModDate(LocalDateTime.now());
         }
 

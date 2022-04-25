@@ -21,7 +21,7 @@ public interface MemberService {
                 .fromSocial(entity.isFromSocial())
                 .nickName(entity.getNickName())
                 .password(entity.getPassword())
-                .userName(entity.getUserName())
+                .name(entity.getName())
                 .build();
 
         return dto;
@@ -35,7 +35,7 @@ public interface MemberService {
                 .fromSocial(dto.isFromSocial())
                 .id(dto.getId())
                 .password(dto.getPassword())
-                .userName(dto.getUserName())
+                .name(dto.getName())
                 .build();
 
         return entity;

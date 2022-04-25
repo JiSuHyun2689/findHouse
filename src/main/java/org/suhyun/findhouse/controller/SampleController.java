@@ -31,4 +31,19 @@ public class SampleController {
 
         model.addAttribute("dto", dto);
     }
+
+    @GetMapping("/all")
+    public void exAll(){
+        log.info("exAll.................................");
+    }
+
+    @GetMapping("/member")
+    public void exMember(){
+        log.info("exMember.................................");
+    }
+
+    @GetMapping("/admin")
+    public void exAdmin(){
+        log.info("exAdmin.................................");
+    }
 }

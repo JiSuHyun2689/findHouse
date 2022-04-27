@@ -25,6 +25,7 @@ public class AuthMemberDTO extends User {
     public AuthMemberDTO(String username, String password, boolean fromSocial, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = username;
+        this.password = password;
         this.fromSocial = fromSocial;
     }
 }

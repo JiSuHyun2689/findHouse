@@ -39,15 +39,21 @@ public class MemberUserDetailsService implements UserDetailsService {
         log.info(member);
         log.info("-------------------------------------------------------------------------");
 
-        AuthMemberDTO authMember = new AuthMemberDTO(member.getId(),
+        AuthMemberDTO authMember = new AuthMemberDTO(
+                member.getId(),
                 member.getPassword(),
                 member.isFromSocial(),
                 member.getRoleSet().stream().map(role ->
-                        new SimpleGrantedAuthority("ROLE_" + role.name())
-                ).collect(Collectors.toList()));
+                        new SimpleGrantedAuthority("ROLE_" + role.name()))
+                        .collect(Collectors.toList()));
 
         authMember.setName(member.getName());
         authMember.setFromSocial(member.isFromSocial());
+
+        log.info("-------------------------------------------------------------------------");
+        log.info(authMember);
+        log.info("-------------------------------------------------------------------------");
+
 
         return authMember;
     }

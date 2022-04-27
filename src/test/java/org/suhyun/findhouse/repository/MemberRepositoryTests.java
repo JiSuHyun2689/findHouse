@@ -108,5 +108,15 @@ public class MemberRepositoryTests {
 
         System.out.println(member);
 
+        String pw = "1111";
+
+        String enPw = passwordEncoder.encode(pw);
+
+        boolean matchResult = passwordEncoder.matches( member.getPassword(), enPw);
+
+        System.out.println(member.getPassword());
+
+        System.out.println("matchResult : " + matchResult);
+
     }
 }

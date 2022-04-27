@@ -3,6 +3,7 @@ package org.suhyun.findhouse.controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.suhyun.findhouse.dto.HouseDTO;
 import org.suhyun.findhouse.dto.PageRequestDTO;
+import org.suhyun.findhouse.security.dto.AuthMemberDTO;
 import org.suhyun.findhouse.service.HouseService;
 
 @Controller
@@ -33,17 +35,18 @@ public class SampleController {
     }
 
     @GetMapping("/all")
-    public void exAll(){
+    public void exAll() {
         log.info("exAll.................................");
     }
 
     @GetMapping("/member")
-    public void exMember(){
+    public void exMember(@AuthenticationPrincipal AuthMemberDTO authMember){
         log.info("exMember.................................");
+        log.info(authMember);
     }
 
     @GetMapping("/admin")
-    public void exAdmin(){
+    public void exAdmin() {
         log.info("exAdmin.................................");
     }
 }

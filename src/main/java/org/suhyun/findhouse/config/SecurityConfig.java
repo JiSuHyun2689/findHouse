@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.suhyun.findhouse.security.handler.MemberLoginSuccessHandler;
 import org.suhyun.findhouse.security.service.MemberUserDetailsService;
 
 @Configuration
@@ -24,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public MemberLoginSuccessHandler successHandler(){
+        return new MemberLoginSuccessHandler(passwordEncoder());
     }
 
     @Override
@@ -40,12 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http
-                .formLogin()
-                .loginPage("/member/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/house/list")
-                .usernameParameter("id");
+                .formLogin();
+                //.loginPage("/member/login")
+                //.loginProcessingUrl("/login")
+                //.defaultSuccessUrl("/house/list")
+                //.usernameParameter("id");
 
+        http.oauth2Login().successHandler(successHandler());
+        http.rememberMe().tokenValiditySeconds(60*60*7).userDetailsService(userDetailsService());
         http.logout()
                 .logoutSuccessUrl("/house/list");
 

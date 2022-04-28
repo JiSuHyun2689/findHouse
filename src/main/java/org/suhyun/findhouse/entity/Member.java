@@ -21,12 +21,15 @@ public class Member extends BaseEntity {
     private String id;
 
     @Column(nullable = false)
-    private String password, name, nickName;
+    private String password, name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private String nickName;
+
+    @Column(nullable = true)
     private LocalDate birth;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String contact;
 
     @ColumnDefault("false")

@@ -46,11 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http
-                .formLogin();
-                //.loginPage("/member/login")
-                //.loginProcessingUrl("/login")
-                //.defaultSuccessUrl("/house/list")
-                //.usernameParameter("id");
+                .formLogin()
+                .loginPage("/member/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/house/list")
+                .usernameParameter("id");
 
         http.oauth2Login().successHandler(successHandler());
         http.rememberMe().tokenValiditySeconds(60*60*7).userDetailsService(userDetailsService());

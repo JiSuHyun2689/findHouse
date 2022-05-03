@@ -2,6 +2,7 @@ package org.suhyun.findhouse.security.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -14,6 +15,8 @@ import org.suhyun.findhouse.entity.MemberRole;
 import org.suhyun.findhouse.repository.MemberRepository;
 import org.suhyun.findhouse.security.dto.AuthMemberDTO;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -45,17 +48,19 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
         log.info("==========================================================");
 
         String email = null;
+        Map<String, Object> attributes = null;
 
         if(clientName.equals("Google")){
             email = oAuth2User.getAttribute("email");
+            attributes = oAuth2User.getAttributes();
+        }else if(clientName.equals("Naver")){
+            attributes = ofNaver(oAuth2User.getAttributes());
+            email = (String) attributes.get("email");
         }
 
+
+
         log.info("EMAIL : " + email);
-
-        /*
-        Member member = saveSocialMember(email);
-
-        return oAuth2User;*/
 
         Member member = saveSocialMember(email);
 
@@ -66,7 +71,7 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
                 member.getRoleSet().stream().map(
                         role -> new SimpleGrantedAuthority("ROLE_"+role.name())
                 ).collect(Collectors.toList()),
-                oAuth2User.getAttributes()
+                attributes
         );
         authMember.setName(member.getName());
         return authMember;
@@ -94,4 +99,8 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
         return member;
     }
 
+
+    private Map<String, Object> ofNaver(Map<String, Object> attributes){
+        return (Map<String, Object>) attributes.get("response");
+    }
 }

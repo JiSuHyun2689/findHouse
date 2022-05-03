@@ -30,6 +30,19 @@
                 </div>
                 <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
             </form>
+
+            <tbody>
+            <tr>
+                <td><a href="/oauth2/authorization/naver">Naver</a></td>
+            </tr>
+            <tr>
+                <td><a href="/oauth2/authorization/google">Google</a></td>
+            </tr>
+            <tr>
+                <td><a href="/oauth2/authorization/kakao">Kakao</a></td>
+            </tr>
+
+            </tbody>
         </div>
 
         <div th:if="${param.error}" class="alert alert-error">

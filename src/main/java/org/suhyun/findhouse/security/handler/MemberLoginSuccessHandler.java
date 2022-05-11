@@ -35,13 +35,15 @@ public class MemberLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         boolean fromSocial = authMember.isFromSocial();
 
-        log.info("회원 정보를 수정해야 하나요? " + fromSocial);
+        log.info("소셜 로그인을 했나요? " + fromSocial);
 
         boolean passwordResult = passwordEncoder.matches("1111", authMember.getPassword());
 
         if(fromSocial && passwordResult){
+            System.out.println("회원 정보를 수정해야합니다.");
             redirectStrategy.sendRedirect(request, response, "/member/modify?from=social&id="+authMember.getId());
+        }else {
+            redirectStrategy.sendRedirect(request, response, "/house/list");
         }
-
     }
 }

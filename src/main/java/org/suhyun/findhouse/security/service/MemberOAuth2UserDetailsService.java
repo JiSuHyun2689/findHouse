@@ -15,6 +15,7 @@ import org.suhyun.findhouse.entity.MemberRole;
 import org.suhyun.findhouse.repository.MemberRepository;
 import org.suhyun.findhouse.security.dto.AuthMemberDTO;
 
+import java.sql.SQLOutput;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("---------------------------------------------------------");
         log.info("userRequest : " + userRequest);
 
@@ -50,14 +51,16 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
         String email = null;
         Map<String, Object> attributes = null;
 
-        if(clientName.equals("Google")){
+        if (clientName.equals("Google")) {
             email = oAuth2User.getAttribute("email");
             attributes = oAuth2User.getAttributes();
-        }else if(clientName.equals("Naver")){
+        } else if (clientName.equals("Naver")) {
             attributes = ofNaver(oAuth2User.getAttributes());
             email = (String) attributes.get("email");
+        } else if (clientName.equals("Kakao")) {
+            attributes = ofKakao(oAuth2User.getAttributes());
+            email = (String) attributes.get("email");
         }
-
 
 
         log.info("EMAIL : " + email);
@@ -69,7 +72,7 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
                 member.getPassword(),
                 true,
                 member.getRoleSet().stream().map(
-                        role -> new SimpleGrantedAuthority("ROLE_"+role.name())
+                        role -> new SimpleGrantedAuthority("ROLE_" + role.name())
                 ).collect(Collectors.toList()),
                 attributes
         );
@@ -81,7 +84,7 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
 
         Optional<Member> result = repository.findById(email, true);
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
             return result.get();
         }
 
@@ -100,7 +103,11 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
     }
 
 
-    private Map<String, Object> ofNaver(Map<String, Object> attributes){
+    private Map<String, Object> ofNaver(Map<String, Object> attributes) {
         return (Map<String, Object>) attributes.get("response");
+    }
+
+    private Map<String, Object> ofKakao(Map<String, Object> attributes) {
+        return (Map<String, Object>) attributes.get("kakao_account");
     }
 }

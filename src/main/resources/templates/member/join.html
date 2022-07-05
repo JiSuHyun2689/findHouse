@@ -13,7 +13,7 @@
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">ID</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control " placeholder="아이디를 입력해주세요."
+                        <input type="text" class="form-control user-info " placeholder="아이디를 입력해주세요."
                                name="id" value="user" id="id">
                         <button class="btn btn-primary" type="button" id="checkId">
                             중복체크
@@ -22,33 +22,33 @@
                 </div>
                 <div class="form-group position-relative  mb-4">
                     <label style="font-weight: bold">PASSWORD</label>
-                    <input type="password" class="form-control checkPassword" placeholder="비밀번호를 입력해주세요."
+                    <input type="password" class="form-control checkPassword user-info" placeholder="비밀번호를 입력해주세요."
                            name="password" value="1111" id="password">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">PASSWORD CHECK</label>
-                    <input type="password" class="form-control checkPassword"
+                    <input type="password" class="form-control checkPassword user-info"
                            placeholder="비밀번호를 다시 입력해주세요."
                            name="passwordCheck" value="1111" id="passwordCheck">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">이름</label>
-                    <input type="text" class="form-control " placeholder="이름을 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="이름을 입력해주세요."
                            name="name" value="홍길동">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">닉네임</label>
-                    <input type="text" class="form-control " placeholder="닉네임을 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="닉네임을 입력해주세요."
                            name="nickName" value="star1">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">생년월일</label>
-                    <input type="date" id="birth" class="form-control "
+                    <input type="date" id="birth" class="form-control user-info extra"
                            name="birth">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">연락처</label>
-                    <input type="text" class="form-control " placeholder="연락처를 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="연락처를 입력해주세요."
                            name="contact" value="01024442233">
                 </div>
 
@@ -75,19 +75,61 @@
         var passwordCheck = $("#passwordCheck");
         var inputForm = $("#inputForm");
         var checkPassword = $(".checkPassword");
+        var infos = $(".user-info");
+        var extra = $(".extra");
+
+        extra.blur(function() {
+            if ($(this).val() != "") {
+                $(this).data("state", true);
+            } else {
+                $(this).data("state", false);
+            }
+        });
 
 
-        // form submit check
-        /*
-        * if empty -> submit no
-        * else -> submit
-        * */
+        // check Empty and Checks
+        inputForm.submit(function (event) {
+            console.log("inputForm submit !!!!!");
+
+            infos.each(function (idx, target) {
+                console.log(idx, target);
+                event.preventDefault();
+                if (!checkEmptyValue(target) || !checkState(target)) {
+                    console.log("check");
+
+                    return false;
+                }
+                return true;
+            });
+            //return true;
+        });
+
+        function checkState(target){
+            console.log("11111" , target);
+            var state = $(target).getAttribute("state");
+            console.log(state);
+            if(!state) {
+                sweetAlert("warning", target.name + "를 다시 입력해주세요.", false, target);
+                return false;
+            }
+            return true;
+        }
+
+
+        function checkEmptyValue(target) {
+            var value = $(target).val();
+            if (value == "") {
+                sweetAlert("warning", target.name + "를 다시 입력해주세요.", false, target);
+                return false;
+            }
+            return true;
+        }
 
 
         // id check
-        checkId.click(function (){
+        checkId.click(function () {
             console.log("chekc id click !!!");
-            console.log("id : " + id);
+            console.log("id : " + id.val());
 
             $.ajax({
                 url: '/ajax/duplicateCheckId?id=' + id.val(),
@@ -96,25 +138,26 @@
                 dataType: "text",
                 success: function (result) {
                     console.log("check id result: " + result);
-                    if(result == 'false'){
-                        sweetAlert('success', 'this id is available', true);
-                    }else{
-                        sweetAlert('warning', 'this id is not available', false);
+                    if (result == 'false') {
+                        sweetAlert('success', 'this id is available', true, "id");
+                        id.dataset.state = "true";
+                        //id.data("state", true);
+                    } else {
+                        sweetAlert('warning', 'this id is not available', false, "id");
+                        //id.data("state", false);
+                        id.setAttribute("data-state", "false");
                     }
                 }
             });
         })
 
         // pw check
-        checkPassword.on('input', function(){
+        checkPassword.on('input', function () {
             password.val() == passwordCheck.val() ? changePw(true) : changePw(false);
         })
 
-
-        // empty value check
-
         // sweet alert
-        function sweetAlert(icon, title, confirm){
+        function sweetAlert(icon, title, confirm, target) {
             Swal.fire({
                 icon: icon,
                 title: title,
@@ -122,56 +165,35 @@
                 showCancelButton: true,
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel'
-            }).then(result =>{
-                if(result.isDismissed){
+            }).then(result => {
+                if (target == "id" && result.isDismissed) {
                     id.val('');
                 }
             })
         }
 
-        function changePw(result){
-            // pw
+        function changePw(result) {
+            var add = '';
+            var remove = '';
+            var pwState = false;
+            var pws = checkPassword;
 
+            if (result == true) {
+                add = 'is-valid';
+                remove = 'is-invalid';
+                pwState = true;
+            } else {
+                add = 'is-invalid';
+                remove = 'is-valid';
+                pwState = false;
+            }
+
+            pws.each(function (idx, target) {
+                target.classList.remove(remove);
+                target.classList.add(add);
+                target.data("state", pwState);
+            })
         }
-
-        /*
-        checkId.click(function (e) {
-            console.log("check id click !");
-            var icon = '';
-            var title = '';
-
-            $.ajax({
-                url: '/ajax/duplicateCheckId?id=' + id.val(),
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "text",
-                success: function (result) {
-                    console.log("result: " + result);
-                    if(result == 'false'){
-                        icon = 'success';
-                        title = 'this id is available';
-                    }else{
-                        icon = 'warning';
-                        title = 'this id is not available';
-                    }
-
-                    Swal.fire({
-                        icon: icon,
-                        title: title,
-                        showConfirmButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: '사용하기',
-                        cancelButtonText: '취소'
-                    }).then(result =>{
-                        if(result.isDismissed){
-                            id.val('');
-                        }
-                    })
-                }, error: function (request, status, error) {
-                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            });
-        });*/
     });
 
 </script>

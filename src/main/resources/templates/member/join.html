@@ -89,26 +89,18 @@
 
         // check Empty and Checks
         inputForm.submit(function (event) {
-            console.log("inputForm submit !!!!!");
-
             infos.each(function (idx, target) {
-                console.log(idx, target);
-                event.preventDefault();
                 if (!checkEmptyValue(target) || !checkState(target)) {
-                    console.log("check");
-
+                    event.preventDefault();
                     return false;
                 }
-                return true;
             });
-            //return true;
+            return true;
         });
 
         function checkState(target){
-            console.log("11111" , target);
-            var state = $(target).getAttribute("state");
-            console.log(state);
-            if(!state) {
+            var state = $(target).data("state");
+            if(!state || state == "") {
                 sweetAlert("warning", target.name + "를 다시 입력해주세요.", false, target);
                 return false;
             }
@@ -140,12 +132,11 @@
                     console.log("check id result: " + result);
                     if (result == 'false') {
                         sweetAlert('success', 'this id is available', true, "id");
-                        id.dataset.state = "true";
-                        //id.data("state", true);
+                        console.log(id);
+                        id.data("state", true);
                     } else {
                         sweetAlert('warning', 'this id is not available', false, "id");
-                        //id.data("state", false);
-                        id.setAttribute("data-state", "false");
+                        id.data("state", false);
                     }
                 }
             });
@@ -190,9 +181,11 @@
 
             pws.each(function (idx, target) {
                 target.classList.remove(remove);
-                target.classList.add(add);
-                target.data("state", pwState);
+                target.classList.add(add);;
             })
+            password.data("state", pwState);
+            passwordCheck.data("state", pwState);
+
         }
     });
 

@@ -47,6 +47,9 @@
                                                 표시되지 않습니다!</i></small>
                                                 <input type="text" class="form-control" name="address"
                                                        th:value="${dto.address}">
+                                                <input type="text" class="form-control" value="상세주소">
+                                                <input type="button" class="btn btn-light-secondary me-1 mb-1 rounded-pill" value="search" id="addressSearchBtn">
+
                                             </div>
                                         </div>
 
@@ -619,7 +622,9 @@
                                             <label style="font-weight: bold">Comments</label>
                                         </div>
                                     </div>
+                                    <div id="map" style="width: 500px; height: 400px">
 
+                                    </div>
 
                                     <div class="col-12 d-flex justify-content-between">
                                         <div>
@@ -657,6 +662,7 @@
 </th:block>
 
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=546ca95baaee220f9bd82f6ddfd77603&libraries=services"></script>
 <script>
 
     $(document).ready(function () {
@@ -676,6 +682,53 @@
             form.append(comletionDate);
             form.submit();
         });*/
+
+        var addressSearchBtn = $("#addressSearchBtn");
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var geocoder = new kakao.maps.services.Geocoder();
+
+
+        addressSearchBtn.on("click", function (event){
+
+            var address = $("#address");
+            //상세주소 빈칸처리 필요
+
+            geocoder.addressSearch(address.val(), function(result, status) {
+
+                // 정상적으로 검색이 완료됐으면
+                if (status === kakao.maps.services.Status.OK) {
+
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+                    marker.setMap(map);
+                    map.setCenter(coords);
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '주소를 다시 확인해주세요.',
+                        showConfirmButton: true,
+                        timer: 1500
+                    }).then(result => {
+                        address.val('');
+                        // 상세주소 빈칸 처리 필요
+                    })
+                }
+            });
+        });
+
+
 
         // house remove button event
         $("#removeBtn").click(function () {

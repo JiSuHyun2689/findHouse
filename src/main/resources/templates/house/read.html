@@ -61,7 +61,7 @@
                                         <div class="col-8">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">주소</label>
-                                                <input type="text" class="form-control" name="address"
+                                                <input type="text" class="form-control" name="address" id="address"
                                                        th:value="${dto.address}" readonly>
                                             </div>
                                         </div>
@@ -624,13 +624,17 @@
                                                                     <i data-feather="x"></i>
                                                                 </button>
                                                             </div>
-                                                            <div class="modal-body">
+
+
+                                                            <div class="modal-body"
+                                                                 th:if="${#authentication.principal.id} != null">
                                                                 <div class="form-group">
                                                                     <label style="font-weight: bold">Reviewer
                                                                         ID</label>
                                                                     <input type="text" class="form-control"
                                                                            name="reviewerId"
-                                                                           th:value="${#authentication.principal.id}" readonly>
+                                                                           th:value="${#authentication.principal.id}"
+                                                                           readonly>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label style="font-weight: bold">Grade<span
@@ -710,6 +714,9 @@
                                         </div>
 
 
+                                        <div id="map" style="width: 500px; height: 400px">
+
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -722,7 +729,7 @@
     </th:block>
 </th:block>
 
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=546ca95baaee220f9bd82f6ddfd77603&libraries=services"></script>
 <script>
 
     $(document).ready(function () {
@@ -735,6 +742,34 @@
         var targetId = '[[${dto.id}]]';
         var reviewNum;
         var grade = 0;
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        geocoder.addressSearch($("#address").val(), function (result, status) {
+
+            console.log($("#address").val());
+            console.log(result);
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+                marker.setMap(map);
+                map.setCenter(coords);
+            }
+        });
 
 
         // house remove button event

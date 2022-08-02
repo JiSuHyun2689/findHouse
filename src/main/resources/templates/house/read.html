@@ -760,6 +760,93 @@
             if (status === kakao.maps.services.Status.OK) {
 
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                var random = Math.floor(Math.random() * 100) + 50;
+                console.log("random : " ,  random);
+
+
+/*
+                // 지도에 표시할 원을 생성합니다
+                var circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(result[0].y, result[0].x),  // 원의 중심좌표 입니다
+                    radius: random, // 미터 단위의 원의 반지름입니다
+                    strokeWeight: 5, // 선의 두께입니다
+                    strokeColor: '#75B8FA', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다
+                });
+
+// 지도에 원을 표시합니다
+                circle.setMap(map);*/
+
+
+
+                // 지도에 표시할 원을 생성합니다
+                var newR = Math.floor(Math.random() * random) + random;
+                console.log(newR*100000000);
+
+                console.log(result[0].y + '100000000');
+                var newY = result[0].y + (newR*100000000000000000);
+                var newX = result[0].x + (newR*100000000000000000);
+
+                console.log('before LatLng ', result[0]);
+                console.log('before coords ', coords);
+                coords.La = coords.La + (newR * 0.001);
+                coords.Ma = coords.Ma + (newR * 0.001);
+                newX = coords.La;
+                newY = coords.Ma;
+
+                console.log('after coords ', coords);
+                console.log(newY, newX);
+
+                coords = new kakao.maps.LatLng(newY, newX);
+                var circle1 = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(newY, newX),  // 원의 중심좌표 입니다
+                    radius: random, // 미터 단위의 원의 반지름입니다
+                    strokeWeight: 5, // 선의 두께입니다
+                    strokeColor: '#FE009B', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다
+                });
+
+// 지도에 원을 표시합니다
+                circle1.setMap(map);
+
+
+
+
+                /*
+                // 지도를 클릭한 위치에 표출할 마커입니다
+                var marker = new kakao.maps.Marker({
+                    // 지도 중심좌표에 마커를 생성합니다
+                    position: map.getCenter()
+                });
+// 지도에 마커를 표시합니다
+                marker.setMap(map);
+
+
+
+                kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+
+                    // 클릭한 위도, 경도 정보를 가져옵니다
+                    var latlng = mouseEvent.latLng;
+                    console.log('111', latlng);
+
+                    // 마커 위치를 클릭한 위치로 옮깁니다
+                    marker.setPosition(latlng);
+
+                    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+                    message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+                    var resultDiv = document.getElementById('clickLatlng');
+                    resultDiv.innerHTML = message;
+
+                });*/
+
 
                 // 결과값으로 받은 위치를 마커로 표시합니다
                 var marker = new kakao.maps.Marker({
@@ -770,6 +857,8 @@
                 map.setCenter(coords);
             }
         });
+
+
 
 
         // house remove button event

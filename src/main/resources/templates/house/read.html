@@ -26,7 +26,7 @@
                             <form class="form form-vertical" method="post">
                                 <div class="form-body">
                                     <div class="row">
-                                        <th:block sec:authentication="name"></th:block>
+                                        <!--<th:block sec:authentication="name"></th:block>-->
 
 
                                         <input type="hidden" name="houseNum" th:value="${dto.houseNum}">
@@ -527,7 +527,13 @@
                                             </div>
                                         </li>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="form-group custom-control">
+                                            <div id="map" style="height: 300px; border-radius: 10px;">
 
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="col-12">
                                         <div class="form-group fileForm custom-control">
@@ -714,9 +720,6 @@
                                         </div>
 
 
-                                        <div id="map" style="width: 500px; height: 400px">
-
-                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -729,7 +732,6 @@
     </th:block>
 </th:block>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=546ca95baaee220f9bd82f6ddfd77603&libraries=services"></script>
 <script>
 
     $(document).ready(function () {
@@ -743,122 +745,72 @@
         var reviewNum;
         var grade = 0;
 
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
 
+        var mapContainer = document.getElementById('map'),
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 4
+            };
         var map = new kakao.maps.Map(mapContainer, mapOption);
         var geocoder = new kakao.maps.services.Geocoder();
 
         geocoder.addressSearch($("#address").val(), function (result, status) {
 
-            console.log($("#address").val());
-            console.log(result);
-            // 정상적으로 검색이 완료됐으면
             if (status === kakao.maps.services.Status.OK) {
 
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                var random = Math.floor(Math.random() * 100) + 50;
-                console.log("random : " ,  random);
+                // 보안 문제로 본 주소를 그대로 노출하지 않고, 본 주소를 포함하는 랜덤한 길이의 원으로 위치 표시
+                // 본 주소에서 랜덤한 길이의 반지름을 가지는 원 생성
+                var random = Math.floor(Math.random() * 100) + 30;
+                console.log("default random R : ", random);
+                var beforeCoords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
+                // 랜덤 좌표를 구할 때, -1할지 +1할지
+                var list = [1, -1];
+                var randomNum = Math.floor(Math.random() * 2);
+                console.log(randomNum);
 
-/*
-                // 지도에 표시할 원을 생성합니다
-                var circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(result[0].y, result[0].x),  // 원의 중심좌표 입니다
-                    radius: random, // 미터 단위의 원의 반지름입니다
-                    strokeWeight: 5, // 선의 두께입니다
-                    strokeColor: '#75B8FA', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'dashed', // 선의 스타일 입니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.7  // 채우기 불투명도 입니다
-                });
-
-// 지도에 원을 표시합니다
-                circle.setMap(map);*/
-
-
-
-                // 지도에 표시할 원을 생성합니다
+                // 원 안의 랜덤 좌표 구하기
                 var newR = Math.floor(Math.random() * random) + random;
-                console.log(newR*100000000);
+                var newX = beforeCoords.La - ((newR * 0.00001) * list[randomNum]);
+                var newY = beforeCoords.Ma - ((newR * 0.00001) * list[randomNum]);
+                var afterCoords = new kakao.maps.LatLng(newY, newX);
 
-                console.log(result[0].y + '100000000');
-                var newY = result[0].y + (newR*100000000000000000);
-                var newX = result[0].x + (newR*100000000000000000);
+                // 클릭한 위치를 기준으로 선을 생성하고 지도위에 표시합니다
+                clickLine = new kakao.maps.Polyline({
+                    map: map, // 선을 표시할 지도입니다
+                    path: [beforeCoords, afterCoords], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+                    strokeWeight: 0, // 선의 두께입니다
+                    strokeColor: '#db4040', // 선의 색깔입니다
+                    strokeOpacity: 0, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'solid' // 선의 스타일입니다
+                });
 
-                console.log('before LatLng ', result[0]);
-                console.log('before coords ', coords);
-                coords.La = coords.La + (newR * 0.001);
-                coords.Ma = coords.Ma + (newR * 0.001);
-                newX = coords.La;
-                newY = coords.Ma;
-
-                console.log('after coords ', coords);
-                console.log(newY, newX);
-
-                coords = new kakao.maps.LatLng(newY, newX);
-                var circle1 = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(newY, newX),  // 원의 중심좌표 입니다
-                    radius: random, // 미터 단위의 원의 반지름입니다
-                    strokeWeight: 5, // 선의 두께입니다
-                    strokeColor: '#FE009B', // 선의 색깔입니다
+                var distance = Math.round(clickLine.getLength());
+                console.log('distance : ', distance);
+                console.log('newR : ', newR);
+                var radius = random + distance;
+                console.log('radius : ', radius);
+                var circle = new kakao.maps.Circle({
+                    center: afterCoords,  // 원의 중심좌표 입니다
+                    radius: radius, // 미터 단위의 원의 반지름입니다
+                    strokeWeight: 3, // 선의 두께입니다
+                    strokeColor: '#3982FF', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'dashed', // 선의 스타일 입니다
                     fillColor: '#CFE7FF', // 채우기 색깔입니다
                     fillOpacity: 0.7  // 채우기 불투명도 입니다
                 });
 
-// 지도에 원을 표시합니다
-                circle1.setMap(map);
+                if (radius < 150) {
+                    map.setLevel(3);
+                }else if (radius > 300){
+                    map.setLevel(5);
+                }
 
-
-
-
-                /*
-                // 지도를 클릭한 위치에 표출할 마커입니다
-                var marker = new kakao.maps.Marker({
-                    // 지도 중심좌표에 마커를 생성합니다
-                    position: map.getCenter()
-                });
-// 지도에 마커를 표시합니다
-                marker.setMap(map);
-
-
-
-                kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-
-
-                    // 클릭한 위도, 경도 정보를 가져옵니다
-                    var latlng = mouseEvent.latLng;
-                    console.log('111', latlng);
-
-                    // 마커 위치를 클릭한 위치로 옮깁니다
-                    marker.setPosition(latlng);
-
-                    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                    message += '경도는 ' + latlng.getLng() + ' 입니다';
-
-                    var resultDiv = document.getElementById('clickLatlng');
-                    resultDiv.innerHTML = message;
-
-                });*/
-
-
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-                marker.setMap(map);
-                map.setCenter(coords);
+                circle.setMap(map);
+                map.setCenter(afterCoords);
             }
         });
-
-
 
 
         // house remove button event

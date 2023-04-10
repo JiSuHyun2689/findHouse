@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Data
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 @Builder
 public class MemberDTO {
 
+    @Id
     private String id;
 
     private String password, name, nickName;

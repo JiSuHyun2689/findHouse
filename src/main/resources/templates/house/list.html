@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<script>
+       function addressShow(address){
+            let addressArr = address.split(" ");
+            return addressArr[0];
+        }
+
+
+</script>
+
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
 
@@ -26,10 +35,12 @@
                                     <div class="card-content">
                                         <div class="card-body">
                                             <h4 class="card-title">
-                                                <div style="font-weight: bold">[[${dto.houseNum}]].</div>
-                                                [[${dto.title}]]
+                                                <div style="font-weight: bold">[[${dto.houseNum}]]. [[${dto.title}]]</div>
+
                                             </h4>
-                                            <h6 class="card-subtitle">[[${dto.address}]]</h6>
+                                            <h6 class="card-subtitle">
+                                                <script>document.write(addressShow('[[${dto.address}]]'));</script>
+                                            </h6>
                                         </div>
                                         <div id="carouselExampleSlidesOnly" class="carousel slide"
                                              data-bs-ride="carousel">
@@ -43,133 +54,16 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="card-body">
-                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                                       href="#home"
-                                                       role="tab" aria-controls="home" aria-selected="true">Info</a>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                                       href="#profile" role="tab" aria-controls="profile"
-                                                       aria-selected="false">Option</a>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                                       href="#contact" role="tab" aria-controls="contact"
-                                                       aria-selected="false">Contact</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade active show" id="home" role="tabpanel"
-                                                     aria-labelledby="home-tab">
-                                                    <br>
-                                                    <table>
-                                                        <thead>
-                                                        <tr>Id</tr>
-                                                        <tr>RegDate</tr>
-
-
-                                                        </thead>
-                                                        <tbody>
-                                                        <td>
-                                                            <p>[[${dto.id}]]</p>
-                                                        </td>
-                                                        <td><p>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</p>
-                                                        </td>
-                                                        </tbody>
-                                                    </table>
-                                                    <td>[[${dto.id}]]</td>
-                                                    <td>ContractType</td>
-                                                    <td>BuildingType</td>
-                                                    <td>Area</td>
-                                                    <td>RegDate</td>
-                                                    <td>View</td>
-
-                                                    <td>[[${dto.id}]]</td>
-                                                    <td>[[${dto.contractType}]]</td>
-                                                    <td>[[${dto.buildingType}]]</td>
-                                                    <td>[[${dto.area}]]㎡</td>
-
-                                                    <td>[[${dto.view}]]</td>
-                                                    </p>
-                                                </div>
-                                                <div class="tab-pane fade" id="profile" role="tabpanel"
-                                                     aria-labelledby="profile-tab">
-                                                    Integer interdum diam eleifend metus lacinia, quis gravida eros
-                                                    mollis.
-                                                    Fusce non sapien
-                                                    sit amet magna dapibus
-                                                    ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum
-                                                    non. Duis
-                                                    a mauris ex.
-                                                    Ut finibus risus sed massa
-                                                    mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
-                                                    Integer
-                                                    pretium dolor
-                                                    at sapien laoreet ultricies.
-                                                    Fusce congue et lorem id convallis. Nulla volutpat tellus nec
-                                                    molestie
-                                                    finibus. In nec
-                                                    odio tincidunt eros finibus
-                                                    ullamcorper. Ut sodales, dui nec posuere finibus, nisl sem aliquam
-                                                    metus, eu
-                                                    accumsan
-                                                    lacus felis at odio. Sed lacus
-                                                    quam, convallis quis condimentum ut, accumsan congue massa.
-                                                    Pellentesque et
-                                                    quam vel
-                                                    massa pretium ullamcorper vitae eu
-                                                    tortor.
-                                                </div>
-                                                <div class="tab-pane fade" id="contact" role="tabpanel"
-                                                     aria-labelledby="contact-tab">
-                                                    <p class="mt-2">Duis ultrices purus non eros fermentum hendrerit.
-                                                        Aenean
-                                                        ornare interdum
-                                                        viverra. Sed ut odio velit. Aenean eu diam
-                                                        dictum nibh rhoncus mattis quis ac risus. Vivamus eu congue
-                                                        ipsum.
-                                                        Maecenas id
-                                                        sollicitudin ex. Cras in ex vestibulum,
-                                                        posuere orci at, sollicitudin purus. Morbi mollis elementum
-                                                        enim, in
-                                                        cursus sem
-                                                        placerat ut.</p>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="card-body">
                                             <p class="card-text">
                                             <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                    <tr>
-                                                        <td>[[${dto.id}]]</td>
-                                                        <td>ContractType</td>
-                                                        <td>BuildingType</td>
-                                                        <td>Area</td>
-                                                        <td>RegDate</td>
-                                                        <td>View</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>[[${dto.id}]]</td>
-                                                        <td>[[${dto.contractType}]]</td>
-                                                        <td>[[${dto.buildingType}]]</td>
-                                                        <td>[[${dto.area}]]㎡</td>
-                                                        <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
-                                                        <td>[[${dto.view}]]</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+
                                             </div>
                                             </p>
 
-
+                                            <span class="badge contractType" th:data-value="${dto.contractType}">[[${dto.contractType}]]</span>
+                                            <span class="badge buildingType" th:data-value="${dto.BuildingType}">[[${dto.BuildingType}]]</span>
+                                            <span class="area" th:data-value="${dto.area}">[[${dto.area}]]㎡</span>
                                             [[${dto}]]
                                         </div>
                                     </div>
@@ -322,6 +216,46 @@
             $("input[name='page']").remove();
             searchForm.submit();
         });
+
+
+        $(".contractType").each(function(i, target){
+            var contractType = $(target).attr('data-value');
+            var className = "";
+            if(contractType == "전세"){
+                className = "bg-primary";
+            }else if(contractType == "월세"){
+                className = "bg-success";
+            }else if(contractType == "매매"){
+                className = "bg-secondary";
+            }else{
+                className = "bg-info";
+            }
+
+            $(target).addClass(className);
+        });
+
+        $(".buildingType").each(function(i, target){
+            var buildingType = $(target).attr('data-value');
+            var className = "";
+            if(buildingType == "원룸"){
+                className = "bg-light-primary";
+            }else if(buildingType == "투룸"){
+                className = "bg-light-success";
+            }else if(buildingType == "빌라"){
+                className = "bg-light-secondary";
+            }else if(buildingType == "오피스텔"){
+                className = "bg-light-info";
+            }else if(buildingType == "아파트"){
+                className = "bg-light-danger";
+            }else if(buildingType == "단독주택"){
+                className = "bg-light-warning";
+            }else{
+                className = "bg-light-dark";
+            }
+
+            $(target).addClass(className);
+        });
+
 
     });
 </script>

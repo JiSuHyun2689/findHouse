@@ -53,6 +53,7 @@ public class MemberController {
         log.info("Member Join Post ------------------------------------------------------------------------");
         log.info(dto);
 
+        dto.getPassword();
         String id = service.register(dto);
 
         if (id != null)

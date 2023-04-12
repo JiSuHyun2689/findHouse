@@ -20,26 +20,22 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/ajax")
 @RequiredArgsConstructor
-public class AjaxController {
+public class AjaxController{
 
     @Autowired
     private MemberService memberService;
 
 
     @GetMapping("/duplicateCheckId")
-    public ResponseEntity<Boolean> duplicateCheckId(String id) throws Exception{
+    public ResponseEntity<Boolean> duplicateCheckId(String id){
 
         log.info("Duplicate Check Id : " + id + ".............................................................");
 
         boolean result = false;
 
-        try {
-            result = memberService.read(id) != null ? true : false;
-        }catch(Exception e){
-            log.info(e);
-            result =false;
+        if(memberService.read(id) != null){
+            result = true;
         }
-
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

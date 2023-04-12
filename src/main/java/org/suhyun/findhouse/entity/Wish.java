@@ -16,11 +16,11 @@ public class Wish extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishNum;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "house_num")
     private House house;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade =CascadeType.ALL)
     @JoinColumn(name = "id")
     private Member member;
 }

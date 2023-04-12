@@ -9,6 +9,7 @@ import org.suhyun.findhouse.entity.House;
 import org.suhyun.findhouse.entity.Wish;
 import org.suhyun.findhouse.repository.WishRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,10 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
+    @Transactional
     public Long register(WishDTO wishDTO) {
+
+        log.info("wish register check !!!! " + wishDTO);
 
         Wish wish = dtoToEntity(wishDTO);
 

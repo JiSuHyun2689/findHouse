@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Builder
 public class MemberDTO {
 
-    @Id
     private String id;
 
     private String password, name, nickName;

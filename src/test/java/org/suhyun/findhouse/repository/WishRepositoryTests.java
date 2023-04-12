@@ -26,7 +26,7 @@ public class WishRepositoryTests {
 
             Long houseNum = (long) (Math.random() * 5) + 1;
 
-            Member member = Member.builder().id("user1").build();
+            Member member = Member.builder().id("user").build();
 
             Wish wish = Wish.builder()
                     .house(House.builder().houseNum(houseNum).build())
@@ -80,5 +80,26 @@ public class WishRepositoryTests {
 
     }
 
+
+    @Test
+    public void insertWishTest2() {
+
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+
+            Long houseNum = 2L;
+
+            Member member = Member.builder().id("user").build();
+
+            Wish wish = Wish.builder()
+                    .house(House.builder().houseNum(houseNum).build())
+                    .member(member)
+                    .build();
+
+
+            System.out.println(wish);
+            wishRepository.save(wish);
+        });
+
+    }
 
 }

@@ -3,9 +3,12 @@ package org.suhyun.findhouse.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.suhyun.findhouse.dto.MemberDTO;
 import org.suhyun.findhouse.entity.Member;
+import org.suhyun.findhouse.entity.MemberRole;
 import org.suhyun.findhouse.repository.MemberRepository;
 
 import java.time.LocalDateTime;
@@ -19,13 +22,21 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepository repository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public String register(MemberDTO dto) {
 
         log.info("Member Register -----------------------------------------------------");
         log.info(dto);
 
-        String id = repository.save(dtoToEntity(dto)).getId();
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        Member member = dtoToEntity(dto);
+
+        member.addMemberRole(MemberRole.USER);
+
+        String id = repository.save(member).getId();
 
         return id;
     }
@@ -36,9 +47,14 @@ public class MemberServiceImpl implements MemberService {
         log.info("Member read -----------------------------------------------------");
         log.info(id);
 
-        MemberDTO dto = entityToDTo(repository.getById(id));
+        boolean check = repository.existsById(id);
 
-        return dto;
+        if(check) {
+            MemberDTO dto = entityToDTo(repository.getById(id));
+            return dto;
+        }
+
+        return null;
     }
 
     @Override

@@ -1006,7 +1006,7 @@
         }
 
         function getHouseWishOfMember() {
-            var id = "user100"; // 임시 아이디
+            var id = '[[${#authentication.principal.id}]]'; // 임시 아이디
             $.getJSON("/wish/" + houseNum + "/" + id, function (arr) {
                 console.log("get house wish member : " + houseNum + ", " + id);
                 if (arr != null) {
@@ -1021,7 +1021,7 @@
 
             var icon = $(this);
             var current = icon.data("current");
-            var id = "user100"; // 임시 아이디
+            var id = '[[${#authentication.principal.id}]]'; // 임시 아이디
             var data = {
                 houseNum: houseNum,
                 id: id

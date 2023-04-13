@@ -90,14 +90,16 @@ public class WishRepositoryTests {
 
             Member member = Member.builder().id("user").build();
 
-            Wish wish = Wish.builder()
-                    .house(House.builder().houseNum(houseNum).build())
-                    .member(member)
-                    .build();
+            House house = House.builder().houseNum(houseNum).build();
+
+            Wish wish = Wish.builder().house(house).member(member).build();
 
 
-            System.out.println(wish);
-            wishRepository.save(wish);
+            System.out.println("house:::::::::: " + house);
+            System.out.println(":::::: wish :::::::: + " + wish);
+            wish = wishRepository.save(wish);
+            System.out.println("test ::::: "+wish);
+
         });
 
     }

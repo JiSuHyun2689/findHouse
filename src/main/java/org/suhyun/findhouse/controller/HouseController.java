@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.suhyun.findhouse.dto.*;
 import org.suhyun.findhouse.service.*;
 
+import java.security.Principal;
+
 @Controller
 @Log4j2
 @RequestMapping("/house")
@@ -32,12 +34,13 @@ public class HouseController {
 
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(PageRequestDTO pageRequestDTO, Model model, Principal principal) {
 
         log.info("house list ....................... " + pageRequestDTO);
 
         //model.addAttribute("result", houseService.getList(pageRequestDTO));
         model.addAttribute("result", houseService.getSearchList(pageRequestDTO));
+        model.addAttribute("user", principal);
     }
 
 

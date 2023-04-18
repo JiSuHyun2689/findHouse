@@ -34,7 +34,8 @@
         <script th:src="@{/js/main.js}"></script>
 
 
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=546ca95baaee220f9bd82f6ddfd77603&libraries=services"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=546ca95baaee220f9bd82f6ddfd77603&libraries=services"></script>
 
         <!--
         <link rel="stylesheet" th:href="@{/vendors/rater-js/style.css}">
@@ -71,9 +72,9 @@
                         </li>
 
                         <li class="sidebar-item active ">
-                            <a th:href="@{/house/}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>회원가입 </span>
+                            <a th:href="@{/member/join}" class='sidebar-link'>
+                                <i class="bi bi-person-badge"></i>
+                                <span>회원가입</span>
                             </a>
                         </li>
                     </ul>
@@ -90,7 +91,8 @@
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent" sec:authorize="isAuthenticated()">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent"
+                             sec:authorize="isAuthenticated()">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                                 <li class="nav-item dropdown me-1">
                                     <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown"
@@ -117,13 +119,14 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <div class="dropdown" >
+                            <div class="dropdown">
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="user-menu d-flex" >
+                                    <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600" ></h6>
+                                            <h6 class="mb-0 text-gray-600"></h6>
                                             <p class="mb-0 text-sm text-gray-600" sec:authentication="name"></p>
-                                            <p class="mb-0 text-sm text-gray-600" sec:authentication="principal.name">님</p>
+                                            <p class="mb-0 text-sm text-gray-600" sec:authentication="principal.name">
+                                                님</p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
 
@@ -133,13 +136,21 @@
                                         </div>
                                     </div>
                                 </a>
+
+                                <a th:value="user"></a>
+                                <!--
+                                <div th:if="${#authentication.principal.id} != null">
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
 
-                                    <li><a class="dropdown-item" th:src="@{/member/modify?id="><i class="icon-mid bi bi-person me-2"></i>
-                                    My Page</a></li>
+
+
+                                    <li><a class="dropdown-item" th:src="@{/member/modify?id=${user}"><i
+                                            class="icon-mid bi bi-person me-2"></i>
+                                        My Page</a></li>
                                     <li><a class="dropdown-item" th:src="@{/member/logout}"><i
                                             class="icon-mid bi bi-box-arrow-left me-2"></i>Logout</a></li>
                                 </ul>
+                                </div>-->
                             </div>
                         </div>
                     </div>

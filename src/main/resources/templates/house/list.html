@@ -7,6 +7,14 @@
             return addressArr[0];
         }
 
+       function showOptions(dto){
+            //console.log(dto);
+            console.log(JSON.parse(dto));
+            $.each(JSON.parse(dto), function (i, target){
+                console.log(i, target);
+            })
+       }
+
 
 </script>
 
@@ -65,6 +73,31 @@
                                             <span class="badge buildingType" th:data-value="${dto.BuildingType}">[[${dto.BuildingType}]]</span>
                                             <span class="area" th:data-value="${dto.area}">[[${dto.area}]]㎡</span>
                                             [[${dto}]]
+
+                                            <div class="options">
+                                                <img th:if="${dto.optionDto.airConditioner != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.bed != false}" th:src="@{/images/icons/bed.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.bookshelf != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.closet != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.desk != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.dishwasher != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.dryer != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.gasStove != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.induction != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
+                                                <p th:each="target : ${dto}">
+                                                     <span th:text="${target}">target ======></span>
+                                                    <tr>-------------------------------------</tr>
+
+                                                </p>
+
+
+                                            </div>
+
+                                            <script>
+                                                showOptions('[[${dto.optionDto}]]');
+                                            </script>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -255,6 +288,7 @@
 
             $(target).addClass(className);
         });
+
 
 
     });

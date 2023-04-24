@@ -6,8 +6,6 @@
 
         <div id="auth">
             <h3 class="auth-title">Member Login</h3>
-            <p class="auth-subtitle mb-5">회원가입을 위한
-                <code class="highlighter-rouge">정보</code> 를 입력해주세요.</p>
 
             <form class="form form-vertical form-inline" method="POST" action="/login" id="inputForm">
                 <div class="form-group position-relative has-icon-left mb-4">
@@ -33,13 +31,13 @@
 
             <tbody>
             <tr>
-                <td><a href="/oauth2/authorization/naver">Naver</a></td>
+                <td><a href="/oauth2/authorization/naver"><img th:src="@{/images/icons/naver.png}" class="login-logo-custom"></a></td>
             </tr>
             <tr>
-                <td><a href="/oauth2/authorization/google">Google</a></td>
+                <td><a href="/oauth2/authorization/google"><img th:src="@{/images/icons/google.png}" class="login-logo-customlogo-custom"></a></td>
             </tr>
             <tr>
-                <td><a href="/oauth2/authorization/kakao">Kakao</a></td>
+                <td><a href="/oauth2/authorization/kakao"><img th:src="@{/images/icons/kakao.png}" class="login-logo-customlogo-custom"></a></td>
             </tr>
 
             </tbody>

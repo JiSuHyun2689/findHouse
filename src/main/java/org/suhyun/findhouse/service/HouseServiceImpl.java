@@ -61,9 +61,12 @@ public class HouseServiceImpl implements HouseService {
         Structure structure = (Structure) entityMap.get("structure");
 
         repository.save(house);
-        optionRepository.save(option);
         priceRepository.save(price);
         structureRepository.save(structure);
+
+        if(option != null){
+            optionRepository.save(option);
+        }
 
         if (cost != null) {
             costRepository.save(cost);

@@ -40,7 +40,10 @@ public class HouseController {
 
         //model.addAttribute("result", houseService.getList(pageRequestDTO));
         model.addAttribute("result", houseService.getSearchList(pageRequestDTO));
-        model.addAttribute("user", principal);
+        if(principal != null) {
+            model.addAttribute("loginUserName", principal.getName());
+            log.info("login user : " + principal.getName());
+        }
     }
 
 

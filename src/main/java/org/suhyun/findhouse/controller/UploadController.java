@@ -69,7 +69,7 @@ public class UploadController {
 
                 File thumbnailFile = new File(thumbnailSaveName);
 
-                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 150);
+                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 400, 300);
 
                 resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
 

@@ -6,16 +6,6 @@
             let addressArr = address.split(" ");
             return addressArr[0];
         }
-
-       function showOptions(dto){
-            //console.log(dto);
-            console.log(JSON.parse(dto));
-            $.each(JSON.parse(dto), function (i, target){
-                console.log(i, target);
-            })
-       }
-
-
 </script>
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
@@ -52,10 +42,10 @@
                                         </div>
                                         <div id="carouselExampleSlidesOnly" class="carousel slide"
                                              data-bs-ride="carousel">
-                                            <div class="carousel-inner">
+                                            <div class="carousel-inner img-thumbnail">
                                                 <div th:each="houseImage : ${dto.imageDTOList}">
                                                     <a th:href="@{/house/read?(houseNum= ${dto.houseNum}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-                                                        <img class="img-fluid w-100"
+                                                        <img class="img-fluid w-100 thumbnail-custom"
                                                              th:if="${houseImage.path != null}"
                                                              th:src="|/display?fileName=${houseImage.getThumbnailURL()}|">
                                                     </a>
@@ -72,30 +62,23 @@
                                             <span class="badge contractType" th:data-value="${dto.contractType}">[[${dto.contractType}]]</span>
                                             <span class="badge buildingType" th:data-value="${dto.BuildingType}">[[${dto.BuildingType}]]</span>
                                             <span class="area" th:data-value="${dto.area}">[[${dto.area}]]㎡</span>
-                                            [[${dto}]]
 
-                                            <div class="options">
+                                            <div class="option">
                                                 <img th:if="${dto.optionDto.airConditioner != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
                                                 <img th:if="${dto.optionDto.bed != false}" th:src="@{/images/icons/bed.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.bookshelf != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.closet != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.desk != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.dishwasher != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.dryer != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.gasStove != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <img th:if="${dto.optionDto.induction != false}" th:src="@{/images/icons/airConditioner.png}" class="logo-custom">
-                                                <p th:each="target : ${dto}">
-                                                     <span th:text="${target}">target ======></span>
-                                                    <tr>-------------------------------------</tr>
+                                                <img th:if="${dto.optionDto.bookshelf != false}" th:src="@{/images/icons/bookshelf.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.closet != false}" th:src="@{/images/icons/closet.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.desk != false}" th:src="@{/images/icons/desk.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.dishwasher != false}" th:src="@{/images/icons/dishwasher.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.dryer != false}" th:src="@{/images/icons/dryer.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.gasStove != false}" th:src="@{/images/icons/gasStove.png}" class="logo-custom">
+                                                <img th:if="${dto.optionDto.induction != false}" th:src="@{/images/icons/induction.png}" class="logo-custom">
 
-                                                </p>
-
-
+                                                <img th:if="${dto.elevator != false}" th:src="@{/images/icons/elevator.png}" class="logo-custom">
+                                                <img th:if="${dto.loan != false}" th:src="@{/images/icons/loan.png}" class="logo-custom">
+                                                <img th:if="${dto.pet != false}" th:src="@{/images/icons/pet.png}" class="logo-custom">
+                                                <img th:if="${dto.parking != false}" th:src="@{/images/icons/parking.png}" class="logo-custom">
                                             </div>
-
-                                            <script>
-                                                showOptions('[[${dto.optionDto}]]');
-                                            </script>
 
 
                                         </div>

@@ -22,14 +22,14 @@
                                     <div class="row">
 
                                         <!-- 수정 필요 -->
-                                        <input type="hidden" name="id" value="user">
+                                        <input type="hidden" name="id" th:value="${#authentication.principal.id}">
                                         <input type="hidden" name="status" value="거래가능">
 
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">제목</label>
-                                                <input type="text" class="form-control" name="title"
-                                                       placeholder="제목을 입력해주세요." value="test">
+                                                <input type="text" class="form-control checkInfo" name="title"
+                                                       placeholder="제목을 입력해주세요." data-name="제목" value="test">
                                             </div>
                                         </div>
 
@@ -44,10 +44,10 @@
                                                     정확히
                                                     표시되지 않습니다!</i></small>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="address" id="address"
-                                                           placeholder="주소를 입력해주세요." value="세종대로 110">
+                                                    <input type="text" class="form-control checkInfo" name="address" id="address"
+                                                           placeholder="주소를 입력해주세요." value="세종대로 110" data-name="주소">
                                                     <button class="btn btn-light-secondary"
-                                                            type="button" id="addressSearchBtn">Search
+                                                            type="button" id="addressSearchBtn">검색
                                                     </button>
 
                                                 </div>
@@ -57,7 +57,7 @@
                                         <div class="col-10">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">상세주소</label>
-                                                <input type="text" class="form-control" value="상세주소">
+                                                <input type="text" class="form-control checkInfo" value="상세주소" data-name="상세주소">
 
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">면적(㎡)</label>
-                                                <input type="text" class="form-control" name="area" placeholder="면적(㎡)"
+                                                <input type="text" class="form-control checkInfo" name="area" data-name="면적" placeholder="면적(㎡)"
                                                        value="12.9">
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">유형</label>
-                                                <select class="form-select" name="contractType" id="contractType">
+                                                <select class="form-select checkInfo" name="contractType" data-name="유형" id="contractType">
                                                     <option value="전세">전세</option>
                                                     <option value="월세">월세</option>
                                                     <option value="선세">선세</option>
@@ -86,7 +86,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">건물유형</label>
-                                                <select class="form-select" name="buildingType">
+                                                <select class="form-select checkInfo" name="buildingType" data-name="건물 유형">
                                                     <option value="원룸">원룸</option>
                                                     <option value="투룸">투룸</option>
                                                     <option value="빌라">빌라</option>
@@ -101,7 +101,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">중개수수료 (만원)</label>
-                                                <input type="number" class="form-control" name="brokerage"
+                                                <input type="number" class="form-control checkInfo" data-name="중개 수수료"name="brokerage"
                                                        placeholder="(만원)" value="15">
                                             </div>
                                         </div>
@@ -109,7 +109,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">최소 계약기간 (개월)</label>
-                                                <input type="number" class="form-control" name="minTerm"
+                                                <input type="number" class="form-control checkInfo" data-name="최소 계약 기간" name="minTerm"
                                                        placeholder="(개월)" value="6">
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">해당 층 수</label>
-                                                <input type="number" class="form-control" name="theFloor" placeholder=""
+                                                <input type="number" class="form-control checkInfo"data-name="해당 층 수" name="theFloor" placeholder=""
                                                        value="2">
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">전체 층 수</label>
-                                                <input type="number" class="form-control" name="wholeFloor"
+                                                <input type="number" class="form-control checkInfo" data-name="전체 층 수" name="wholeFloor"
                                                        placeholder="" value="10">
                                             </div>
                                         </div>
@@ -133,7 +133,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">입주 가능 날짜</label>
-                                                <input type="date" id="moveInDate" class="form-control"
+                                                <input type="date" id="moveInDate" data-name="입주 가능 날짜" class="form-control checkInfo"
                                                        name="moveInDate">
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">준공 날짜</label>
-                                                <input type="date" id="completionDate" class="form-control"
+                                                <input type="date" id="completionDate" data-name="준공 날짜" class="form-control checkInfo"
                                                        name="completionDate">
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">방 개수</label>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control checkInfo" data-name="방 개수"
                                                        name="structureDto.room" value="1">
                                             </div>
                                         </div>
@@ -157,7 +157,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">거실 개수</label>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control checkInfo" data-name="거실 개수"
                                                        name="structureDto.livingRoom" value="1">
                                             </div>
                                         </div>
@@ -165,7 +165,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">화장실 개수</label>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control checkInfo" data-name="화장실 개수"
                                                        name="structureDto.toilet" value="1">
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">베란다 개수</label>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control checkInfo" data-name="베란다 개수"
                                                        name="structureDto.veranda" value="1">
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                                         <div class="col-2 price">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">가격 (만원)</label>
-                                                <input type="number" class="form-control price"
+                                                <input type="number" class="form-control price checkInfo" data-name="가격"
                                                        name="priceDto.price"
                                                        placeholder="가격 (만원)" value="100000000">
                                             </div>
@@ -192,7 +192,7 @@
                                         <div class="col-2 deposit" style="display:none">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">보증금 (만원)</label>
-                                                <input type="number" class="form-control deposit"
+                                                <input type="number" class="form-control deposit checkInfo" data-name="보증금"
                                                        name="priceDto.deposit"
                                                        placeholder="보증금 (만원)" value="10000000">
                                             </div>
@@ -201,7 +201,7 @@
                                         <div class="col-2 monthly" style="display:none">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">월세 (만원)</label>
-                                                <input type="number" class="form-control monthly"
+                                                <input type="number" class="form-control monthly checkInfo" data-name="월세"
                                                        name="priceDto.monthly"
                                                        placeholder="월세 (만원)" value="7000000">
                                             </div>
@@ -210,7 +210,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">관리비 (만원)</label>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control checkInfo" data-name="관리비"
                                                        name="costDto.totalCost"
                                                        placeholder="관리비 (만원)" value="50000">
                                             </div>
@@ -219,7 +219,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">관리비 기타 항목</label>
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control checkInfo" data-name="관리비 기타 항목"
                                                        name="costDto.costContent"
                                                        placeholder="관리비 기타 항목" value="전기, 수도, 가스 별도">
                                             </div>
@@ -636,6 +636,7 @@
         });
 
 
+
         addressSearchBtn.on("click", function (event) {
             marker.setMap(null);
 
@@ -765,7 +766,7 @@
 
         function showResult(uploadResultArr) {
 
-            $(".filepond--root").css({"height": "250px"});
+            $(".filepond--root").css({"height": "500px"});
 
             var uploadUL = $(".uploadResult ul");
             var str = "";
@@ -819,6 +820,46 @@
         });
 
 
+        form.submit(function (event) {
+            $(".checkInfo").each(function (idx, target){
+
+               var value = $(target).val();
+               var contractTypeValue = contractType.val();
+
+                if (contractTypeValue == '월세') {
+                    if($(target).data('name') == "가격")
+                        return;
+                } else {
+                    if($(target).data('name') == ("보증금" || "월세"))
+                        return;
+                }
+
+               if(value == ""){
+                   event.preventDefault();
+                   sweetAlert("warning",  $(target).data('name') + "을(를) 다시 입력해주세요.", false, target);
+                   return false;
+               }
+            });
+            return true;
+        });
+
+
+
+
+        function sweetAlert(icon, title, confirm, target) {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                showConfirmButton: confirm,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel'
+            }).then(result => {
+                if (target == "id" && result.isDismissed) {
+                    id.val('');
+                }
+            })
+        }
     });
 
 </script>

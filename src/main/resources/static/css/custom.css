@@ -41,7 +41,8 @@
 }
 
 
-.a img  login-logo-custom{
-    width: 10em;
-    height: 3em;
+.login-logo-custom{
+    width: 140px;
+    height: 80px;
+    padding-top: 3em;
 }

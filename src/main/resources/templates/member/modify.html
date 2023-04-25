@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <form class="form form-vertical form-inline" method="post" action="/member/modify"
                                   id="inputForm">
-
+                                [[${dto}]]
                                 <div class="form-body">
                                     <div class="row">
 
@@ -38,49 +38,55 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">PASSWORD</label>
-                                                <input type="password" class="form-control" name="password"
-                                                       th:value="${dto.password}">
+                                                <input type="password" class="form-control checkInfo checkPassword"
+                                                       name="password"
+                                                       th:value="${dto.password}" data-name="비밀번호" data-state="false">
                                             </div>
                                         </div>
 
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">PASSWORD CHECK</label>
-                                                <input type="password" class="form-control" name="passwordCheck"
-                                                       th:value="${dto.password}">
+                                                <input type="password" class="form-control checkInfo checkPassword"
+                                                       name="passwordCheck" data-name="비밀번호 체크"
+                                                       th:value="${dto.password}" data-state="false">
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">이름</label>
-                                                <input type="text" class="form-control" th:value="${dto.name}"
-                                                       name="name">
+                                                <input type="text" class="form-control checkInfo" th:value="${dto.name}"
+                                                       data-name="이름"
+                                                       name="name" data-state="true">
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">닉네임</label>
-                                                <input type="text" class="form-control" th:value="${dto.nickName}"
-                                                       name="nickName">
+                                                <input type="text" class="form-control checkInfo"
+                                                       th:value="${dto.nickName}" data-name="닉네임"
+                                                       name="nickName" data-state="true">
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">생년월일</label>
-                                                <input type="date" id="birth" class="form-control"
+                                                <input type="date" id="birth" class="form-control checkInfo"
                                                        th:value="${#temporals.format(dto.birth, 'yyyy-MM-dd')}"
-                                                       name="birth">
+                                                       data-name="생년월일"
+                                                       name="birth" data-state="true">
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label style="font-weight: bold">연락처</label>
-                                                <input type="text" class="form-control" th:value="${dto.contact}"
-                                                       name="contact">
+                                                <input type="text" class="form-control checkInfo"
+                                                       th:value="${dto.contact}" data-name="연락처"
+                                                       name="contact" data-state="true">
                                             </div>
                                         </div>
 
@@ -101,10 +107,12 @@
                                                         class="btn btn-primary me-1 mb-1 rounded-pill submitBtn">
                                                     Submit
                                                 </button>
-                                                <button type="button"
-                                                        class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">
-                                                    List
-                                                </button>
+                                                <a th:href="@{/house/list}">
+                                                    <button type="button"
+                                                            class="btn btn-secondary me-1 mb-1 rounded-pill listBtn">
+                                                        List
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
 
@@ -126,6 +134,13 @@
 
     $(document).ready(function () {
 
+        var form = $("#inputForm");
+        var password = $("#password");
+        var passwordCheck = $("#passwordCheck");
+        var checkPassword = $(".checkPassword");
+        var checkInfo = $(".checkInfo");
+        var fromSocial = '[[${dto.fromSocial}]]';
+
         $("#removeBtn").click(function () {
             form.attr("action", "/member/remove").attr("method", "post");
 
@@ -146,6 +161,101 @@
                 }
             })
         }); // end removeBtn event
+
+
+        function sweetAlert(icon, title, confirm, target) {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                showConfirmButton: confirm,
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel'
+            }).then(result => {
+                if (target == "id" && result.isDismissed) {
+                    id.val('');
+                }
+            })
+        }
+
+        form.submit(function (event) {
+
+            checkInfo.each(function (idx, target) {
+
+                if ($(target).data("name") == "비밀번호" || $(target).data("name") == "비밀번호 체크") {
+                    if (fromSocial == "false") {
+                        return
+                    }
+                }
+                if (!checkEmptyValue(target) || !checkState(target)) {
+                    event.preventDefault();
+                    return false;
+                }
+
+            });
+            return true;
+        });
+
+
+        function checkState(target) {
+            var state = $(target).data("state");
+
+            if (!state || state == "") {
+                sweetAlert("warning", $(target).data('name') + "을(를) 다시 입력해주세요.", false, target);
+                return false;
+            }
+            return true;
+        }
+
+
+        function checkEmptyValue(target) {
+            var value = $(target).val();
+            if (value == "") {
+                sweetAlert("warning", $(target).data('name') + "을(를) 다시 입력해주세요.", false, target);
+                return false;
+            }
+            return true;
+        }
+
+        $(".checkInfo").blur(function () {
+            if ($(this).val() != "") {
+                $(this).data("state", true);
+            } else {
+                $(this).data("state", false);
+            }
+        });
+
+
+        // pw check
+        checkPassword.on('input', function () {
+            password.val() == passwordCheck.val() ? changePw(true) : changePw(false);
+        })
+
+        function changePw(result) {
+            var add = '';
+            var remove = '';
+            var pwState = false;
+            var pws = checkPassword;
+
+            if (result == true) {
+                add = 'is-valid';
+                remove = 'is-invalid';
+                pwState = true;
+            } else {
+                add = 'is-invalid';
+                remove = 'is-valid';
+                pwState = false;
+            }
+
+            pws.each(function (idx, target) {
+                target.classList.remove(remove);
+                target.classList.add(add);
+                ;
+            })
+            password.data("state", pwState);
+            passwordCheck.data("state", pwState);
+
+        }
     });
 
 </script>

@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.suhyun.findhouse.security.handler.MemberLoginSuccessHandler;
 import org.suhyun.findhouse.security.service.MemberUserDetailsService;
 
@@ -24,6 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     MemberUserDetailsService memberUserDetailsService;
 
+    public SecurityConfig(AuthenticationFailureHandler failureHandler) {
+        this.failureHandler = failureHandler;
+    }
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -33,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public MemberLoginSuccessHandler successHandler(){
         return new MemberLoginSuccessHandler(passwordEncoder());
     }
+
+
+    private final AuthenticationFailureHandler failureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/member/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/house/list")
-                .usernameParameter("id");
+                .usernameParameter("id")
+                .failureHandler(failureHandler);
 
         http.oauth2Login().successHandler(successHandler());
         http.rememberMe().tokenValiditySeconds(60*60*7).userDetailsService(userDetailsService());

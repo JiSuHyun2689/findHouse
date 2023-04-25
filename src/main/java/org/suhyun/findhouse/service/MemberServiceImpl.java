@@ -64,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
         log.info(dto);
 
         Member member = repository.getById(dto.getId());
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         if (member != null) {
             member.changeInfo(dto.getPassword(), dto.getName(), dto.getNickName(), dto.getBirth(), dto.getContact());

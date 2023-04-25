@@ -14,7 +14,7 @@
                     <label style="font-weight: bold">ID</label>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control user-info " placeholder="아이디를 입력해주세요."
-                               name="id" value="user" id="id">
+                               name="id" value="user" id="id" data-name="아이디">
                         <button class="btn btn-primary" type="button" id="checkId">
                             중복체크
                         </button>
@@ -23,32 +23,32 @@
                 <div class="form-group position-relative  mb-4">
                     <label style="font-weight: bold">PASSWORD</label>
                     <input type="password" class="form-control checkPassword user-info" placeholder="비밀번호를 입력해주세요."
-                           name="password" value="1111" id="password">
+                           name="password" value="1111" id="password" data-name="비밀번호">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">PASSWORD CHECK</label>
                     <input type="password" class="form-control checkPassword user-info"
                            placeholder="비밀번호를 다시 입력해주세요."
-                           name="passwordCheck" value="1111" id="passwordCheck">
+                           name="passwordCheck" value="1111" id="passwordCheck" data-name="비밀번호 체크">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">이름</label>
-                    <input type="text" class="form-control user-info extra" placeholder="이름을 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="이름을 입력해주세요." data-name="이름"
                            name="name" value="홍길동">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">닉네임</label>
-                    <input type="text" class="form-control user-info extra" placeholder="닉네임을 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="닉네임을 입력해주세요." data-name="닉네임"
                            name="nickName" value="star1">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">생년월일</label>
                     <input type="date" id="birth" class="form-control user-info extra"
-                           name="birth">
+                           name="birth" data-name="생년월일">
                 </div>
                 <div class="form-group position-relative mb-4">
                     <label style="font-weight: bold">연락처</label>
-                    <input type="text" class="form-control user-info extra" placeholder="연락처를 입력해주세요."
+                    <input type="text" class="form-control user-info extra" placeholder="연락처를 입력해주세요." data-name="연락처"
                            name="contact" value="01024442233">
                 </div>
 
@@ -101,7 +101,7 @@
         function checkState(target){
             var state = $(target).data("state");
             if(!state || state == "") {
-                sweetAlert("warning", target.name + "를 다시 입력해주세요.", false, target);
+                sweetAlert("warning", $(target).data("name") + "을(를) 다시 입력해주세요.", false, target);
                 return false;
             }
             return true;
@@ -111,7 +111,7 @@
         function checkEmptyValue(target) {
             var value = $(target).val();
             if (value == "") {
-                sweetAlert("warning", target.name + "를 다시 입력해주세요.", false, target);
+                sweetAlert("warning", $(target).data("name") + "을(를) 다시 입력해주세요.", false, target);
                 return false;
             }
             return true;

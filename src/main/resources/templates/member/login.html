@@ -27,23 +27,26 @@
                     </label>
                 </div>
                 <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+
             </form>
 
-            <tbody>
-            <tr>
-                <td><a href="/oauth2/authorization/naver"><img th:src="@{/images/icons/naver.png}" class="login-logo-custom"></a></td>
-            </tr>
-            <tr>
-                <td><a href="/oauth2/authorization/google"><img th:src="@{/images/icons/google.png}" class="login-logo-customlogo-custom"></a></td>
-            </tr>
-            <tr>
-                <td><a href="/oauth2/authorization/kakao"><img th:src="@{/images/icons/kakao.png}" class="login-logo-customlogo-custom"></a></td>
-            </tr>
-
-            </tbody>
+            <a th:href="@{/member/join}">
+                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-4">Join us</button>
+            </a>
+            <div class="social-login buttons row mt-4">
+                <span>
+                <a href="/oauth2/authorization/naver"><img th:src="@{/images/icons/naver.png}" class="login-logo-custom"
+                                                           style="width: 180px; height: 45.99px"></a>
+                <a href="/oauth2/authorization/google"><img th:src="@{/images/icons/google.png}"
+                                                            class="login-logo-custom"></a>
+                <a href="/oauth2/authorization/kakao"><img th:src="@{/images/icons/kakao.png}"
+                                                           class="login-logo-custom"></a>
+                </span>
+            </div>
         </div>
 
         <div th:if="${param.error}" class="alert alert-error">
+            [[${param.error}]]
             Invalid username and password.
         </div>
         <div th:if="${param.logout}" class="alert alert-success">
@@ -52,3 +55,28 @@
 
     </th:block>
 </th:block>
+
+<script>
+    var msg = '[[${msg}]]';
+    var error = `[[${param.error}]]`;
+    var exception = `[[${param.exception}]]`;
+
+    if (error) {
+        console.log(error);
+        console.log(exception);
+        sweetAlert('warning', exception, false);
+    }
+
+    function sweetAlert(icon, title, confirm) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            showConfirmButton: confirm,
+            showCancelButton: true,
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel'
+        })
+    }
+
+
+</script>

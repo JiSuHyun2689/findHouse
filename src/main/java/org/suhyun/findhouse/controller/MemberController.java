@@ -30,9 +30,13 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public void login() {
+    public void login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "exception", required = false) String exception,
+                      Model model) throws Exception {
 
         log.info("Member login ------------------------------------------------------------------------");
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
 
     }
 
